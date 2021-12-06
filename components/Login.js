@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 
-export const Login = () => {
+export const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,6 +27,10 @@ export const Login = () => {
           placeholder="Password:"
           secureTextEntry={true}
         />
+
+        <Button title="Login" onPress={() => navigation.navigate("Home")} />
+
+        <Button></Button>
       </View>
     </View>
   );
