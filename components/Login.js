@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  Pressable,
+} from "react-native";
 
 export const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -8,11 +15,11 @@ export const Login = ({ navigation }) => {
   console.log(password);
 
   return (
-    <View>
+    <View style={styles.pageContainer}>
       <View>
         <Text style={styles.title}>Welcome to FrostyMeet</Text>
       </View>
-      <View>
+      <View style={styles.formContainer}>
         <TextInput
           style={styles.input}
           value={username}
@@ -28,9 +35,19 @@ export const Login = ({ navigation }) => {
           secureTextEntry={true}
         />
 
-        <Button title="Login" onPress={() => navigation.navigate("Home")} />
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </Pressable>
 
-        <Button></Button>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Text style={styles.buttonText}>Sign up</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -62,6 +79,35 @@ const styles = StyleSheet.create({
     marginRight: 30,
     borderWidth: 1,
     borderColor: "red",
-    fontSize: 20,
+    padding: 3,
+    fontSize: 18,
+    borderRadius: 4,
+  },
+
+  formContainer: {
+    flex: 2,
+    alignItems: "center",
+  },
+
+  pageContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+  },
+
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "navy",
+    margin: 10,
+  },
+
+  buttonText: {
+    color: "white",
+    fontSize: 18,
   },
 });
