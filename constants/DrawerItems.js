@@ -15,7 +15,7 @@ export default [
     iconName: "face-profile",
   },
   {
-    name: "Schedule Meets",
+    name: "Scheduled Meets",
     iconType: "Material",
     iconName: "face-profile",
   },

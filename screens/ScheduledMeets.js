@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 
-export const ScheduleMeets = () => {
+export const ScheduledMeets = () => {
   return (
     <View>
       <View>
-        <Text>schedule meets</Text>
+        <Text>scheduled meets</Text>
       </View>
     </View>
   );

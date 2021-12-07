@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Image, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Image,
+  Pressable,
+} from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export const Home = ({ navigation }) => {
@@ -20,13 +27,16 @@ export const Home = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={() => navigation.navigate("Meets")}>
+        <Pressable
+          style={styles.button}
+          onPress={() => navigation.navigate("Meets")}
+        >
           <Text style={styles.buttonText}>Join a Meet!</Text>
         </Pressable>
 
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate("Schedule Meets")}
+          onPress={() => navigation.navigate("Create Meets")}
         >
           <Text style={styles.buttonText}>Create a Meet!</Text>
         </Pressable>
