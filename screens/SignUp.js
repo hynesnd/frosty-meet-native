@@ -140,7 +140,13 @@ export const SignUp = ({ navigation }) => {
           <Pressable style={styles.button} onPress={handleUploadPhoto}>
             <Text style={styles.buttonText}>Get Verified by FaceID</Text>
           </Pressable>
-          <Pressable style={styles.button} onPress={setUser}>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              setUser;
+              navigation.navigate("Home");
+            }}
+          >
             <Text style={styles.buttonText}>Submit</Text>
           </Pressable>
         </View>
