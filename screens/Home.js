@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Image, Pressable } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export const Home = () => {
+export const Home = ({ navigation }) => {
+  const Stack = createNativeStackNavigator();
+
   return (
     <View>
       <View style={styles.titleContainer}>
@@ -23,7 +26,7 @@ export const Home = () => {
 
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate("ScheduleMeets")}
+          onPress={() => navigation.navigate("Schedule Meets")}
         >
           <Text style={styles.buttonText}>Create a Meet!</Text>
         </Pressable>
