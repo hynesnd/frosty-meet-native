@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  Image,
+  Pressable,
+} from "react-native";
 
 export const SignUp = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -8,6 +16,49 @@ export const SignUp = ({ navigation }) => {
   const [pronouns, setPronouns] = useState("");
   const [email, setEmail] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
+  const [photo, setPhoto] = useState(null);
+  const [user, setUser] = useState({});
+
+  // const SERVER_URL = "http://localhost:3000";
+
+  // const createFormData = (photo, body = {}) => {
+  //   const data = new FormData();
+
+  //   data.append("photo", {
+  //     name: photo.fileName,
+  //     type: photo.type,
+  //     uri: Platform.OS === "ios" ? photo.uri.replace("file://", "") : photo.uri,
+  //   });
+
+  //   Object.keys(body).forEach((key) => {
+  //     data.append(key, body[key]);
+  //   });
+
+  //   return data;
+  // };
+
+  const handleChoosePhoto = () => {
+    // launchImageLibrary({ noData: true }, (response) => {
+    //   // console.log(response);
+    //   if (response) {
+    //     setPhoto(response);
+    //   }
+    // });
+  };
+
+  const handleUploadPhoto = () => {
+    // fetch(`${SERVER_URL}/api/upload`, {
+    //   method: "POST",
+    //   body: createFormData(photo, { userId: "123" }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((response) => {
+    //     console.log("response", response);
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   });
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -20,6 +71,11 @@ export const SignUp = ({ navigation }) => {
   return (
     <View>
       <View style={styles.formContainer}>
+        <Image
+          source={{ uri: "https://source.unsplash.com/random/200x200" }}
+          style={styles.avatarImg}
+        />
+
         <TextInput
           style={styles.input}
           value={username}
@@ -54,6 +110,40 @@ export const SignUp = ({ navigation }) => {
           onChangeText={setDateOfBirth}
           placeholder="Date of birth:"
         />
+      </View>
+      <View style={styles.buttons}>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+          {photo && (
+            <>
+              <Image source={{ uri: photo.uri }} style={{ width: 100, height: 100 }} />
+              <Pressable style={styles.button} onPress={handleUploadPhoto}>
+                <Text style={styles.buttonText}>Upload Avatar</Text>
+              </Pressable>
+            </>
+          )}
+          <Pressable style={styles.button} onPress={handleChoosePhoto}>
+            <Text style={styles.buttonText}>Choose Avatar</Text>
+          </Pressable>
+        </View>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+          {photo && (
+            <>
+              <Image source={{ uri: photo.uri }} style={{ width: 150, height: 150 }} />
+              <Pressable style={styles.button} onPress={handleUploadPhoto}>
+                <Text style={styles.buttonText}>Upload Profile Picture</Text>
+              </Pressable>
+            </>
+          )}
+          <Pressable style={styles.button} onPress={handleChoosePhoto}>
+            <Text style={styles.buttonText}>Choose Profile Picture</Text>
+          </Pressable>
+          <Pressable style={styles.button} onPress={handleUploadPhoto}>
+            <Text style={styles.buttonText}>Get Verified by FaceID</Text>
+          </Pressable>
+          <Pressable style={styles.button} onPress={setUser}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -116,5 +206,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 18,
+  },
+
+  avatarImg: {
+    width: 150,
+    height: 150,
+    margin: 20,
   },
 });
