@@ -14,7 +14,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { CreateMeets } from "./screens/CreateMeets";
 import { Meets } from "./screens/Meets";
 import { EditProfile } from "./screens/EditProfile";
-import { ScheduleMeets } from "./screens/ScheduleMeets";
+import { ScheduledMeets } from "./screens/ScheduledMeets";
 
 // const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -41,8 +41,8 @@ export default function App() {
                 ? CreateMeets
                 : drawer.name === "Meets"
                 ? Meets
-                : drawer.name === "Schedule Meets"
-                ? ScheduleMeets
+                : drawer.name === "Scheduled Meets"
+                ? ScheduledMeets
                 : drawer.name === "Edit Profile"
                 ? EditProfile
                 : Home
