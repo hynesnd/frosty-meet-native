@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Button,
-  Pressable,
-} from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, Pressable } from "react-native";
 
 export const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -16,7 +9,7 @@ export const Login = ({ navigation }) => {
 
   return (
     <View style={styles.pageContainer}>
-      <View>
+      <View style={styles.titleContainer}>
         <Text style={styles.title}>Welcome to FrostyMeet</Text>
       </View>
       <View style={styles.formContainer}>
@@ -35,17 +28,11 @@ export const Login = ({ navigation }) => {
           secureTextEntry={true}
         />
 
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate("Home")}
-        >
+        <Pressable style={styles.button} onPress={() => navigation.navigate("Home")}>
           <Text style={styles.buttonText}>Login</Text>
         </Pressable>
 
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate("Home")}
-        >
+        <Pressable style={styles.button} onPress={() => navigation.navigate("Home")}>
           <Text style={styles.buttonText}>Sign up</Text>
         </Pressable>
       </View>
@@ -71,6 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: "#eaeaea",
+    justifyContent: "center",
   },
   input: {
     marginTop: 10,
@@ -85,7 +73,7 @@ const styles = StyleSheet.create({
   },
 
   formContainer: {
-    flex: 2,
+    flex: 1,
     alignItems: "center",
   },
 
