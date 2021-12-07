@@ -1,20 +1,62 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login } from "./components/Login";
-import { Home } from "./components/Home";
+import { Login } from "./screens/Login";
+import { Home } from "./screens/Home";
+import DrawerItems from "./constants/DrawerItems";
+import Header from "./components/Header";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: true }}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
+      <Drawer.Navigator
+        drawerType="front"
+        initialRouteName="Login"
+        drawerContentOptions={{
+          activeTintColor: "#e91e63",
+          itemStyle: { marginVertical: 10 },
+        }}
+      >
+        {DrawerItems.map((drawer) => (
+          <Drawer.Screen
+            key={drawer.name}
+            name={drawer.name}
+            component={drawer.name === "Login" ? Login : Home}
+            options={{
+              drawerIcon: ({ focused }) =>
+                drawer.iconType === "Material" ? (
+                  <MaterialCommunityIcons
+                    name={drawer.iconName}
+                    size={24}
+                    color={focused ? "#e91e63" : "black"}
+                  />
+                ) : drawer.iconType === "Feather" ? (
+                  <Feather
+                    name={drawer.iconName}
+                    size={24}
+                    color={focused ? "#e91e63" : "black"}
+                  />
+                ) : (
+                  <FontAwesome5
+                    name={drawer.iconName}
+                    size={24}
+                    color={focused ? "#e91e63" : "black"}
+                  />
+                ),
+              headerShown: true,
+            }}
+          />
+        ))}
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
