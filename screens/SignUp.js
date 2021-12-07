@@ -65,7 +65,7 @@ export const SignUp = ({ navigation }) => {
       return () => {
         navigation.popToTop();
       };
-    })
+    }, [])
   );
 
   return (
@@ -112,10 +112,15 @@ export const SignUp = ({ navigation }) => {
         />
       </View>
       <View style={styles.buttons}>
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
           {photo && (
             <>
-              <Image source={{ uri: photo.uri }} style={{ width: 100, height: 100 }} />
+              <Image
+                source={{ uri: photo.uri }}
+                style={{ width: 100, height: 100 }}
+              />
               <Pressable style={styles.button} onPress={handleUploadPhoto}>
                 <Text style={styles.buttonText}>Upload Avatar</Text>
               </Pressable>
@@ -125,10 +130,15 @@ export const SignUp = ({ navigation }) => {
             <Text style={styles.buttonText}>Choose Avatar</Text>
           </Pressable>
         </View>
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
           {photo && (
             <>
-              <Image source={{ uri: photo.uri }} style={{ width: 150, height: 150 }} />
+              <Image
+                source={{ uri: photo.uri }}
+                style={{ width: 150, height: 150 }}
+              />
               <Pressable style={styles.button} onPress={handleUploadPhoto}>
                 <Text style={styles.buttonText}>Upload Profile Picture</Text>
               </Pressable>
