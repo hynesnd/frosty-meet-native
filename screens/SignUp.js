@@ -1,7 +1,16 @@
 import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 
-export const SignUp = () => {
+export const SignUp = ({ navigation }) => {
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        navigation.popToTop();
+      };
+    })
+  );
+
   return (
     <View>
       <View>

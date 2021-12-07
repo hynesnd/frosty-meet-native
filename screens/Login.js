@@ -1,5 +1,14 @@
+import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  Pressable,
+} from "react-native";
 import { SignUp } from "./SignUp";
 
 export const Login = ({ navigation }) => {
@@ -8,36 +17,61 @@ export const Login = ({ navigation }) => {
 
   console.log(password);
 
+  const Stack = createNativeStackNavigator();
+
+  const LoginForm = () => {
+    return (
+      <View style={styles.pageContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Welcome to FrostyMeet</Text>
+        </View>
+        <View style={styles.formContainer}>
+          <TextInput
+            style={styles.input}
+            value={username}
+            onChangeText={setUsername}
+            placeholder="Username:"
+          />
+
+          <TextInput
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Password:"
+            secureTextEntry={true}
+          />
+
+          <Pressable
+            style={styles.button}
+            onPress={() => navigation.navigate("Home")}
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </Pressable>
+
+          <Pressable
+            style={styles.button}
+            onPress={() => navigation.navigate("SignUp")}
+          >
+            <Text style={styles.buttonText}>Sign up</Text>
+          </Pressable>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.pageContainer}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Welcome to FrostyMeet</Text>
-      </View>
-      <View style={styles.formContainer}>
-        <TextInput
-          style={styles.input}
-          value={username}
-          onChangeText={setUsername}
-          placeholder="Username:"
-        />
-
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Password:"
-          secureTextEntry={true}
-        />
-
-        <Pressable style={styles.button} onPress={() => navigation.navigate("Home")}>
-          <Text style={styles.buttonText}>Login</Text>
-        </Pressable>
-
-        <Pressable style={styles.button} onPress={() => navigation.navigate("SignUp")}>
-          <Text style={styles.buttonText}>Sign up</Text>
-        </Pressable>
-      </View>
-    </View>
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+        name="Login"
+        component={LoginForm}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ headerShown: true }}
+      />
+    </Stack.Navigator>
   );
 };
 
