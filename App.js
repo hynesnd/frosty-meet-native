@@ -11,6 +11,10 @@ import Header from "./components/Header";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { CreateMeets } from "./screens/CreateMeets";
+import { Meets } from "./screens/Meets";
+import { EditProfile } from "./screens/EditProfile";
+import { ScheduleMeets } from "./screens/ScheduleMeets";
 
 // const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -30,7 +34,19 @@ export default function App() {
           <Drawer.Screen
             key={drawer.name}
             name={drawer.name}
-            component={drawer.name === "Login" ? Login : Home}
+            component={
+              drawer.name === "Login"
+                ? Login
+                : drawer.name === "Create Meets"
+                ? CreateMeets
+                : drawer.name === "Meets"
+                ? Meets
+                : drawer.name === "Schedule Meets"
+                ? ScheduleMeets
+                : drawer.name === "Edit Profile"
+                ? EditProfile
+                : Home
+            }
             options={{
               drawerIcon: ({ focused }) =>
                 drawer.iconType === "Material" ? (

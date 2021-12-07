@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button, Pressable } from "react-native";
+import { SignUp } from "./SignUp";
 
 export const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -32,7 +33,7 @@ export const Login = ({ navigation }) => {
           <Text style={styles.buttonText}>Login</Text>
         </Pressable>
 
-        <Pressable style={styles.button} onPress={() => navigation.navigate("Home")}>
+        <Pressable style={styles.button} onPress={() => navigation.navigate("SignUp")}>
           <Text style={styles.buttonText}>Sign up</Text>
         </Pressable>
       </View>
