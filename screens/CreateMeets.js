@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Picker } from "react-native";
-import DatePicker from "react-native-datepicker";
 
 export const CreateMeets = () => {
   const [meetTitle, setMeetTitle] = useState("");
@@ -12,7 +11,12 @@ export const CreateMeets = () => {
     { label: "Climbing", value: "climbing" },
     { label: "Cinema", value: "cinema" },
   ]);
-  const [dateStart, setDateStart] = useState("2022-01-01");
+  // const [chosenDate, setChosenDate] = useState(new Date());
+
+  const [startDate, setStartDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [endTime, setEndTime] = useState("");
 
   return (
     <View>
@@ -30,10 +34,18 @@ export const CreateMeets = () => {
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
-            onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
+            onValueChange={(itemValue, itemIndex) =>
+              setCategoryValue(itemValue)
+            }
           >
             {categories.map((cat) => {
-              return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
+              return (
+                <Picker.Item
+                  key={cat.label}
+                  label={cat.label}
+                  value={cat.value}
+                />
+              );
             })}
           </Picker>
         </View>
@@ -48,31 +60,38 @@ export const CreateMeets = () => {
           />
         </View>
         <View style={styles.formRow3}>
-          <DatePicker
-            style={{ width: 200 }}
-            date={dateStart}
-            mode="date"
-            placeholder="select date"
-            format="YYYY-MM-DD"
-            minDate="2016-05-01"
-            maxDate="2016-06-01"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            customStyles={{
-              dateIcon: {
-                position: "absolute",
-                left: 0,
-                top: 4,
-                marginLeft: 0,
-              },
-              dateInput: {
-                marginLeft: 36,
-              },
-            }}
-            onDateChange={(date) => {
-              setStateStart(date);
-            }}
-          />
+          <Text style={styles.row3Labels}>Start:</Text>
+          <Text style={styles.row3Labels}>End:</Text>
+        </View>
+        <View style={styles.formRow4}>
+          <View style={styles.eventStartContainer}>
+            <TextInput
+              style={styles.dateInput}
+              value={startDate}
+              onChangeText={setStartDate}
+              placeholder="DD/MM/YYYY"
+            />
+            <TextInput
+              style={styles.timeInput}
+              value={startTime}
+              onChangeText={setStartTime}
+              placeholder="HH:MM"
+            />
+          </View>
+          <View style={styles.eventEndContainer}>
+            <TextInput
+              style={styles.dateInput}
+              value={endDate}
+              onChangeText={setEndDate}
+              placeholder="DD/MM/YYYY"
+            />
+            <TextInput
+              style={styles.timeInput}
+              value={endTime}
+              onChangeText={setEndTime}
+              placeholder="HH:MM"
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -174,5 +193,39 @@ const styles = StyleSheet.create({
     height: 25,
     width: 150,
     marginTop: 10,
+  },
+
+  formRow3: {
+    marginTop: 10,
+    flexDirection: "row",
+    paddingHorizontal: 20,
+  },
+  row3Labels: {
+    textAlign: "left",
+    flex: 1,
+    paddingLeft: 8,
+  },
+
+  formRow4: {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    paddingHorizontal: 20,
+  },
+  eventStartContainer: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-evenly",
+  },
+  eventEndContainer: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-evenly",
+  },
+  dateInput: {
+    maxWidth: 90,
+  },
+  timeInput: {
+    maxWidth: 50,
   },
 });
