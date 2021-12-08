@@ -1,7 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Picker } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Picker,
+  Pressable,
+  Image,
+} from "react-native";
 
-export const CreateMeets = () => {
+export const CreateMeets = ({ navigation }) => {
   const [meetTitle, setMeetTitle] = useState("");
   const [meetDescription, setMeetDescription] = useState("");
   const [open, setOpen] = useState(false);
@@ -17,6 +26,18 @@ export const CreateMeets = () => {
   const [startTime, setStartTime] = useState("");
   const [endDate, setEndDate] = useState("");
   const [endTime, setEndTime] = useState("");
+
+  const [event, setEvent] = useState({});
+
+  const uploadEventImage = () => {};
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     return () => {
+  //       navigation.popToTop();
+  //     };
+  //   }, [])
+  // );
 
   return (
     <View>
@@ -94,6 +115,34 @@ export const CreateMeets = () => {
           </View>
         </View>
       </View>
+      <View>
+        <View style={styles.mapContainer}>
+          <Image
+            source={{ uri: "https://source.unsplash.com/random/300x300" }}
+            style={styles.map}
+          />
+        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            uploadEventImage;
+          }}
+        >
+          <Text style={styles.buttonText}>Upload Image</Text>
+        </Pressable>
+
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            setEvent;
+            navigation.navigate("View Event");
+          }}
+        >
+          <Text style={styles.buttonText}>Submit!</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -113,9 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   titleContainer: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: "#eaeaea",
+    padding: 12,
     justifyContent: "center",
   },
 
@@ -136,7 +183,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     maxWidth: 150,
     borderWidth: 1,
-    borderColor: "red",
+    borderColor: "lightgrey",
     padding: 1,
     fontSize: 18,
     borderRadius: 4,
@@ -149,7 +196,7 @@ const styles = StyleSheet.create({
     marginRight: 40,
     flex: 1,
     borderWidth: 1,
-    borderColor: "red",
+    borderColor: "lightgrey",
     padding: 1,
     fontSize: 18,
     borderRadius: 4,
@@ -224,8 +271,23 @@ const styles = StyleSheet.create({
   },
   dateInput: {
     maxWidth: 90,
+    borderWidth: 1,
+    borderColor: "lightgrey",
+    borderRadius: 4,
   },
   timeInput: {
     maxWidth: 50,
+    borderWidth: 1,
+    borderColor: "lightgrey",
+    borderRadius: 4,
+  },
+  mapContainer: {
+    flex: 1,
+    alignItems: "center",
+  },
+  map: {
+    width: 300,
+    height: 300,
+    margin: 50,
   },
 });

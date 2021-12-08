@@ -8,6 +8,7 @@ import { Login } from "./screens/Login";
 import { Home } from "./screens/Home";
 import DrawerItems from "./constants/DrawerItems";
 import Header from "./components/Header";
+import { ViewEvent } from "./screens/ViewEvent";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -43,6 +44,8 @@ export default function App() {
                 ? Meets
                 : drawer.name === "Scheduled Meets"
                 ? ScheduledMeets
+                : drawer.name === "View Event"
+                ? ViewEvent
                 : drawer.name === "Edit Profile"
                 ? EditProfile
                 : Home
