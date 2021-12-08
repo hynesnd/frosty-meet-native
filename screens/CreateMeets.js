@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Picker } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export const CreateMeets = () => {
   const [meetTitle, setMeetTitle] = useState("");
   const [open, setOpen] = useState(false);
-  const [categoryValue, setCategoryValue] = useState(null);
+  const [categoryValue, setCategoryValue] = useState("");
   const [categories, setCategories] = useState([
     { label: "Social", value: "social" },
     { label: "Climbing", value: "climbing" },
@@ -25,7 +25,7 @@ export const CreateMeets = () => {
             onChangeText={setMeetTitle}
             placeholder="Title:"
           />
-          <DropDownPicker
+          {/* <DropDownPicker
             style={styles.pickerStyle}
             open={open}
             value={categoryValue}
@@ -39,7 +39,16 @@ export const CreateMeets = () => {
               fontWeight: "bold",
             }}
             showArrowIcon={true}
-          />
+          /> */}
+          <Picker
+            style={styles.pickerStyle}
+            selectedValue={categoryValue}
+            onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
+          >
+            {categories.map((cat) => {
+              return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
+            })}
+          </Picker>
         </View>
       </View>
       {/* <View>
@@ -121,15 +130,12 @@ const styles = StyleSheet.create({
 
   formRow1: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-evenly",
   },
 
   pickerStyle: {
+    height: 25,
+    width: 150,
     marginTop: 10,
-    marginBottom: 10,
-    flexDirection: "row",
-    maxWidth: 150,
-    fontSize: 20,
-    padding: 3,
   },
 });
