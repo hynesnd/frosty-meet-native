@@ -4,6 +4,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 export const CreateMeets = () => {
   const [meetTitle, setMeetTitle] = useState("");
+  const [meetDescription, setMeetDescription] = useState("");
   const [open, setOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
   const [categories, setCategories] = useState([
@@ -25,21 +26,6 @@ export const CreateMeets = () => {
             onChangeText={setMeetTitle}
             placeholder="Title:"
           />
-          {/* <DropDownPicker
-            style={styles.pickerStyle}
-            open={open}
-            value={categoryValue}
-            items={categories}
-            setOpen={setOpen}
-            setValue={setCategoryValue}
-            setItems={setCategories}
-            placeholder="Select a category"
-            placeholderStyle={{
-              color: "grey",
-              fontWeight: "bold",
-            }}
-            showArrowIcon={true}
-          /> */}
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
@@ -50,13 +36,17 @@ export const CreateMeets = () => {
             })}
           </Picker>
         </View>
+        <View style={styles.formRow2}>
+          <TextInput
+            style={styles.inputDescription}
+            value={meetDescription}
+            onChangeText={setMeetDescription}
+            placeholder="Please give a description ..."
+            multiline={true}
+            numberOfLines={4}
+          />
+        </View>
       </View>
-      {/* <View>
-        <Text>create meets</Text>
-      </View>
-      <View>
-        <Text>create meets</Text>
-      </View> */}
     </View>
   );
 };
@@ -105,6 +95,20 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
 
+  inputDescription: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 40,
+    marginRight: 40,
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "red",
+    padding: 1,
+    fontSize: 18,
+    borderRadius: 4,
+    alignSelf: "stretch",
+  },
+
   formContainer: {
     flex: 1,
     alignItems: "stretch",
@@ -131,6 +135,11 @@ const styles = StyleSheet.create({
   formRow1: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+  },
+
+  formRow2: {
+    flexDirection: "row",
+    justifyContent: "center",
   },
 
   pickerStyle: {
