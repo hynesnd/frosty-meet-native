@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Picker } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import DatePicker from "react-native-datepicker";
 
 export const CreateMeets = () => {
   const [meetTitle, setMeetTitle] = useState("");
@@ -12,6 +12,7 @@ export const CreateMeets = () => {
     { label: "Climbing", value: "climbing" },
     { label: "Cinema", value: "cinema" },
   ]);
+  const [dateStart, setDateStart] = useState("2022-01-01");
 
   return (
     <View>
@@ -44,6 +45,33 @@ export const CreateMeets = () => {
             placeholder="Please give a description ..."
             multiline={true}
             numberOfLines={4}
+          />
+        </View>
+        <View style={styles.formRow3}>
+          <DatePicker
+            style={{ width: 200 }}
+            date={dateStart}
+            mode="date"
+            placeholder="select date"
+            format="YYYY-MM-DD"
+            minDate="2016-05-01"
+            maxDate="2016-06-01"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: "absolute",
+                left: 0,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                marginLeft: 36,
+              },
+            }}
+            onDateChange={(date) => {
+              setStateStart(date);
+            }}
           />
         </View>
       </View>
