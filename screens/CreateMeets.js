@@ -15,11 +15,13 @@ export const CreateMeets = ({ navigation }) => {
   const [meetDescription, setMeetDescription] = useState("");
   const [open, setOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
+
   const [categories, setCategories] = useState([
     { label: "Social", value: "social" },
     { label: "Climbing", value: "climbing" },
     { label: "Cinema", value: "cinema" },
   ]);
+
   // const [chosenDate, setChosenDate] = useState(new Date());
 
   const [startDate, setStartDate] = useState("");
