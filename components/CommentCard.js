@@ -10,16 +10,14 @@ export default function CommentCard({ navigation, comment }) {
     <View style={styles.commentContainer}>
       <View style={styles.topRow}>
         <Text style={styles.username}>By: {comment.username}</Text>
-        <Text style={styles.createdAt}>
-          Posted: {comment.dateCreated.slice(0, 10)}
-        </Text>
+        <Text style={styles.createdAt}>Posted: {comment.dateCreated.slice(0, 10)}</Text>
       </View>
       <View style={styles.middleRow}>
         <Text style={styles.body}>{comment.commentBody}</Text>
       </View>
       <View style={styles.bottomRow}>
         <Pressable style={styles.votesButton} onPress={() => {}}>
-          👍{comment.votes}
+          <Text>👍 {comment.votes}</Text>
         </Pressable>
       </View>
     </View>
@@ -43,9 +41,7 @@ const styles = StyleSheet.create({
   username: {
     fontWeight: "bold",
   },
-  bottomRow: {
-    flex: "row",
-  },
+
   votesButton: {
     alignSelf: "flex-end",
     borderWidth: 1,

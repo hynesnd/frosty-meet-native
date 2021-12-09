@@ -6,11 +6,17 @@ import {
   TextInput,
   Pressable,
   Image,
+  Dimensions,
+  ScrollView,
 } from "react-native";
 import { EventContext } from "../contexts/event-context.js";
 import { UserContext } from "../contexts/user-context.js";
 import { getComments } from "../utils/api.js";
 import CommentCard from "../components/CommentCard";
+import SlidingPanel from "react-native-sliding-up-down-panels";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export const ViewEvent = ({ navigation }) => {
   const { event, setEvent } = useContext(EventContext);
@@ -25,7 +31,7 @@ export const ViewEvent = ({ navigation }) => {
 
   return (
     <View>
-      <View style={styles.contentsContainer}>
+      <ScrollView style={styles.contentsContainer}>
         <View style={styles.topContainer}>
           <View style={styles.topRow}>
             <Text style={styles.eventTitle}>{event.title}</Text>
@@ -60,9 +66,7 @@ export const ViewEvent = ({ navigation }) => {
             <View style={styles.leftMiddleSide}>
               <Text style={styles.eventDetailText}>
                 Category:{" "}
-                {event.categories.length > 0
-                  ? event.categories[0].categorySlug
-                  : "none"}
+                {event.categories.length > 0 ? event.categories[0].categorySlug : "none"}
               </Text>
               <Text style={styles.eventDetailText}>
                 Creator: {event.creator.username}
@@ -71,8 +75,7 @@ export const ViewEvent = ({ navigation }) => {
                 Date: {event.eventStart.slice(0, 10).replaceAll("-", "/")}
               </Text>
               <Text style={styles.eventDetailText}>
-                Time: {event.eventStart.slice(11, 16)} -{" "}
-                {event.eventEnd.slice(11, 16)}
+                Time: {event.eventStart.slice(11, 16)} - {event.eventEnd.slice(11, 16)}
               </Text>
             </View>
             <View style={styles.rightMiddleSide}>
@@ -84,9 +87,7 @@ export const ViewEvent = ({ navigation }) => {
           </View>
         </View>
         <View>
-          <Text style={styles.eventDescription}>
-            Description: {event.description}
-          </Text>
+          <Text style={styles.eventDescription}>Description: {event.description}</Text>
         </View>
         <Pressable style={styles.participantsContainer}>
           <Text>Participants</Text>
@@ -108,9 +109,25 @@ export const ViewEvent = ({ navigation }) => {
         <View style={styles.commentsContainer}>
           <Text>Comments</Text>
           {comments.map((comment) => {
-            return <CommentCard comment={comment} />;
+            return <CommentCard key={comment._id} comment={comment} />;
           })}
         </View>
+      </ScrollView>
+      <View style={styles.ChatContainer}>
+        <SlidingPanel
+          headerLayoutHeight={100}
+          headerLayout={() => (
+            <View style={styles.headerLayoutStyle}>
+              <Text style={styles.upArrow}>⇡</Text>
+              <Text style={styles.commonTextStyle}>Live Chat!</Text>
+            </View>
+          )}
+          slidingPanelLayout={() => (
+            <View style={styles.slidingPanelLayoutStyle}>
+              <Text style={styles.commonTextStyle}>The best thing about me is you</Text>
+            </View>
+          )}
+        />
       </View>
     </View>
   );
@@ -120,6 +137,7 @@ const styles = StyleSheet.create({
   contentsContainer: {
     flexDirection: "column",
     margin: 30,
+    height: 700,
   },
   topContainer: {
     flexDirection: "column",
@@ -193,5 +211,30 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     marginVertical: 5,
+  },
+  headerLayoutStyle: {
+    width: windowWidth,
+    height: 100,
+    backgroundColor: "orange",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  slidingPanelLayoutStyle: {
+    width: windowWidth,
+    height: windowHeight,
+    backgroundColor: "#7E52A0",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  commonTextStyle: {
+    color: "white",
+    fontSize: 18,
+  },
+  ChatContainer: {
+    flex: 1,
+  },
+  upArrow: {
+    fontSize: 30,
+    fontWeight: "bold",
   },
 });
