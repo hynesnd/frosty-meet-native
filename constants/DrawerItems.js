@@ -20,11 +20,6 @@ export default [
     iconName: "face-profile",
   },
   {
-    name: "Scheduled Meets",
-    iconType: "Material",
-    iconName: "face-profile",
-  },
-  {
     name: "Edit Profile",
     iconType: "Material",
     iconName: "face-profile",

@@ -127,8 +127,14 @@ export const Meets = ({ navigation }) => {
 
   const [followingValue, setFollowingValue] = useState("");
   const [followingOptions, setFollowingOptions] = useState([
-    { label: "All Users", value: "all" },
-    { label: "Followed Users", value: "followed" },
+    { label: "Anyone", value: "all" },
+    { label: "Followed", value: "followed" },
+  ]);
+
+  const [joinedValue, setJoinedValue] = useState("");
+  const [joinedOptions, setJoinedOptions] = useState([
+    { label: "Any Meet", value: "all" },
+    { label: "Joined", value: "joined" },
   ]);
 
   const [mapOpened, setMapOpened] = useState(true);
@@ -166,6 +172,21 @@ export const Meets = ({ navigation }) => {
           onValueChange={(itemValue, itemIndex) => setFollowingValue(itemValue)}
         >
           {followingOptions.map((opt) => {
+            return (
+              <Picker.Item
+                key={opt.label}
+                label={opt.label}
+                value={opt.value}
+              />
+            );
+          })}
+        </Picker>
+        <Picker
+          style={styles.pickerStyle}
+          selectedValue={joinedValue}
+          onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
+        >
+          {joinedOptions.map((opt) => {
             return (
               <Picker.Item
                 key={opt.label}
@@ -222,7 +243,7 @@ const styles = StyleSheet.create({
   },
   pickerStyle: {
     height: 25,
-    width: 125,
+    width: 80,
     marginTop: 10,
   },
   dateInput: {
