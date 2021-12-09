@@ -1,17 +1,11 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Pressable,
-} from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import React, { useState, useContext } from "react";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { UserContext } from "../contexts/user-context.js";
 
 export default function Header({ navigation, event }) {
-  // need to create user context
   const [toggleOn, setToggleOn] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  const [currentEvent, setCurrentEvent] = useState(event);
 
   return (
     <View style={styles.cardContainer}>
@@ -49,11 +43,28 @@ export default function Header({ navigation, event }) {
           <Pressable
             style={styles.button}
             onPress={() => {
-              // need user context to check if joined
-              // need to check context provider for native
+              // backend patch: just send event id and body,
+              // which is a new participants array
+              if (currentEvent.participants.includes(user.username)) {
+                const newEvent = { ...currentEvent };
+                newEvent.participants.splice(
+                  newEvent.participants.indexOf(user.username),
+                  1
+                );
+                setCurrentEvent(newEvent);
+                // backend stuff must be done here
+              } else {
+                const newEvent = { ...currentEvent };
+                newEvent.participants.push(user.username);
+                setCurrentEvent(newEvent);
+                // backend stuff must be done here
+              }
+              console.log(currentEvent.participants);
             }}
           >
-            <Text style={styles.buttonText}>Join/Leave</Text>
+            <Text style={styles.buttonText}>
+              {event.participants.includes(user.username) ? "Leave" : "Join"}
+            </Text>
           </Pressable>
           <Pressable
             style={styles.button}

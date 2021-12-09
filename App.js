@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,67 +16,70 @@ import { CreateMeets } from "./screens/CreateMeets";
 import { Meets } from "./screens/Meets";
 import { EditProfile } from "./screens/EditProfile";
 import { ScheduledMeets } from "./screens/ScheduledMeets";
+import { UserProvider } from "./contexts/user-context.js";
 
 // const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        drawerType="front"
-        initialRouteName="Login"
-        drawerContentOptions={{
-          activeTintColor: "#e91e63",
-          itemStyle: { marginVertical: 10 },
-        }}
-      >
-        {DrawerItems.map((drawer) => (
-          <Drawer.Screen
-            key={drawer.name}
-            name={drawer.name}
-            component={
-              drawer.name === "Login"
-                ? Login
-                : drawer.name === "Create Meets"
-                ? CreateMeets
-                : drawer.name === "Meets"
-                ? Meets
-                : drawer.name === "Scheduled Meets"
-                ? ScheduledMeets
-                : drawer.name === "View Event"
-                ? ViewEvent
-                : drawer.name === "Edit Profile"
-                ? EditProfile
-                : Home
-            }
-            options={{
-              drawerIcon: ({ focused }) =>
-                drawer.iconType === "Material" ? (
-                  <MaterialCommunityIcons
-                    name={drawer.iconName}
-                    size={24}
-                    color={focused ? "#e91e63" : "black"}
-                  />
-                ) : drawer.iconType === "Feather" ? (
-                  <Feather
-                    name={drawer.iconName}
-                    size={24}
-                    color={focused ? "#e91e63" : "black"}
-                  />
-                ) : (
-                  <FontAwesome5
-                    name={drawer.iconName}
-                    size={24}
-                    color={focused ? "#e91e63" : "black"}
-                  />
-                ),
-              headerShown: true,
-            }}
-          />
-        ))}
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        <Drawer.Navigator
+          drawerType="front"
+          initialRouteName="Login"
+          drawerContentOptions={{
+            activeTintColor: "#e91e63",
+            itemStyle: { marginVertical: 10 },
+          }}
+        >
+          {DrawerItems.map((drawer) => (
+            <Drawer.Screen
+              key={drawer.name}
+              name={drawer.name}
+              component={
+                drawer.name === "Login"
+                  ? Login
+                  : drawer.name === "Create Meets"
+                  ? CreateMeets
+                  : drawer.name === "Meets"
+                  ? Meets
+                  : drawer.name === "Scheduled Meets"
+                  ? ScheduledMeets
+                  : drawer.name === "View Event"
+                  ? ViewEvent
+                  : drawer.name === "Edit Profile"
+                  ? EditProfile
+                  : Home
+              }
+              options={{
+                drawerIcon: ({ focused }) =>
+                  drawer.iconType === "Material" ? (
+                    <MaterialCommunityIcons
+                      name={drawer.iconName}
+                      size={24}
+                      color={focused ? "#e91e63" : "black"}
+                    />
+                  ) : drawer.iconType === "Feather" ? (
+                    <Feather
+                      name={drawer.iconName}
+                      size={24}
+                      color={focused ? "#e91e63" : "black"}
+                    />
+                  ) : (
+                    <FontAwesome5
+                      name={drawer.iconName}
+                      size={24}
+                      color={focused ? "#e91e63" : "black"}
+                    />
+                  ),
+                headerShown: true,
+              }}
+            />
+          ))}
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </UserProvider>
   );
 }
 

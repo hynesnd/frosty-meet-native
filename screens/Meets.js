@@ -33,7 +33,7 @@ export const Meets = ({ navigation }) => {
       image: "https://source.unsplash.com/random/50x50",
       categories: [{ category_name: "Social" }],
       tags: [],
-      participants: [],
+      participants: ["neil123"],
       dateCreated: "date",
       start: {
         date: "10/12/2021",
