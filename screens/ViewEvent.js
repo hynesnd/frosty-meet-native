@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useFocusEffect } from "react";
 import {
   View,
   Text,
@@ -19,7 +19,7 @@ export const ViewEvent = () => {
       <View style={styles.contentsContainer}>
         <View style={styles.topContainer}>
           <View style={styles.topRow}>
-            <Text>{event.title}</Text>
+            <Text style={styles.eventTitle}>{event.title}</Text>
             <Pressable
               style={styles.button}
               onPress={() => {
@@ -50,21 +50,34 @@ export const ViewEvent = () => {
           <View style={styles.middleRows}>
             <View style={styles.leftMiddleSide}>
               <Text style={styles.eventDetailText}>
-                Category: {event.categories[0].category_name}
+                Category:{" "}
+                {event.categories.length > 0
+                  ? event.categories[0].categorySlug
+                  : "none"}
               </Text>
               <Text style={styles.eventDetailText}>
                 Creator: {event.creator.username}
               </Text>
               <Text style={styles.eventDetailText}>
-                Description: {event.description}
+                Date: {event.eventStart.slice(0, 10).replaceAll("-", "/")}
               </Text>
-              <Text style={styles.eventDetailText}>Start: {event.start}</Text>
-              <Text style={styles.eventDetailText}>End: {event.end}</Text>
+              <Text style={styles.eventDetailText}>
+                Time: {event.eventStart.slice(11, 16)} -{" "}
+                {event.eventEnd.slice(11, 16)}
+              </Text>
             </View>
             <View style={styles.rightMiddleSide}>
-              <Image source={{ uri: event.image }} style={styles.eventImage} />
+              <Image
+                source={{ uri: "https://source.unsplash.com/random/200x200" }}
+                style={styles.eventImage}
+              />
             </View>
           </View>
+        </View>
+        <View>
+          <Text style={styles.eventDescription}>
+            Description: {event.description}
+          </Text>
         </View>
       </View>
     </View>
@@ -74,24 +87,49 @@ export const ViewEvent = () => {
 const styles = StyleSheet.create({
   contentsContainer: {
     flexDirection: "column",
+    margin: 30,
   },
   topContainer: {
     flexDirection: "column",
   },
   topRow: {
     flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  eventTitle: {
+    fontSize: 20,
+  },
+  button: {
+    borderWidth: 1,
+    borderRadius: 5,
+    fontSize: 16,
+    padding: 3,
+    height: 24,
   },
   middleRows: {
+    marginVertical: 10,
     flexDirection: "row",
   },
   leftMiddleSide: {
     flexDirection: "column",
+    flex: 1,
+    justifyContent: "space-around",
   },
-  eventDetailText: {
-    width: 200,
+  rightMiddleSide: {
+    flex: 1,
   },
   eventImage: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
+  },
+  eventDetailText: {
+    fontSize: 16,
+  },
+  eventDescription: {
+    fontSize: 12,
+    marginTop: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    padding: 10,
   },
 });

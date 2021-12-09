@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,121 +9,37 @@ import {
   Image,
 } from "react-native";
 import EventCard from "../components/EventCard.js";
+import { getParks, getEvents, getCategories } from "../utils/api.js";
 
 export const Meets = ({ navigation }) => {
   const [categoryValue, setCategoryValue] = useState("");
   const [categories, setCategories] = useState([
-    { label: "Social", value: "social" },
-    { label: "Climbing", value: "climbing" },
-    { label: "Cinema", value: "cinema" },
+    { label: "Any type", value: "any type" },
   ]);
+  const [events, setEvents] = useState([]);
 
-  const [events, setEvents] = useState([
-    {
-      _id: "61b0cf67d802748ef1433440",
-      title: "Event1",
-      description:
-        "This is the description and it is quite a long description as you can see",
-      location: {
-        longitude: "-8.1927645",
-        latitude: "41.124339",
-        name: "pin name",
-        description: "pin description",
-      },
-      image: "https://source.unsplash.com/random/50x50",
-      categories: [{ category_name: "Social" }],
-      tags: [],
-      participants: ["neil123"],
-      dateCreated: "date",
-      start: {
-        date: "10/12/2021",
-        time: "12:30",
-      },
-      end: {
-        date: "10/12/2021",
-        time: "14:45",
-      },
-      creator: "Balli",
-    },
-    {
-      _id: "61b0cf67d802748ef1433441",
-      title: "Event1",
-      description:
-        "This is the description and it is quite a long description as you can see",
-      location: {
-        longitude: "-8.1927645",
-        latitude: "41.124339",
-        name: "pin name",
-        description: "pin description",
-      },
-      image: "https://source.unsplash.com/random/50x50",
-      categories: [{ category_name: "Social" }],
-      tags: [],
-      participants: [],
-      dateCreated: "date",
-      start: {
-        date: "10/12/2021",
-        time: "12:30",
-      },
-      end: {
-        date: "10/12/2021",
-        time: "14:45",
-      },
-      creator: "Sam",
-    },
-    {
-      _id: "61b0cf67d802748ef1433442",
-      title: "Event1",
-      description:
-        "This is the description and it is quite a long description as you can see",
-      location: {
-        longitude: "-8.1927645",
-        latitude: "41.124339",
-        name: "pin name",
-        description: "pin description",
-      },
-      image: "https://source.unsplash.com/random/50x50",
-      categories: [{ category_name: "Social" }],
-      tags: [],
-      participants: [],
-      dateCreated: "date",
-      start: {
-        date: "10/12/2021",
-        time: "12:30",
-      },
-      end: {
-        date: "10/12/2021",
-        time: "14:45",
-      },
-      creator: "Neil",
-    },
-    {
-      _id: "61b0cf67d802748ef1433443",
-      title: "Event1",
-      description:
-        "This is the description and it is quite a long description as you can see",
-      location: {
-        longitude: "-8.1927645",
-        latitude: "41.124339",
-        name: "pin name",
-        description: "pin description",
-      },
-      image: "https://source.unsplash.com/random/50x50",
-      categories: [{ category_name: "Social" }],
-      tags: [],
-      participants: [],
-      dateCreated: "date",
-      start: {
-        date: "10/12/2021",
-        time: "12:30",
-      },
-      end: {
-        date: "10/12/2021",
-        time: "14:45",
-      },
-      creator: "Yi",
-    },
-  ]);
+  useEffect(() => {
+    getCategories().then(({ data }) => {
+      const newCategories = [...categories];
+      data.categories.forEach((category) => {
+        newCategories.push({
+          label:
+            category.categorySlug.slice(0, 1).toUpperCase() +
+            category.categorySlug.slice(1),
+          value: category.categorySlug,
+        });
+      });
+      setCategories(newCategories);
+      setCategoryValue("any type");
+    });
+    getEvents().then(({ data }) => {
+      const newEvents = [];
+      data.events.forEach((event) => {
+        newEvents.push(event);
+      });
+      setEvents(newEvents);
+    });
+  }, []);
 
   const [followingValue, setFollowingValue] = useState("");
   const [followingOptions, setFollowingOptions] = useState([
@@ -228,8 +144,10 @@ export const Meets = ({ navigation }) => {
       {events.length === 0 ? (
         <Text>No events here</Text>
       ) : (
-        events.map((event) => {
-          return <EventCard navigation={navigation} event={event} />;
+        events.map((currentEvent) => {
+          return (
+            <EventCard navigation={navigation} currentEvent={currentEvent} />
+          );
         })
       )}
     </View>

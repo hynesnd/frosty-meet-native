@@ -1,11 +1,14 @@
 import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
+import { EventContext } from "../contexts/event-context.js";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export default function Header({ navigation, event }) {
+export default function Header({ navigation, currentEvent }) {
   const [toggleOn, setToggleOn] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  const [currentEvent, setCurrentEvent] = useState(event);
+  const { event, setEvent } = useContext(EventContext);
+  const Stack = createNativeStackNavigator();
 
   return (
     <View style={styles.cardContainer}>
@@ -19,22 +22,35 @@ export default function Header({ navigation, event }) {
           }
         }}
       >
-        <Image source={{ uri: event.image }} style={styles.eventImage} />
+        <Image
+          source={{ uri: "https://source.unsplash.com/random/200x200" }}
+          style={styles.eventImage}
+        />
         <View style={styles.textContainer}>
           <View style={styles.textRow}>
-            <Text style={styles.eventTitle}>{event.title}</Text>
+            <Text style={styles.eventTitle}>
+              {currentEvent.title.length > 25
+                ? `${currentEvent.title.slice(0, 20)}...`
+                : currentEvent.title}
+            </Text>
             <Text style={styles.eventDateTime}>
-              Starts: {event.start.date} {event.start.time}
+              {currentEvent.eventStart.slice(0, 10).replaceAll("-", "/")}
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>Creator: {event.creator}</Text>
+            <Text>Creator: "CREATOR"</Text>
             <Text style={styles.eventDateTime}>
-              Ends: {event.end.date} {event.end.time}
+              {currentEvent.eventStart.slice(11, 16)} -{" "}
+              {currentEvent.eventEnd.slice(11, 16)}
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>Info: {event.description}</Text>
+            <Text>
+              Info:{" "}
+              {currentEvent.description.length > 100
+                ? `${currentEvent.description.slice(0, 60)}...`
+                : currentEvent.description}
+            </Text>
           </View>
         </View>
       </Pressable>
@@ -63,12 +79,15 @@ export default function Header({ navigation, event }) {
             }}
           >
             <Text style={styles.buttonText}>
-              {event.participants.includes(user.username) ? "Leave" : "Join"}
+              {currentEvent.participants.includes(user.username)
+                ? "Leave"
+                : "Join"}
             </Text>
           </Pressable>
           <Pressable
             style={styles.button}
             onPress={() => {
+              setEvent(currentEvent);
               return navigation.navigate("View Event");
             }}
           >
