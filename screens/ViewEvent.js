@@ -14,6 +14,7 @@ import { UserContext } from "../contexts/user-context.js";
 import { getComments } from "../utils/api.js";
 import CommentCard from "../components/CommentCard";
 import SlidingPanel from "react-native-sliding-up-down-panels";
+import Chat from "../components/Chat";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -124,7 +125,7 @@ export const ViewEvent = ({ navigation }) => {
           )}
           slidingPanelLayout={() => (
             <View style={styles.slidingPanelLayoutStyle}>
-              <Text style={styles.commonTextStyle}>The best thing about me is you</Text>
+              <Chat />
             </View>
           )}
         />
@@ -215,14 +216,14 @@ const styles = StyleSheet.create({
   headerLayoutStyle: {
     width: windowWidth,
     height: 100,
-    backgroundColor: "orange",
+    backgroundColor: "grey",
     justifyContent: "space-evenly",
     alignItems: "center",
   },
   slidingPanelLayoutStyle: {
     width: windowWidth,
     height: windowHeight,
-    backgroundColor: "#7E52A0",
+    backgroundColor: "purple",
     justifyContent: "center",
     alignItems: "center",
   },
