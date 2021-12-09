@@ -15,6 +15,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { CreateMeets } from "./screens/CreateMeets";
 import { Meets } from "./screens/Meets";
 import { EditProfile } from "./screens/EditProfile";
+import { UserPage } from "./screens/UserPage";
 import { UserProvider } from "./contexts/user-context.js";
 import { EventProvider } from "./contexts/event-context.js";
 
@@ -47,6 +48,8 @@ export default function App() {
                     ? Meets
                     : drawer.name === "View Event"
                     ? ViewEvent
+                    : drawer.name === "User Page"
+                    ? UserPage
                     : drawer.name === "Edit Profile"
                     ? EditProfile
                     : Home

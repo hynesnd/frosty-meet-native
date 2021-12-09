@@ -9,9 +9,18 @@ export const getEvents = () => {
 export const getUsers = () => {
   return frostyApi.get("/users");
 };
+export const getUser = (id) => {
+  return frostyApi.get(`/users/${id}`);
+};
 export const getCategories = () => {
   return frostyApi.get("/categories");
 };
 export const getParks = () => {
   return frostyApi.get("/parks");
+};
+export const getComments = (id) => {
+  return frostyApi.get(`/events/${id}/comments`);
+};
+export const postComment = (id) => {
+  //
 };

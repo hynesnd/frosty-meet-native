@@ -1,4 +1,4 @@
-import React, { useState, useContext, useFocusEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,10 +9,19 @@ import {
 } from "react-native";
 import { EventContext } from "../contexts/event-context.js";
 import { UserContext } from "../contexts/user-context.js";
+import { getComments } from "../utils/api.js";
+import CommentCard from "../components/CommentCard";
 
-export const ViewEvent = () => {
+export const ViewEvent = ({ navigation }) => {
   const { event, setEvent } = useContext(EventContext);
   const { user, setUser } = useContext(UserContext);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    getComments(event.eventId).then(({ data }) => {
+      setComments(data.comments);
+    });
+  }, []);
 
   return (
     <View>
@@ -79,6 +88,29 @@ export const ViewEvent = () => {
             Description: {event.description}
           </Text>
         </View>
+        <Pressable style={styles.participantsContainer}>
+          <Text>Participants</Text>
+        </Pressable>
+        <Pressable style={styles.galleryContainer}>
+          <Image
+            source={{ uri: "https://source.unsplash.com/random/200x200" }}
+            style={styles.galleryImage}
+          />
+          <Image
+            source={{ uri: "https://source.unsplash.com/random/200x200" }}
+            style={styles.galleryImage}
+          />
+          <Image
+            source={{ uri: "https://source.unsplash.com/random/200x200" }}
+            style={styles.galleryImage}
+          />
+        </Pressable>
+        <View style={styles.commentsContainer}>
+          <Text>Comments</Text>
+          {comments.map((comment) => {
+            return <CommentCard comment={comment} />;
+          })}
+        </View>
       </View>
     </View>
   );
@@ -127,9 +159,39 @@ const styles = StyleSheet.create({
   },
   eventDescription: {
     fontSize: 12,
-    marginTop: 5,
+    marginVertical: 5,
     borderRadius: 5,
     borderWidth: 1,
     padding: 10,
+  },
+  participantsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    borderRadius: 5,
+    borderWidth: 1,
+    height: 25,
+    padding: 5,
+    marginVertical: 5,
+  },
+  galleryContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    borderRadius: 5,
+    borderWidth: 1,
+    height: 100,
+    marginVertical: 5,
+  },
+  galleryImage: {
+    width: 80,
+    height: 80,
+    marginTop: 10,
+  },
+  commentsContainer: {
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    borderRadius: 5,
+    borderWidth: 1,
+    padding: 5,
+    marginVertical: 5,
   },
 });

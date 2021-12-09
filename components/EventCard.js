@@ -2,13 +2,11 @@ import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
 import { EventContext } from "../contexts/event-context.js";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export default function Header({ navigation, currentEvent }) {
+export default function EventCard({ navigation, currentEvent }) {
   const [toggleOn, setToggleOn] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { event, setEvent } = useContext(EventContext);
-  const Stack = createNativeStackNavigator();
 
   return (
     <View style={styles.cardContainer}>
