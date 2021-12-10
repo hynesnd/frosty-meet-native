@@ -144,6 +144,7 @@ export const ViewEvent = ({ navigation }) => {
       <View style={styles.ChatContainer}>
         <SlidingPanel
           onAnimationStop={() => setChatOn(true)}
+          panelPosition="bottom"
           headerLayoutHeight={100}
           headerLayout={() => (
             <View style={styles.headerLayoutStyle}>
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
   contentsContainer: {
     flexDirection: "column",
     marginHorizontal: 30,
-    marginBottom: 30,
+    marginBottom: 55,
     height: 700,
   },
   topContainer: {
@@ -241,6 +242,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     marginVertical: 5,
+    marginBottom: 50,
   },
   headerLayoutStyle: {
     width: windowWidth,

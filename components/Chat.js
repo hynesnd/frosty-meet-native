@@ -70,7 +70,8 @@ export default function CommentCard() {
       <View style={styles.chat}>
         <View style={styles.username}>
           <Text style={styles.roomTitle}>
-            {user.username} <Text style={{ fontSize: 15 }}>in {event.title}</Text>
+            {user.username}{" "}
+            <Text style={{ fontSize: 15 }}>in {event.title}</Text>
           </Text>
         </View>
         <ScrollView style={styles.chatMessage}>
