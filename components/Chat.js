@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
   chat: {
     width: windowWidth,
     height: Number(parseInt(windowHeight) - 150),
-    backgroundColor: "grey",
     padding: 1,
     flexDirection: "column",
     justifyContent: "space-between",
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
     paddingBottom: 1,
   },
   roomTitle: {
-    color: "white",
+    color: "purple",
     fontSize: 25,
   },
   chatMessage: {
@@ -155,8 +154,8 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: 50,
     flex: 4,
-    border: "white",
-    backgroundColor: "lightgrey",
+    border: "orange",
+    backgroundColor: "white",
   },
   sendButton: {
     width: Number(parseInt(windowWidth) * 0.2),

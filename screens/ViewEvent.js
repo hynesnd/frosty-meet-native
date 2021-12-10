@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   slidingPanelLayoutStyle: {
     width: windowWidth,
     height: Number(parseInt(windowHeight) - 100),
-    backgroundColor: "purple",
+    backgroundColor: "lightgrey",
     justifyContent: "center",
     alignItems: "center",
   },
