@@ -23,7 +23,7 @@ export const ViewEvent = ({ navigation }) => {
   const { event, setEvent } = useContext(EventContext);
   const { user, setUser } = useContext(UserContext);
   const [comments, setComments] = useState([]);
-  const [sliderOn, setSliderOn] = useState(false);
+  const [chatOn, setChatOn] = useState(false);
 
   useEffect(() => {
     getComments(event.eventId).then(({ data }) => {
@@ -117,7 +117,7 @@ export const ViewEvent = ({ navigation }) => {
       </ScrollView>
       <View style={styles.ChatContainer}>
         <SlidingPanel
-          onAnimationStop={() => setSliderOn(true)}
+          onAnimationStop={() => setChatOn(true)}
           headerLayoutHeight={100}
           headerLayout={() => (
             <View style={styles.headerLayoutStyle}>
@@ -126,9 +126,7 @@ export const ViewEvent = ({ navigation }) => {
             </View>
           )}
           slidingPanelLayout={() => (
-            <View style={styles.slidingPanelLayoutStyle}>
-              {sliderOn ? <Chat /> : null}
-            </View>
+            <View style={styles.slidingPanelLayoutStyle}>{chatOn ? <Chat /> : null}</View>
           )}
         />
       </View>

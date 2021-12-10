@@ -1,10 +1,21 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { View, Text, StyleSheet, Image, Pressable, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+  TextInput,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { UserContext } from "../contexts/user-context.js";
 import { EventContext } from "../contexts/event-context.js";
 import io from "socket.io-client";
 
 const socket = io();
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default function CommentCard() {
   const { user, setUser } = useContext(UserContext);
@@ -58,11 +69,11 @@ export default function CommentCard() {
     <View style={styles.chatRoomContainer}>
       <View style={styles.chat}>
         <View style={styles.username}>
-          <Text sytle={styles.roomTitle}>
-            {user.username} <Text style={{ fontSize: 10 }}>in {event.title}</Text>
+          <Text style={styles.roomTitle}>
+            {user.username} <Text style={{ fontSize: 15 }}>in {event.title}</Text>
           </Text>
         </View>
-        <View style={styles.chatMessage}>
+        <ScrollView style={styles.chatMessage}>
           {messages.map((msg) => {
             if (msg.username === username) {
               return (
@@ -73,7 +84,7 @@ export default function CommentCard() {
               );
             } else {
               return (
-                <View key={msg.timestamp} style={styles.message - right}>
+                <View key={msg.timestamp} style={styles.messageRight}>
                   <Text>{msg.message_body} </Text>
                   <Text>{msg.username}</Text>
                 </View>
@@ -81,15 +92,16 @@ export default function CommentCard() {
             }
           })}
           <View ref={messagesEndRef} />
-        </View>
-        <View style={styles.send}>
+        </ScrollView>
+        <View style={styles.sender}>
           <TextInput
+            style={styles.send}
             placeholder="enter your message"
             value={message_body}
             onChangeText={setMessage_body}
           ></TextInput>
-          <Pressable onPress={sendData}>
-            <Text>Send</Text>
+          <Pressable onPress={sendData} style={styles.sendButton}>
+            <Text style={{ fontSize: 20, alignSelf: "center" }}>Send</Text>
           </Pressable>
         </View>
       </View>
@@ -100,5 +112,61 @@ export default function CommentCard() {
 const styles = StyleSheet.create({
   chatRoomContainer: {
     flexDirection: "column",
+  },
+  chat: {
+    width: windowWidth,
+    height: Number(parseInt(windowHeight) - 150),
+    backgroundColor: "grey",
+    padding: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  username: {
+    width: windowWidth,
+    alignSelf: "flex-start",
+    fontWeight: "bold",
+    border: 1,
+    paddingBottom: 1,
+  },
+  roomTitle: {
+    color: "white",
+    fontSize: 25,
+  },
+  chatMessage: {
+    height: Number(parseInt(windowHeight) * 0.7),
+    overflow: "auto",
+    flexDirection: "column",
+    width: windowWidth,
+    alignContent: "flex-start",
+  },
+  message: {
+    marginLeft: 0,
+    maxWidth: 200,
+    paddingLeft: 5,
+  },
+  messageRight: {
+    marginLeft: "auto",
+    marginRight: 0,
+    flexDirection: "column",
+    maxWidth: 200,
+    paddingRight: 5,
+  },
+  send: {
+    width: windowWidth,
+    height: 50,
+    flex: 4,
+    border: "white",
+    backgroundColor: "lightgrey",
+  },
+  sendButton: {
+    width: Number(parseInt(windowWidth) * 0.2),
+    backgroundColor: "orange",
+    borderRadius: 3,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  sender: {
+    flexDirection: "row",
   },
 });
