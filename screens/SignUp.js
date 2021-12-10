@@ -71,10 +71,7 @@ export const SignUp = ({ navigation }) => {
   return (
     <View>
       <View style={styles.formContainer}>
-        <Image
-          source={{ uri: "https://source.unsplash.com/random/200x200" }}
-          style={styles.avatarImg}
-        />
+        <Image style={styles.image} source={require("../logo.png")} />
 
         <TextInput
           style={styles.input}
@@ -224,7 +221,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-  avatarImg: {
+  image: {
     width: 150,
     height: 150,
     margin: 20,

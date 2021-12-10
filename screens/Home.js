@@ -14,16 +14,9 @@ export const Home = ({ navigation }) => {
 
   return (
     <View>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Home</Text>
-      </View>
-
       <View>
         <View style={styles.mapContainer}>
-          <Image
-            source={{ uri: "https://source.unsplash.com/random/300x300" }}
-            style={styles.map}
-          />
+          <Image source={require("../logo.png")} style={styles.map} />
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -46,26 +39,6 @@ export const Home = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    marginTop: 16,
-    marginBottom: 20,
-    paddingVertical: 8,
-    borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
-    backgroundColor: "#61dafb",
-    color: "#20232a",
-    textAlign: "center",
-    fontSize: 25,
-    fontWeight: "bold",
-  },
-  titleContainer: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: "#eaeaea",
-    justifyContent: "center",
-  },
-
   pageContainer: {
     flex: 1,
     backgroundColor: "#fff",

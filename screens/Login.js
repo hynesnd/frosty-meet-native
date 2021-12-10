@@ -8,6 +8,7 @@ import {
   TextInput,
   Button,
   Pressable,
+  Image,
 } from "react-native";
 import { SignUp } from "./SignUp";
 
@@ -20,8 +21,8 @@ export const Login = ({ navigation }) => {
   const LoginForm = () => {
     return (
       <View style={styles.pageContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Welcome to FrostyMeet</Text>
+        <View style={styles.logoContainer}>
+          <Image style={styles.logo} source={require("../logo.png")} />
         </View>
         <View style={styles.formContainer}>
           <TextInput
@@ -74,22 +75,13 @@ export const Login = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    marginTop: 16,
-    marginBottom: 20,
-    paddingVertical: 8,
-    borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
-    backgroundColor: "#61dafb",
-    color: "#20232a",
+  logo: {
+    height: 300,
+    width: 300,
     textAlign: "center",
-    fontSize: 25,
-    fontWeight: "bold",
   },
-  titleContainer: {
+  logoContainer: {
     flex: 1,
-    backgroundColor: "#eaeaea",
     justifyContent: "center",
   },
   input: {

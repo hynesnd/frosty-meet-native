@@ -41,12 +41,6 @@ export const Meets = ({ navigation }) => {
     });
   }, []);
 
-  const [followingValue, setFollowingValue] = useState("");
-  const [followingOptions, setFollowingOptions] = useState([
-    { label: "Anyone", value: "all" },
-    { label: "Followed", value: "followed" },
-  ]);
-
   const [joinedValue, setJoinedValue] = useState("");
   const [joinedOptions, setJoinedOptions] = useState([
     { label: "Any Meet", value: "all" },
@@ -67,7 +61,13 @@ export const Meets = ({ navigation }) => {
           onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
         >
           {categories.map((cat) => {
-            return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
+            return (
+              <Picker.Item
+                key={cat.label}
+                label={cat.label}
+                value={cat.value}
+              />
+            );
           })}
         </Picker>
         <TextInput
@@ -78,20 +78,17 @@ export const Meets = ({ navigation }) => {
         />
         <Picker
           style={styles.pickerStyle}
-          selectedValue={followingValue}
-          onValueChange={(itemValue, itemIndex) => setFollowingValue(itemValue)}
-        >
-          {followingOptions.map((opt) => {
-            return <Picker.Item key={opt.label} label={opt.label} value={opt.value} />;
-          })}
-        </Picker>
-        <Picker
-          style={styles.pickerStyle}
           selectedValue={joinedValue}
           onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
         >
           {joinedOptions.map((opt) => {
-            return <Picker.Item key={opt.label} label={opt.label} value={opt.value} />;
+            return (
+              <Picker.Item
+                key={opt.label}
+                label={opt.label}
+                value={opt.value}
+              />
+            );
           })}
         </Picker>
       </View>
@@ -147,7 +144,7 @@ const styles = StyleSheet.create({
   },
   pickerStyle: {
     height: 25,
-    width: 80,
+    width: 100,
     marginTop: 10,
   },
   dateInput: {
