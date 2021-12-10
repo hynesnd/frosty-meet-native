@@ -11,6 +11,7 @@ export default function CommentCard() {
   const { event, setEvent } = useContext(EventContext);
   const [messages, setMessages] = useState([]);
   const [message_body, setMessage_body] = useState("");
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     let username = user.username;
@@ -33,6 +34,8 @@ export default function CommentCard() {
       });
       setMessages([...temp]);
     });
+
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [socket, messages]);
   console.log(message_body, "<<<<<<<<<<<<<<<<");
 
@@ -43,13 +46,11 @@ export default function CommentCard() {
     }
   };
 
-  const messagesEndRef = useRef(null);
+  //   const scrollToBottom = () => {
+  //     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  //   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(scrollToBottom, [messages]);
+  //   useEffect(scrollToBottom, [messages]);
 
   console.log(messages, "messages");
 
