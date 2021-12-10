@@ -1,23 +1,23 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Header({ screen }) {
   const navigation = useNavigation();
   return (
-    <View style={headerStyles.container}>
+    <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
         <Entypo name="menu" size={24} color="black" />
       </TouchableOpacity>
       <View>
-        <Text>{screen}</Text>
+        <Text style={styles.text}>{screen}</Text>
       </View>
     </View>
   );
 }
 
-const headerStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     position: "absolute",
     top: 30,
