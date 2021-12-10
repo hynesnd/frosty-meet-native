@@ -23,6 +23,7 @@ export const ViewEvent = ({ navigation }) => {
   const { event, setEvent } = useContext(EventContext);
   const { user, setUser } = useContext(UserContext);
   const [comments, setComments] = useState([]);
+  const [sliderOn, setSliderOn] = useState(false);
 
   useEffect(() => {
     getComments(event.eventId).then(({ data }) => {
@@ -116,6 +117,7 @@ export const ViewEvent = ({ navigation }) => {
       </ScrollView>
       <View style={styles.ChatContainer}>
         <SlidingPanel
+          onAnimationStop={() => setSliderOn(true)}
           headerLayoutHeight={100}
           headerLayout={() => (
             <View style={styles.headerLayoutStyle}>
@@ -125,7 +127,7 @@ export const ViewEvent = ({ navigation }) => {
           )}
           slidingPanelLayout={() => (
             <View style={styles.slidingPanelLayoutStyle}>
-              <Chat />
+              {sliderOn ? <Chat /> : null}
             </View>
           )}
         />
@@ -222,7 +224,7 @@ const styles = StyleSheet.create({
   },
   slidingPanelLayoutStyle: {
     width: windowWidth,
-    height: windowHeight,
+    height: Number(parseInt(windowHeight) - 100),
     backgroundColor: "purple",
     justifyContent: "center",
     alignItems: "center",
