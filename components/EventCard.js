@@ -3,10 +3,15 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
 import { EventContext } from "../contexts/event-context.js";
 
+// import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 export default function EventCard({ navigation, currentEvent }) {
   const [toggleOn, setToggleOn] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { event, setEvent } = useContext(EventContext);
+
+  // const Stack = createNativeStackNavigator();
 
   return (
     <View style={styles.cardContainer}>
@@ -16,6 +21,7 @@ export default function EventCard({ navigation, currentEvent }) {
           if (toggleOn) {
             setToggleOn(false);
           } else {
+            setEvent(currentEvent);
             setToggleOn(true);
           }
         }}
@@ -52,10 +58,10 @@ export default function EventCard({ navigation, currentEvent }) {
           </View>
         </View>
       </Pressable>
-      {toggleOn ? (
+      {toggleOn && currentEvent === event ? (
         <View style={styles.extraContainer}>
           <Pressable
-            style={styles.button}
+            style={styles.joinButton}
             onPress={() => {
               // backend patch: just send event id and body,
               // which is a new participants array
@@ -85,8 +91,7 @@ export default function EventCard({ navigation, currentEvent }) {
           <Pressable
             style={styles.button}
             onPress={() => {
-              setEvent(currentEvent);
-              return navigation.navigate("View Event");
+              return navigation.navigate("ViewEvent");
             }}
           >
             <Text style={styles.buttonText}>Read More</Text>
@@ -125,6 +130,14 @@ const styles = StyleSheet.create({
   },
   extraContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    margin: 5,
+  },
+  joinButton: {
+    marginLeft: 60,
+    marginRight: 88,
+  },
+  buttonText: {
+    width: 80,
+    justifyContent: "center",
   },
 });

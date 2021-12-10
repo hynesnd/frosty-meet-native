@@ -141,12 +141,6 @@ export const SignUp = ({ navigation }) => {
               </Pressable>
             </>
           )}
-          <Pressable style={styles.button} onPress={handleChoosePhoto}>
-            <Text style={styles.buttonText}>Choose Profile Picture</Text>
-          </Pressable>
-          <Pressable style={styles.button} onPress={handleUploadPhoto}>
-            <Text style={styles.buttonText}>Get Verified by FaceID</Text>
-          </Pressable>
           <Pressable
             style={styles.button}
             onPress={() => {

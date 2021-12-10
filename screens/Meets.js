@@ -10,6 +10,9 @@ import {
 } from "react-native";
 import EventCard from "../components/EventCard.js";
 import { getParks, getEvents, getCategories } from "../utils/api.js";
+import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { ViewEvent } from "./ViewEvent.js";
 
 export const Meets = ({ navigation }) => {
   const [categoryValue, setCategoryValue] = useState("");
@@ -50,90 +53,110 @@ export const Meets = ({ navigation }) => {
   const [mapOpened, setMapOpened] = useState(true);
 
   const [eventDate, setEventDate] = useState("");
-  console.log(eventDate, followingValue, categoryValue);
+
+  const Stack = createNativeStackNavigator();
+
+  const MeetsPage = () => {
+    return (
+      <View>
+        <View style={styles.topSelectorRow}>
+          <Picker
+            style={styles.pickerStyle}
+            selectedValue={categoryValue}
+            onValueChange={(itemValue, itemIndex) =>
+              setCategoryValue(itemValue)
+            }
+          >
+            {categories.map((cat) => {
+              return (
+                <Picker.Item
+                  key={cat.label}
+                  label={cat.label}
+                  value={cat.value}
+                />
+              );
+            })}
+          </Picker>
+          <TextInput
+            style={styles.dateInput}
+            value={eventDate}
+            onChangeText={setEventDate}
+            placeholder="DD/MM/YYYY"
+          />
+          <Picker
+            style={styles.pickerStyle}
+            selectedValue={joinedValue}
+            onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
+          >
+            {joinedOptions.map((opt) => {
+              return (
+                <Picker.Item
+                  key={opt.label}
+                  label={opt.label}
+                  value={opt.value}
+                />
+              );
+            })}
+          </Picker>
+        </View>
+        <View style={styles.secondRowContainer}>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              if (mapOpened) {
+                setMapOpened(false);
+              } else {
+                setMapOpened(true);
+              }
+            }}
+          >
+            {mapOpened ? (
+              <Text style={styles.buttonText}>Collapse map</Text>
+            ) : (
+              <Text style={styles.buttonText}>Open map</Text>
+            )}
+          </Pressable>
+          {mapOpened ? (
+            <View>
+              <View style={styles.mapContainer}>
+                <Image
+                  source={{ uri: "https://source.unsplash.com/random/300x300" }}
+                  style={styles.map}
+                />
+              </View>
+            </View>
+          ) : null}
+        </View>
+        {events.length === 0 ? (
+          <Text>No events here</Text>
+        ) : (
+          events.map((currentEvent) => {
+            return (
+              <EventCard
+                key={currentEvent._id}
+                navigation={navigation}
+                currentEvent={currentEvent}
+              />
+            );
+          })
+        )}
+      </View>
+    );
+  };
 
   return (
-    <View>
-      <View style={styles.topSelectorRow}>
-        <Picker
-          style={styles.pickerStyle}
-          selectedValue={categoryValue}
-          onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
-        >
-          {categories.map((cat) => {
-            return (
-              <Picker.Item
-                key={cat.label}
-                label={cat.label}
-                value={cat.value}
-              />
-            );
-          })}
-        </Picker>
-        <TextInput
-          style={styles.dateInput}
-          value={eventDate}
-          onChangeText={setEventDate}
-          placeholder="DD/MM/YYYY"
-        />
-        <Picker
-          style={styles.pickerStyle}
-          selectedValue={joinedValue}
-          onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
-        >
-          {joinedOptions.map((opt) => {
-            return (
-              <Picker.Item
-                key={opt.label}
-                label={opt.label}
-                value={opt.value}
-              />
-            );
-          })}
-        </Picker>
-      </View>
-      <View style={styles.secondRowContainer}>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            if (mapOpened) {
-              setMapOpened(false);
-            } else {
-              setMapOpened(true);
-            }
-          }}
-        >
-          {mapOpened ? (
-            <Text style={styles.buttonText}>Collapse map</Text>
-          ) : (
-            <Text style={styles.buttonText}>Open map</Text>
-          )}
-        </Pressable>
-        {mapOpened ? (
-          <View>
-            <View style={styles.mapContainer}>
-              <Image
-                source={{ uri: "https://source.unsplash.com/random/300x300" }}
-                style={styles.map}
-              />
-            </View>
-          </View>
-        ) : null}
-      </View>
-      {events.length === 0 ? (
-        <Text>No events here</Text>
-      ) : (
-        events.map((currentEvent) => {
-          return (
-            <EventCard
-              key={currentEvent._id}
-              navigation={navigation}
-              currentEvent={currentEvent}
-            />
-          );
-        })
-      )}
-    </View>
+    <Stack.Navigator initialRouteName="Meets">
+      <Stack.Screen
+        name="MeetsPage"
+        component={MeetsPage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ViewEvent"
+        component={ViewEvent}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 };
 

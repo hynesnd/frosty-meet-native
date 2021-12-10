@@ -68,7 +68,9 @@ export const ViewEvent = ({ navigation }) => {
             <View style={styles.leftMiddleSide}>
               <Text style={styles.eventDetailText}>
                 Category:{" "}
-                {event.categories.length > 0 ? event.categories[0].categorySlug : "none"}
+                {event.categories.length > 0
+                  ? event.categories[0].categorySlug
+                  : "none"}
               </Text>
               <Text style={styles.eventDetailText}>
                 Creator: {event.creator.username}
@@ -77,7 +79,8 @@ export const ViewEvent = ({ navigation }) => {
                 Date: {event.eventStart.slice(0, 10).replaceAll("-", "/")}
               </Text>
               <Text style={styles.eventDetailText}>
-                Time: {event.eventStart.slice(11, 16)} - {event.eventEnd.slice(11, 16)}
+                Time: {event.eventStart.slice(11, 16)} -{" "}
+                {event.eventEnd.slice(11, 16)}
               </Text>
             </View>
             <View style={styles.rightMiddleSide}>
@@ -89,7 +92,9 @@ export const ViewEvent = ({ navigation }) => {
           </View>
         </View>
         <View>
-          <Text style={styles.eventDescription}>Description: {event.description}</Text>
+          <Text style={styles.eventDescription}>
+            Description: {event.description}
+          </Text>
         </View>
         <Pressable style={styles.participantsContainer}>
           <Text>Participants</Text>
@@ -126,7 +131,9 @@ export const ViewEvent = ({ navigation }) => {
             </View>
           )}
           slidingPanelLayout={() => (
-            <View style={styles.slidingPanelLayoutStyle}>{chatOn ? <Chat /> : null}</View>
+            <View style={styles.slidingPanelLayoutStyle}>
+              {chatOn ? <Chat /> : null}
+            </View>
           )}
         />
       </View>
