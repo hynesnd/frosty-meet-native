@@ -5,12 +5,12 @@ export default [
     iconName: "face-profile",
   },
   {
-    name: "Meets",
+    name: "Find Event",
     iconType: "Material",
     iconName: "face-profile",
   },
   {
-    name: "Create Meets",
+    name: "Create Event",
     iconType: "Material",
     iconName: "face-profile",
   },

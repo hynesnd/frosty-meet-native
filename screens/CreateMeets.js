@@ -43,9 +43,7 @@ export const CreateMeets = ({ navigation }) => {
 
   return (
     <View>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>create meets</Text>
-      </View>
+      <View style={styles.titleContainer}></View>
       <View style={styles.formContainer}>
         <View style={styles.formRow1}>
           <TextInput

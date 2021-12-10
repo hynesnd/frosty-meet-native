@@ -9,6 +9,8 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import { EventContext } from "../contexts/event-context.js";
 import { UserContext } from "../contexts/user-context.js";
 import { getComments } from "../utils/api.js";
@@ -21,6 +23,7 @@ const windowHeight = Dimensions.get("window").height;
 
 export const ViewEvent = ({ navigation }) => {
   const { event, setEvent } = useContext(EventContext);
+
   const { user, setUser } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [chatOn, setChatOn] = useState(false);
@@ -30,6 +33,14 @@ export const ViewEvent = ({ navigation }) => {
       setComments(data.comments);
     });
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        navigation.popToTop();
+      };
+    }, [])
+  );
 
   return (
     <View>

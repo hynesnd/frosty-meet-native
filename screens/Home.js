@@ -24,14 +24,14 @@ export const Home = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate("Meets")}
         >
-          <Text style={styles.buttonText}>Join a Meet!</Text>
+          <Text style={styles.buttonText}>Find Event!</Text>
         </Pressable>
 
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Create Meets")}
         >
-          <Text style={styles.buttonText}>Create a Meet!</Text>
+          <Text style={styles.buttonText}>Create Event!</Text>
         </Pressable>
       </View>
     </View>
