@@ -70,6 +70,16 @@ export const SignUp = ({ navigation }) => {
 
   return (
     <View>
+      <View style={styles.backContainer}>
+        <Pressable
+          style={styles.backButton}
+          onPress={() => {
+            return navigation.navigate("LoginForm");
+          }}
+        >
+          <Text style={styles.arrow}>⇠</Text>
+        </Pressable>
+      </View>
       <View style={styles.formContainer}>
         <Image style={styles.image} source={require("../logo.png")} />
 
@@ -218,6 +228,11 @@ const styles = StyleSheet.create({
   image: {
     width: 150,
     height: 150,
+    margin: 20,
+  },
+  arrow: {
+    fontSize: 30,
+    fontWeight: "bold",
     margin: 20,
   },
 });

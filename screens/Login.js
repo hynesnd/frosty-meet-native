@@ -61,7 +61,7 @@ export const Login = ({ navigation }) => {
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
-        name="Login"
+        name="LoginForm"
         component={LoginForm}
         options={{ headerShown: false }}
       />

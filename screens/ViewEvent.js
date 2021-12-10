@@ -34,6 +34,16 @@ export const ViewEvent = ({ navigation }) => {
   return (
     <View>
       <ScrollView style={styles.contentsContainer}>
+        <View style={styles.backContainer}>
+          <Pressable
+            style={styles.backButton}
+            onPress={() => {
+              return navigation.navigate("MeetsPage");
+            }}
+          >
+            <Text style={styles.arrow}>⇠</Text>
+          </Pressable>
+        </View>
         <View style={styles.topContainer}>
           <View style={styles.topRow}>
             <Text style={styles.eventTitle}>{event.title}</Text>
@@ -126,7 +136,7 @@ export const ViewEvent = ({ navigation }) => {
           headerLayoutHeight={100}
           headerLayout={() => (
             <View style={styles.headerLayoutStyle}>
-              <Text style={styles.upArrow}>⇡</Text>
+              <Text style={styles.arrow}>⇡</Text>
               <Text style={styles.commonTextStyle}>Live Chat!</Text>
             </View>
           )}
@@ -144,7 +154,8 @@ export const ViewEvent = ({ navigation }) => {
 const styles = StyleSheet.create({
   contentsContainer: {
     flexDirection: "column",
-    margin: 30,
+    marginHorizontal: 30,
+    marginBottom: 30,
     height: 700,
   },
   topContainer: {
@@ -241,7 +252,7 @@ const styles = StyleSheet.create({
   ChatContainer: {
     flex: 1,
   },
-  upArrow: {
+  arrow: {
     fontSize: 30,
     fontWeight: "bold",
   },
