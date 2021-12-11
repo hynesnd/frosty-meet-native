@@ -13,6 +13,7 @@ import { getParks, getEvents, getCategories } from "../utils/api.js";
 import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ViewEvent } from "./ViewEvent.js";
+import { UserPage } from "./UserPage";
 
 export const Meets = ({ navigation }) => {
   const [categoryValue, setCategoryValue] = useState("");
@@ -63,18 +64,10 @@ export const Meets = ({ navigation }) => {
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setCategoryValue(itemValue)
-            }
+            onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
           >
             {categories.map((cat) => {
-              return (
-                <Picker.Item
-                  key={cat.label}
-                  label={cat.label}
-                  value={cat.value}
-                />
-              );
+              return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
             })}
           </Picker>
           <TextInput
@@ -89,13 +82,7 @@ export const Meets = ({ navigation }) => {
             onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
           >
             {joinedOptions.map((opt) => {
-              return (
-                <Picker.Item
-                  key={opt.label}
-                  label={opt.label}
-                  value={opt.value}
-                />
-              );
+              return <Picker.Item key={opt.label} label={opt.label} value={opt.value} />;
             })}
           </Picker>
         </View>
@@ -154,6 +141,11 @@ export const Meets = ({ navigation }) => {
       <Stack.Screen
         name="ViewEvent"
         component={ViewEvent}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="UserPage"
+        component={UserPage}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

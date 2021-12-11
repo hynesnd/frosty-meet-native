@@ -42,7 +42,16 @@ export default function EventCard({ navigation, currentEvent }) {
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>Creator: {currentEvent.creator}</Text>
+            <Text>
+              Creator:
+              <Pressable
+                onPress={() => {
+                  return navigation.navigate("UserPage");
+                }}
+              >
+                <Text style={styles.creatorButtonText}>{currentEvent.creator}</Text>
+              </Pressable>
+            </Text>
             <Text style={styles.eventDateTime}>
               {currentEvent.eventStart.slice(11, 16)} -{" "}
               {currentEvent.eventEnd.slice(11, 16)}
@@ -137,5 +146,9 @@ const styles = StyleSheet.create({
   buttonText: {
     width: 80,
     justifyContent: "center",
+  },
+  creatorButtonText: {
+    fontStyle: "italic",
+    textDecorationLine: "underline",
   },
 });
