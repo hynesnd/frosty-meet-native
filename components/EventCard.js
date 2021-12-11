@@ -152,5 +152,6 @@ const styles = StyleSheet.create({
   creatorButtonText: {
     fontStyle: "italic",
     textDecorationLine: "underline",
+    color: "blue",
   },
 });

@@ -91,7 +91,16 @@ export const ViewEvent = ({ navigation }) => {
                 Category:{" "}
                 {event.categories.length > 0 ? event.categories[0].categorySlug : "none"}
               </Text>
-              <Text style={styles.eventDetailText}>Creator: {event.creator}</Text>
+              <Text style={styles.eventDetailText}>
+                <Text>Creator: </Text>{" "}
+                <Pressable
+                  onPress={() => {
+                    return navigation.navigate("UserPage");
+                  }}
+                >
+                  <Text style={styles.eventCreatorButton}>{event.creator}</Text>
+                </Pressable>
+              </Text>
               <Text style={styles.eventDetailText}>
                 Date: {event.eventStart.slice(0, 10).replaceAll("-", "/")}
               </Text>
@@ -116,6 +125,7 @@ export const ViewEvent = ({ navigation }) => {
             {event.participants.map((participant) => {
               return (
                 <Pressable
+                  key={participant}
                   onPress={() => {
                     return navigation.navigate("UserPage");
                   }}
@@ -280,11 +290,17 @@ const styles = StyleSheet.create({
   participantButtonText: {
     fontStyle: "italic",
     textDecorationLine: "underline",
+    color: "blue",
   },
   participantSpacer: {
     textDecorationLine: "none",
   },
   participant: {
     flex: 1,
+  },
+  eventCreatorButton: {
+    fontStyle: "italic",
+    textDecorationLine: "underline",
+    color: "blue",
   },
 });
