@@ -9,15 +9,18 @@ import {
   Image,
   Pressable,
 } from "react-native";
+import { postNewUser } from "../utils/nh-api";
 
 export const SignUp = ({ navigation }) => {
-  const [username, setUsername] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [pronouns, setPronouns] = useState("");
-  const [email, setEmail] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
   const [photo, setPhoto] = useState(null);
   const [user, setUser] = useState({});
+  const [newUser, setNewUser] = useState({
+    username: "",
+    displayName: "",
+    pronouns: "",
+    email: "",
+    dateOfBirth: "",
+  });
 
   // const SERVER_URL = "http://localhost:3000";
 
@@ -60,6 +63,14 @@ export const SignUp = ({ navigation }) => {
     //   });
   };
 
+  const handleFormChanges = (text, keyToChange) => {
+    setNewUser((prevState) => {
+      const newState = { ...prevState };
+      newState[keyToChange] = text;
+      return newState;
+    });
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       return () => {
@@ -68,6 +79,7 @@ export const SignUp = ({ navigation }) => {
     }, [])
   );
 
+  console.log(newUser);
   return (
     <View>
       <View style={styles.backContainer}>
@@ -85,36 +97,38 @@ export const SignUp = ({ navigation }) => {
 
         <TextInput
           style={styles.input}
-          value={username}
-          onChangeText={setUsername}
+          value={newUser.username}
+          onChangeText={(text) => {
+            handleFormChanges(text, "username");
+          }}
           placeholder="Username:"
         />
 
         <TextInput
           style={styles.input}
-          value={displayName}
-          onChangeText={setDisplayName}
+          value={newUser.displayName}
+          onChangeText={(text) => handleFormChanges(text, "displayName")}
           placeholder="Display Name:"
         />
 
         <TextInput
           style={styles.input}
-          value={pronouns}
-          onChangeText={setPronouns}
+          value={newUser.pronouns}
+          onChangeText={(text) => handleFormChanges(text, "pronouns")}
           placeholder="Pronouns:"
         />
 
         <TextInput
           style={styles.input}
-          value={email}
-          onChangeText={setEmail}
+          value={newUser.email}
+          onChangeText={(text) => handleFormChanges(text, "email")}
           placeholder="email:"
         />
 
         <TextInput
           style={styles.input}
-          value={dateOfBirth}
-          onChangeText={setDateOfBirth}
+          value={newUser.dateOfBirth}
+          onChangeText={(text) => handleFormChanges(text, "dateOfBirth")}
           placeholder="Date of birth:"
         />
       </View>
@@ -154,8 +168,14 @@ export const SignUp = ({ navigation }) => {
           <Pressable
             style={styles.button}
             onPress={() => {
-              setUser;
-              navigation.navigate("Home");
+              postNewUser(newUser)
+                .then((resUser) => {
+                  setUser(resUser);
+                  navigation.navigate("Home");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             }}
           >
             <Text style={styles.buttonText}>Submit</Text>
