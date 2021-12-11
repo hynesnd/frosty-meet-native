@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -10,12 +10,12 @@ import {
   Image,
 } from "react-native";
 
-export const CreateMeets = ({ navigation }) => {
+export const CreateMeets = () => {
   const [meetTitle, setMeetTitle] = useState("");
   const [meetDescription, setMeetDescription] = useState("");
   const [open, setOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
-
+  const navigation = useNavigation();
   const [categories, setCategories] = useState([
     { label: "Social", value: "social" },
     { label: "Climbing", value: "climbing" },
@@ -33,13 +33,13 @@ export const CreateMeets = ({ navigation }) => {
 
   const uploadEventImage = () => {};
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     return () => {
-  //       navigation.popToTop();
-  //     };
-  //   }, [])
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        navigation.popToTop();
+      };
+    }, [])
+  );
 
   return (
     <View>
@@ -55,18 +55,10 @@ export const CreateMeets = ({ navigation }) => {
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setCategoryValue(itemValue)
-            }
+            onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
           >
             {categories.map((cat) => {
-              return (
-                <Picker.Item
-                  key={cat.label}
-                  label={cat.label}
-                  value={cat.value}
-                />
-              );
+              return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
             })}
           </Picker>
         </View>

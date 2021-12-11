@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Image, Pressable } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useFocusEffect } from "@react-navigation/native";
+
 import { Meets } from "./Meets";
 import { CreateMeets } from "./CreateMeets";
 
 export const Home = ({ navigation }) => {
   const Stack = createNativeStackNavigator();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        navigation.popToTop();
-      };
-    }, [])
-  );
   const HomePage = () => {
     return (
       <View>
@@ -24,10 +17,7 @@ export const Home = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("Find Event!")}
-          >
+          <Pressable style={styles.button} onPress={() => navigation.navigate("Meets")}>
             <Text style={styles.buttonText}>Find Event!</Text>
           </Pressable>
 
