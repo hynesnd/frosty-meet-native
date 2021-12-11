@@ -78,7 +78,7 @@ export const Meets = ({ navigation }) => {
             placeholder="DD/MM/YYYY"
           /> */}
 
-          <DatePicker
+          {/* <DatePicker
             defaultDate={new Date(2021, 4, 4)}
             minimumDate={new Date(2021, 1, 1)}
             maximumDate={new Date(2021, 12, 31)}
@@ -94,7 +94,7 @@ export const Meets = ({ navigation }) => {
             onChange={setEventDate}
             value={eventDate}
           />
-          <Text>{eventDate.toString().substr(4, 12)}</Text>
+          <Text>{eventDate.toString().substr(4, 12)}</Text> */}
 
           <Picker
             style={styles.pickerStyle}
