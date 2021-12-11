@@ -1,19 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Pressable,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, TextInput, Pressable, Image } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
-
+import { useFocusEffect } from "@react-navigation/native";
 // import { ViewedUserContext } from "../contexts/viewed-user-context.js";
 
-export const UserPage = () => {
+export const UserPage = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [editClicked, setEditClicked] = useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        navigation.popToTop();
+      };
+    }, [])
+  );
 
   // const { viewedUser, setViewedUser } = useContext(ViewedUserContext);
   // const
@@ -60,18 +61,12 @@ export const UserPage = () => {
           </View>
           <View style={styles.detailsContainer}>
             {editClicked ? (
-              <TextInput
-                placeholder="Display name..."
-                style={styles.textInputDetails}
-              />
+              <TextInput placeholder="Display name..." style={styles.textInputDetails} />
             ) : (
               <Text style={styles.displayName}>{user.displayName}</Text>
             )}
             {editClicked ? (
-              <TextInput
-                placeholder="Pronouns..."
-                style={styles.textInputDetails}
-              />
+              <TextInput placeholder="Pronouns..." style={styles.textInputDetails} />
             ) : (
               <Text style={styles.pronouns}>{user.pronouns}</Text>
             )}
