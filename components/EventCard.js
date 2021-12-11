@@ -42,7 +42,7 @@ export default function EventCard({ navigation, currentEvent }) {
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>Creator: "CREATOR"</Text>
+            <Text>Creator: {currentEvent.creator}</Text>
             <Text style={styles.eventDateTime}>
               {currentEvent.eventStart.slice(11, 16)} -{" "}
               {currentEvent.eventEnd.slice(11, 16)}
@@ -83,9 +83,7 @@ export default function EventCard({ navigation, currentEvent }) {
             }}
           >
             <Text style={styles.buttonText}>
-              {currentEvent.participants.includes(user.username)
-                ? "Leave"
-                : "Join"}
+              {currentEvent.participants.includes(user.username) ? "Leave" : "Join"}
             </Text>
           </Pressable>
           <Pressable
