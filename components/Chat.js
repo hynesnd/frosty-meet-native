@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
   chatMessage: {
     height: Number(parseInt(windowHeight) * 0.7),
-    overflow: "auto",
+    overflow: "visible",
     flexDirection: "column",
     width: windowWidth,
     alignContent: "flex-start",
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: 50,
     flex: 4,
-    border: "orange",
+    borderColor: "orange",
     backgroundColor: "white",
   },
   sendButton: {
