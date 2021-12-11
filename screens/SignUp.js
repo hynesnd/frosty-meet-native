@@ -167,7 +167,7 @@ export const SignUp = ({ navigation }) => {
           <Pressable
             style={styles.button}
             onPress={() => {
-              setUser;
+              setUser(newUser);
               navigation.navigate("Home");
             }}
           >
