@@ -1,40 +1,46 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Image,
-  Pressable,
-} from "react-native";
+import { View, Text, StyleSheet, TextInput, Image, Pressable } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import { Meets } from "./Meets";
+import { CreateMeets } from "./CreateMeets";
 export const Home = ({ navigation }) => {
   const Stack = createNativeStackNavigator();
-
-  return (
-    <View>
+  const HomePage = () => {
+    return (
       <View>
-        <View style={styles.mapContainer}>
-          <Image source={require("../logo.png")} style={styles.map} />
+        <View>
+          <View style={styles.mapContainer}>
+            <Image source={require("../logo.png")} style={styles.map} />
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Pressable
+            style={styles.button}
+            onPress={() => navigation.navigate("Find Event!")}
+          >
+            <Text style={styles.buttonText}>Find Event!</Text>
+          </Pressable>
+
+          <Pressable
+            style={styles.button}
+            onPress={() => navigation.navigate("Create Meets")}
+          >
+            <Text style={styles.buttonText}>Create Event!</Text>
+          </Pressable>
         </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate("Meets")}
-        >
-          <Text style={styles.buttonText}>Find Event!</Text>
-        </Pressable>
-
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate("Create Meets")}
-        >
-          <Text style={styles.buttonText}>Create Event!</Text>
-        </Pressable>
-      </View>
-    </View>
+    );
+  };
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Home" component={HomePage} options={{ headerShown: false }} />
+      <Stack.Screen name="Meets" component={Meets} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Create Meets"
+        component={CreateMeets}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 };
 
