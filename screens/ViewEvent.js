@@ -108,11 +108,28 @@ export const ViewEvent = ({ navigation }) => {
           </View>
         </View>
         <View>
-          <Text style={styles.eventDescription}>Description: {event.description}</Text>
+          <Text style={styles.eventDescription}>{event.description}</Text>
         </View>
-        <Pressable style={styles.participantsContainer}>
-          <Text>Participants</Text>
-        </Pressable>
+        <View style={styles.participantsContainer}>
+          <Text>Participants: </Text>
+          <View style={{ flexDirection: "row", padding: 5 }}>
+            {event.participants.map((participant) => {
+              return (
+                <Pressable
+                  onPress={() => {
+                    return navigation.navigate("UserPage");
+                  }}
+                  style={styles.participant}
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ textDecorationLine: "none" }}> </Text>
+                    <Text style={styles.participantButtonText}>{participant}</Text>
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
         <Pressable style={styles.galleryContainer}>
           <Image
             source={{ uri: "https://source.unsplash.com/random/200x200" }}
@@ -205,12 +222,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   participantsContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-evenly",
     borderRadius: 5,
     borderWidth: 1,
-    height: 25,
-    padding: 5,
+    paddingHorizontal: 10,
     marginVertical: 5,
   },
   galleryContainer: {
@@ -259,5 +275,16 @@ const styles = StyleSheet.create({
   arrow: {
     fontSize: 30,
     fontWeight: "bold",
+  },
+
+  participantButtonText: {
+    fontStyle: "italic",
+    textDecorationLine: "underline",
+  },
+  participantSpacer: {
+    textDecorationLine: "none",
+  },
+  participant: {
+    flex: 1,
   },
 });
