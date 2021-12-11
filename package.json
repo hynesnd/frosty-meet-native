@@ -16,8 +16,12 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "expo": "~43.0.2",
     "expo-status-bar": "~1.1.0",
+    "express": "^4.17.1",
+    "mongodb": "^4.2.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
@@ -28,12 +32,8 @@
     "react-native-sliding-up-down-panels": "^1.0.0",
     "react-native-ui-xg": "^0.0.6",
     "react-native-web": "0.17.1",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
     "socket.io": "^4.0.0",
-    "socket.io-client": "^4.4.0",
-    "mongodb": "^4.2.1"
+    "socket.io-client": "^4.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
