@@ -6,7 +6,6 @@ import {
   TextInput,
   Pressable,
   Picker,
-  DatePicker,
   Image,
 } from "react-native";
 import EventCard from "../components/EventCard.js";
