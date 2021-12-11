@@ -11,17 +11,30 @@ import {
 } from "react-native";
 import EventCard from "../components/EventCard.js";
 import { getParks, getEvents, getCategories } from "../utils/api.js";
-import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  useFocusEffect,
+  useNavigation,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ViewEvent } from "./ViewEvent.js";
 import { UserPage } from "./UserPage";
 
-export const Meets = ({ navigation }) => {
+export const Meets = () => {
   const [categoryValue, setCategoryValue] = useState("");
   const [categories, setCategories] = useState([
     { label: "Any type", value: "any type" },
   ]);
   const [events, setEvents] = useState([]);
+  const navigation = useNavigation();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        navigation.goBack();
+      };
+    }, [])
+  );
 
   useEffect(() => {
     getCategories().then(({ data }) => {

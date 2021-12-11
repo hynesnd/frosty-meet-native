@@ -36,7 +36,7 @@ export const CreateMeets = () => {
   useFocusEffect(
     React.useCallback(() => {
       return () => {
-        navigation.popToTop();
+        navigation.goBack();
       };
     }, [])
   );

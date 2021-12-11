@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, Pressable, Image } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 // import { ViewedUserContext } from "../contexts/viewed-user-context.js";
 
-export const UserPage = ({ navigation }) => {
+export const UserPage = () => {
   const { user, setUser } = useContext(UserContext);
   const [editClicked, setEditClicked] = useState(false);
+  const navigation = useNavigation();
 
   useFocusEffect(
     React.useCallback(() => {

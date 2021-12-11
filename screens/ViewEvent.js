@@ -9,7 +9,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { EventContext } from "../contexts/event-context.js";
 import { UserContext } from "../contexts/user-context.js";
@@ -21,26 +21,25 @@ import Chat from "../components/Chat";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export const ViewEvent = ({ navigation }) => {
+export const ViewEvent = () => {
   const { event, setEvent } = useContext(EventContext);
-
   const { user, setUser } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [chatOn, setChatOn] = useState(false);
-
+  const navigation = useNavigation();
   useEffect(() => {
     getComments(event.eventId).then(({ data }) => {
       setComments(data.comments);
     });
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        navigation.popToTop();
-      };
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     return () => {
+  //       navigation.goBack();
+  //     };
+  //   }, [])
+  // );
 
   return (
     <View>
