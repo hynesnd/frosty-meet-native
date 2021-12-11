@@ -1,10 +1,20 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Image, Pressable } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useFocusEffect } from "@react-navigation/native";
 import { Meets } from "./Meets";
 import { CreateMeets } from "./CreateMeets";
+
 export const Home = ({ navigation }) => {
   const Stack = createNativeStackNavigator();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        navigation.popToTop();
+      };
+    }, [])
+  );
   const HomePage = () => {
     return (
       <View>
