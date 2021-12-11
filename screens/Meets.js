@@ -15,6 +15,7 @@ import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ViewEvent } from "./ViewEvent.js";
 import { UserPage } from "./UserPage";
+import DatePicker from "react-native-neat-date-picker";
 
 export const Meets = ({ navigation }) => {
   const [categoryValue, setCategoryValue] = useState("");
