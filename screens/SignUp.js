@@ -9,6 +9,7 @@ import {
   Image,
   Pressable,
 } from "react-native";
+import { postNewUser } from "../utils/nh-api";
 
 export const SignUp = ({ navigation }) => {
   const [photo, setPhoto] = useState(null);
@@ -167,8 +168,14 @@ export const SignUp = ({ navigation }) => {
           <Pressable
             style={styles.button}
             onPress={() => {
-              setUser(newUser);
-              navigation.navigate("Home");
+              postNewUser(newUser)
+                .then((resUser) => {
+                  setUser(resUser);
+                  navigation.navigate("Home");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             }}
           >
             <Text style={styles.buttonText}>Submit</Text>
