@@ -70,8 +70,7 @@ export default function CommentCard() {
       <View style={styles.chat}>
         <View style={styles.username}>
           <Text style={styles.roomTitle}>
-            {user.username}{" "}
-            <Text style={{ fontSize: 15 }}>in {event.title}</Text>
+            {user.username} <Text style={{ fontSize: 15 }}>in {event.title}</Text>
           </Text>
         </View>
         <ScrollView style={styles.chatMessage}>
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     width: windowWidth,
     alignSelf: "flex-start",
     fontWeight: "bold",
-    border: 1,
+    borderWidth: 1,
     paddingBottom: 1,
   },
   roomTitle: {
