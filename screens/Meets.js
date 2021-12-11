@@ -6,6 +6,7 @@ import {
   TextInput,
   Pressable,
   Picker,
+  DatePicker,
   Image,
 } from "react-native";
 import EventCard from "../components/EventCard.js";
@@ -70,12 +71,31 @@ export const Meets = ({ navigation }) => {
               return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
             })}
           </Picker>
-          <TextInput
+          {/* <TextInput
             style={styles.dateInput}
             value={eventDate}
             onChangeText={setEventDate}
             placeholder="DD/MM/YYYY"
+          /> */}
+
+          <DatePicker
+            defaultDate={new Date(2021, 4, 4)}
+            minimumDate={new Date(2021, 1, 1)}
+            maximumDate={new Date(2021, 12, 31)}
+            locale={"en"}
+            timeZoneOffsetInMinutes={undefined}
+            modalTransparent={false}
+            animationType={"fade"}
+            androidMode={"default"}
+            placeHolderText="Select date"
+            textStyle={{ color: "green" }}
+            placeHolderTextStyle={{ color: "#d3d3d3" }}
+            disabled={false}
+            onChange={setEventDate}
+            value={eventDate}
           />
+          <Text>{eventDate.toString().substr(4, 12)}</Text>
+
           <Picker
             style={styles.pickerStyle}
             selectedValue={joinedValue}
