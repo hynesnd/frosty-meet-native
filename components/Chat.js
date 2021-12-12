@@ -18,12 +18,13 @@ const socket = io("localhost:8000");
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function CommentCard() {
+export default function Chat() {
   const { user, setUser } = useContext(UserContext);
   const { event, setEvent } = useContext(EventContext);
   const [messages, setMessages] = useState([]);
   const [messageBody, setMessageBody] = useState("");
-  const messagesEndRef = useRef(null);
+
+  const scrollRef = useRef();
   let username = user.username;
   let title = event.title;
 
@@ -50,8 +51,6 @@ export default function CommentCard() {
       });
       setMessages([...temp]);
     });
-
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [setMessages]);
 
   console.log(messageBody, "<<<<<<<<<<<<<<<<");
@@ -63,12 +62,6 @@ export default function CommentCard() {
     }
   };
 
-  //   const scrollToBottom = () => {
-  //     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  //   };
-
-  //   useEffect(scrollToBottom, [messages]);
-
   console.log(messages, "messages");
 
   return (
@@ -76,28 +69,52 @@ export default function CommentCard() {
       <View style={styles.chat}>
         <View style={styles.username}>
           <Text style={styles.roomTitle}>
-            {user.username} <Text style={{ fontSize: 15 }}>in {event.title}</Text>
+            {user.username} <Text style={{ fontSize: 16 }}>in {event.title}</Text>
           </Text>
         </View>
-        <ScrollView style={styles.chatMessage}>
+        <ScrollView
+          ref={scrollRef}
+          onContentSizeChange={(contentWidth, contentHeight) => {
+            scrollRef.current.scrollToEnd({ animated: true });
+          }}
+          style={styles.chatMessage}
+        >
           {messages.map((msg) => {
             if (msg.username === username) {
               return (
-                <View key={msg.timestamp} style={styles.message}>
-                  <Text>{msg.messageBody}</Text>
-                  <Text>{msg.username}</Text>
+                <View key={msg._id} style={styles.message}>
+                  <Text
+                    style={{
+                      backgroundColor: "orange",
+                      fontSize: 20,
+                      borderRadius: 5,
+                      padding: 3,
+                    }}
+                  >
+                    {msg.messageBody}
+                  </Text>
+                  <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
                 </View>
               );
             } else {
               return (
-                <View key={msg.timestamp} style={styles.messageRight}>
-                  <Text>{msg.messageBody} </Text>
-                  <Text>{msg.username}</Text>
+                <View key={msg._id} style={styles.messageRight}>
+                  <Text
+                    style={{
+                      backgroundColor: "purple",
+                      fontSize: 20,
+                      borderRadius: 5,
+                      padding: 3,
+                      color: "white",
+                    }}
+                  >
+                    {msg.messageBody}{" "}
+                  </Text>
+                  <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
                 </View>
               );
             }
           })}
-          <View ref={messagesEndRef} />
         </ScrollView>
         <View style={styles.sender}>
           <TextInput
@@ -132,13 +149,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     borderWidth: 1,
     paddingBottom: 1,
+    marginBottom: 5,
   },
   roomTitle: {
-    color: "purple",
+    color: "Purple",
     fontSize: 25,
   },
   chatMessage: {
-    height: Number(parseInt(windowHeight) * 0.7),
+    height: Number(parseInt(windowHeight) * 0.75),
     overflow: "visible",
     flexDirection: "column",
     width: windowWidth,
@@ -148,6 +166,9 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     maxWidth: 200,
     paddingLeft: 5,
+    border: 1,
+    borderColor: "black",
+    borderRadius: 5,
   },
   messageRight: {
     marginLeft: "auto",
@@ -155,6 +176,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     maxWidth: 200,
     paddingRight: 5,
+    border: 1,
+    borderColor: "purple",
   },
   send: {
     width: windowWidth,
@@ -162,6 +185,7 @@ const styles = StyleSheet.create({
     flex: 4,
     borderColor: "orange",
     backgroundColor: "white",
+    paddingLeft: 5,
   },
   sendButton: {
     width: Number(parseInt(windowWidth) * 0.2),
