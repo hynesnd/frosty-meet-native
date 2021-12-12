@@ -7,6 +7,6 @@ export const getUserByUsername = (username) => {
   return frostyApi.get(`/users/${id}`);
 };
 
-export const getParticipants = (id) => {
-  return frostyApi.get(`/events/${id}/participants`);
+export const deleteEvent = (id) => {
+  return frostyApi.delete(`/events/${id}/`);
 };

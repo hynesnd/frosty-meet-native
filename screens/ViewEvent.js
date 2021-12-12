@@ -17,6 +17,7 @@ import { getComments } from "../utils/api.js";
 import CommentCard from "../components/CommentCard";
 import SlidingPanel from "react-native-sliding-up-down-panels";
 import Chat from "../components/Chat";
+import { deleteEvent } from "../utils/YizApi.js";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -26,6 +27,7 @@ export const ViewEvent = () => {
   const { user, setUser } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [chatOn, setChatOn] = useState(false);
+  const [isSelf, setIsSelf] = useState(false);
   const navigation = useNavigation();
   useEffect(() => {
     getComments(event.eventId).then(({ data }) => {
@@ -40,6 +42,8 @@ export const ViewEvent = () => {
   //     };
   //   }, [])
   // );
+
+  const handleEditEvent = (id) => {};
 
   return (
     <View>
@@ -57,6 +61,42 @@ export const ViewEvent = () => {
         <View style={styles.topContainer}>
           <View style={styles.topRow}>
             <Text style={styles.eventTitle}>{event.title}</Text>
+
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                if (currentEvent.creator === user.username) {
+                  setIsSelf(true);
+                } else {
+                  setIsSelf(false);
+                }
+                deleteEvent(event.event_id);
+                navigation.navigate("MeetsPage");
+              }}
+            >
+              {isSelf ? (
+                <Text style={styles.buttonText}>Delete</Text>
+              ) : (
+                <Text style={styles.buttonText}>Nulete</Text>
+              )}
+            </Pressable>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                if (currentEvent.creator === user.username) {
+                  setIsSelf(true);
+                } else {
+                  setIsSelf(false);
+                }
+                handleEditEvent(event.event_id);
+              }}
+            >
+              {isSelf ? (
+                <Text style={styles.buttonText}>Edit</Text>
+              ) : (
+                <Text style={styles.buttonText}>Nudit</Text>
+              )}
+            </Pressable>
             <Pressable
               style={styles.button}
               onPress={() => {

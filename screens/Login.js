@@ -1,4 +1,3 @@
-import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import {
@@ -40,17 +39,11 @@ export const Login = ({ navigation }) => {
             secureTextEntry={true}
           />
 
-          <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("Home")}
-          >
+          <Pressable style={styles.button} onPress={() => navigation.navigate("Home")}>
             <Text style={styles.buttonText}>Login</Text>
           </Pressable>
 
-          <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate("SignUp")}
-          >
+          <Pressable style={styles.button} onPress={() => navigation.navigate("SignUp")}>
             <Text style={styles.buttonText}>Sign up</Text>
           </Pressable>
         </View>
@@ -65,11 +58,7 @@ export const Login = ({ navigation }) => {
         component={LoginForm}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

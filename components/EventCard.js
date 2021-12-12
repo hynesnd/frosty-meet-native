@@ -4,9 +4,6 @@ import { UserContext } from "../contexts/user-context.js";
 import { EventContext } from "../contexts/event-context.js";
 import { ViewedUserContext } from "../contexts/viewed-user-context.js";
 
-// import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 export default function EventCard({ navigation, currentEvent }) {
   const [toggleOn, setToggleOn] = useState(false);
   const { user, setUser } = useContext(UserContext);

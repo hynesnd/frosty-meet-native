@@ -12,7 +12,7 @@ export const UserPage = () => {
   useFocusEffect(
     React.useCallback(() => {
       return () => {
-        navigation.popToTop();
+        navigation.goBack();
       };
     }, [])
   );

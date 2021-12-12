@@ -11,11 +11,7 @@ import {
 } from "react-native";
 import EventCard from "../components/EventCard.js";
 import { getParks, getEvents, getCategories } from "../utils/api.js";
-import {
-  NavigationContainer,
-  useFocusEffect,
-  useNavigation,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ViewEvent } from "./ViewEvent.js";
 import { UserPage } from "./UserPage";
@@ -27,14 +23,6 @@ export const Meets = () => {
   ]);
   const [events, setEvents] = useState([]);
   const navigation = useNavigation();
-
-  useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        navigation.goBack();
-      };
-    }, [])
-  );
 
   useEffect(() => {
     getCategories().then(({ data }) => {
@@ -165,7 +153,7 @@ export const Meets = () => {
   };
 
   return (
-    <Stack.Navigator initialRouteName="Meets">
+    <Stack.Navigator initialRouteName="MeetsPage">
       <Stack.Screen
         name="MeetsPage"
         component={MeetsPage}

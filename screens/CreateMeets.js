@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -31,8 +31,6 @@ export const CreateMeets = () => {
 
   const [event, setEvent] = useState({});
 
-  const uploadEventImage = () => {};
-
   useFocusEffect(
     React.useCallback(() => {
       return () => {
@@ -40,6 +38,8 @@ export const CreateMeets = () => {
       };
     }, [])
   );
+
+  const uploadEventImage = () => {};
 
   return (
     <View>
