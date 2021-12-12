@@ -41,16 +41,7 @@ export default function EventCard({ navigation, currentEvent }) {
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>
-              Creator:
-              <Pressable
-                onPress={() => {
-                  return navigation.navigate("UserPage");
-                }}
-              >
-                <Text style={styles.creatorButtonText}>{currentEvent.creator}</Text>
-              </Pressable>
-            </Text>
+            <Text>Creator: {currentEvent.creator}</Text>
             <Text style={styles.eventDateTime}>
               {currentEvent.eventStart.slice(11, 16)} -{" "}
               {currentEvent.eventEnd.slice(11, 16)}
@@ -91,7 +82,9 @@ export default function EventCard({ navigation, currentEvent }) {
             }}
           >
             <Text style={styles.buttonText}>
-              {currentEvent.participants.includes(user.username) ? "Leave" : "Join"}
+              {currentEvent.participants.includes(user.username)
+                ? "Leave"
+                : "Join"}
             </Text>
           </Pressable>
           <Pressable
@@ -139,8 +132,8 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   joinButton: {
-    marginLeft: 60,
-    marginRight: 88,
+    marginLeft: 65,
+    marginRight: 85,
   },
   buttonText: {
     width: 80,

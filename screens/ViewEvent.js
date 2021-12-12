@@ -13,6 +13,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { EventContext } from "../contexts/event-context.js";
 import { UserContext } from "../contexts/user-context.js";
+import { ViewedUserContext } from "../contexts/viewed-user-context.js";
 import { getComments } from "../utils/api.js";
 import CommentCard from "../components/CommentCard";
 import SlidingPanel from "react-native-sliding-up-down-panels";
@@ -25,6 +26,7 @@ const windowHeight = Dimensions.get("window").height;
 export const ViewEvent = () => {
   const { event, setEvent } = useContext(EventContext);
   const { user, setUser } = useContext(UserContext);
+  const { setViewedUser } = useContext(ViewedUserContext);
   const [comments, setComments] = useState([]);
   const [chatOn, setChatOn] = useState(false);
   const [isSelf, setIsSelf] = useState(false);
@@ -33,6 +35,11 @@ export const ViewEvent = () => {
     getComments(event.eventId).then(({ data }) => {
       setComments(data.comments);
     });
+    if (event.creator === user.username) {
+      setIsSelf(true);
+    } else {
+      setIsSelf(false);
+    }
   }, []);
 
   // useFocusEffect(
@@ -62,65 +69,53 @@ export const ViewEvent = () => {
           <View style={styles.topRow}>
             <Text style={styles.eventTitle}>{event.title}</Text>
             <View style={styles.topRowButtons}>
-              <Pressable
-                style={styles.button}
-                onPress={() => {
-                  if (currentEvent.creator === user.username) {
-                    setIsSelf(true);
-                  } else {
-                    setIsSelf(false);
-                  }
-                  deleteEvent(event.event_id);
-                  navigation.navigate("MeetsPage");
-                }}
-              >
-                {isSelf ? (
+              {isSelf ? (
+                <Pressable
+                  style={styles.button}
+                  onPress={() => {
+                    deleteEvent(event.event_id);
+                    navigation.navigate("MeetsPage");
+                  }}
+                >
                   <Text style={styles.buttonText}>Delete</Text>
-                ) : (
-                  <Text style={styles.buttonText}>Nulete</Text>
-                )}
-              </Pressable>
-              <Pressable
-                style={styles.button}
-                onPress={() => {
-                  if (currentEvent.creator === user.username) {
-                    setIsSelf(true);
-                  } else {
-                    setIsSelf(false);
-                  }
-                  handleEditEvent(event.event_id);
-                }}
-              >
-                {isSelf ? (
-                  <Text style={styles.buttonText}>Edit</Text>
-                ) : (
-                  <Text style={styles.buttonText}>Nudit</Text>
-                )}
-              </Pressable>
+                </Pressable>
+              ) : null}
+              {isSelf ? (
+                <Pressable
+                  style={styles.button}
+                  onPress={() => {
+                    handleEditEvent(event.event_id);
+                  }}
+                >
+                  {isSelf ? <Text style={styles.buttonText}>Edit</Text> : null}
+                </Pressable>
+              ) : null}
               <Pressable
                 style={styles.button}
                 onPress={() => {
                   // backend patch: just send event id and body,
                   // which is an updated event object
-                  if (currentEvent.participants.includes(user.username)) {
-                    const newEvent = { ...currentEvent };
+                  if (event.participants.includes(user.username)) {
+                    const newEvent = { ...event };
                     newEvent.participants.splice(
                       newEvent.participants.indexOf(user.username),
                       1
                     );
-                    setCurrentEvent(newEvent);
+                    setEvent(newEvent);
                     // backend stuff must be done here
                   } else {
-                    const newEvent = { ...currentEvent };
+                    const newEvent = { ...event };
                     newEvent.participants.push(user.username);
-                    setCurrentEvent(newEvent);
+                    setEvent(newEvent);
                     // backend stuff must be done here
                   }
-                  console.log(currentEvent.participants);
+                  console.log(event.participants);
                 }}
               >
                 <Text style={styles.buttonText}>
-                  {event.participants.includes(user.username) ? "Leave" : "Join"}
+                  {event.participants.includes(user.username)
+                    ? "Leave"
+                    : "Join"}
                 </Text>
               </Pressable>
             </View>
@@ -129,13 +124,15 @@ export const ViewEvent = () => {
             <View style={styles.leftMiddleSide}>
               <Text style={styles.eventDetailText}>
                 Category:{" "}
-                {event.categories.length > 0 ? event.categories[0].categorySlug : "none"}
+                {event.categories.length > 0
+                  ? event.categories[0].categorySlug
+                  : "none"}
               </Text>
               <Text style={styles.eventDetailText}>
                 <Text>Creator: </Text>{" "}
                 <Pressable
                   onPress={() => {
-                    return navigation.navigate("UserPage");
+                    return navigation.navigate("ViewUser");
                   }}
                 >
                   <Text style={styles.eventCreatorButton}>{event.creator}</Text>
@@ -145,7 +142,8 @@ export const ViewEvent = () => {
                 Date: {event.eventStart.slice(0, 10).replaceAll("-", "/")}
               </Text>
               <Text style={styles.eventDetailText}>
-                Time: {event.eventStart.slice(11, 16)} - {event.eventEnd.slice(11, 16)}
+                Time: {event.eventStart.slice(11, 16)} -{" "}
+                {event.eventEnd.slice(11, 16)}
               </Text>
             </View>
             <View style={styles.rightMiddleSide}>
@@ -167,13 +165,15 @@ export const ViewEvent = () => {
                 <Pressable
                   key={participant}
                   onPress={() => {
-                    return navigation.navigate("UserPage");
+                    return navigation.navigate("ViewUser");
                   }}
                   style={styles.participant}
                 >
                   <View style={{ flexDirection: "row" }}>
                     <Text style={{ textDecorationLine: "none" }}> </Text>
-                    <Text style={styles.participantButtonText}>{participant}</Text>
+                    <Text style={styles.participantButtonText}>
+                      {participant}
+                    </Text>
                   </View>
                 </Pressable>
               );
@@ -213,7 +213,9 @@ export const ViewEvent = () => {
             </View>
           )}
           slidingPanelLayout={() => (
-            <View style={styles.slidingPanelLayoutStyle}>{chatOn ? <Chat /> : null}</View>
+            <View style={styles.slidingPanelLayoutStyle}>
+              {chatOn ? <Chat /> : null}
+            </View>
           )}
         />
       </View>

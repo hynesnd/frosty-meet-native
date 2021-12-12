@@ -4,8 +4,8 @@ export const UserContext = React.createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
-    displayName: "Neil",
-    username: "neil123",
+    displayName: "Nash Plant",
+    username: "nashplant0",
     pronouns: "He/him",
     dateOfBirth: "01/02/1993",
   });
