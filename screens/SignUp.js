@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import {
   View,
@@ -10,10 +10,11 @@ import {
   Pressable,
 } from "react-native";
 import { postNewUser } from "../utils/nh-api";
+import { UserContext } from "../contexts/user-context";
 
 export const SignUp = ({ navigation }) => {
+  const { user, setUser } = useContext(UserContext);
   const [photo, setPhoto] = useState(null);
-  const [user, setUser] = useState({});
   const [newUser, setNewUser] = useState({
     username: "",
     displayName: "",
