@@ -83,34 +83,42 @@ export default function Chat() {
             if (msg.username === username) {
               return (
                 <View key={msg._id} style={styles.message}>
-                  <Text
-                    style={{
-                      backgroundColor: "orange",
-                      fontSize: 20,
-                      borderRadius: 5,
-                      padding: 3,
-                    }}
-                  >
-                    {msg.messageBody}
-                  </Text>
-                  <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
+                  <View style={styles.messageInnerLeft}>
+                    <Text
+                      style={{
+                        backgroundColor: "orange",
+                        fontSize: 20,
+                        borderRadius: 10,
+                        padding: 10,
+                      }}
+                    >
+                      {msg.messageBody}
+                    </Text>
+                  </View>
+                  <View style={styles.messageInnerLeft}>
+                    <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
+                  </View>
                 </View>
               );
             } else {
               return (
                 <View key={msg._id} style={styles.messageRight}>
-                  <Text
-                    style={{
-                      backgroundColor: "purple",
-                      fontSize: 20,
-                      borderRadius: 5,
-                      padding: 3,
-                      color: "white",
-                    }}
-                  >
-                    {msg.messageBody}{" "}
-                  </Text>
-                  <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
+                  <View style={styles.messageInnerRight}>
+                    <Text
+                      style={{
+                        backgroundColor: "purple",
+                        fontSize: 20,
+                        borderRadius: 10,
+                        padding: 10,
+                        color: "white",
+                      }}
+                    >
+                      {msg.messageBody}{" "}
+                    </Text>
+                  </View>
+                  <View style={styles.messageInnerRight}>
+                    <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
+                  </View>
                 </View>
               );
             }
@@ -160,24 +168,32 @@ const styles = StyleSheet.create({
     overflow: "visible",
     flexDirection: "column",
     width: windowWidth,
-    alignContent: "flex-start",
   },
   message: {
     marginLeft: 0,
-    maxWidth: 200,
+    maxWidth: 250,
     paddingLeft: 5,
     border: 1,
-    borderColor: "black",
     borderRadius: 5,
+    flexDirection: "column",
+    marginVertical: 5,
+  },
+  messageInnerLeft: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
   messageRight: {
     marginLeft: "auto",
     marginRight: 0,
     flexDirection: "column",
-    maxWidth: 200,
+    maxWidth: 250,
     paddingRight: 5,
     border: 1,
-    borderColor: "purple",
+    marginVertical: 5,
+  },
+  messageInnerRight: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   send: {
     width: windowWidth,
