@@ -17,6 +17,7 @@ export const SignUp = ({ navigation }) => {
   const [photo, setPhoto] = useState(null);
   const [newUser, setNewUser] = useState({
     username: "",
+    password: "",
     displayName: "",
     pronouns: "",
     email: "",
@@ -103,6 +104,16 @@ export const SignUp = ({ navigation }) => {
             handleFormChanges(text, "username");
           }}
           placeholder="Username:"
+        />
+
+        <TextInput
+          style={styles.input}
+          value={newUser.password}
+          onChangeText={(text) => {
+            handleFormChanges(text, "password");
+          }}
+          placeholder="Password:"
+          secureTextEntry={true}
         />
 
         <TextInput
