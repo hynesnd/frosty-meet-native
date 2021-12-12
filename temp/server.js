@@ -8,9 +8,18 @@ const { fetchHistory } = require("./fetchHistory");
 const app = express();
 app.use(cors());
 const { MongoClient } = require("mongodb");
+// const uri =
+//   "mongodb+srv://yzhang4:123456abc@cluster0.rspyf.mongodb.net/My_test_project?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 const uri =
-  "mongodb+srv://yzhang4:123456abc@cluster0.rspyf.mongodb.net/My_test_project?retryWrites=true&w=majority";
+  "mongodb+srv://Yiz:MeatUp123@thesnowman.1ublf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
 
 app.use(express());
 
@@ -55,14 +64,14 @@ io.on("connection", (socket) => {
   socket.on("chat", (message_body) => {
     //gets the room user and the message sent
     const p_user = get_Current_User(socket.id);
-    console.log(p_user.username, p_user.eventTitle, text, "<<<<<<<<");
+    console.log(p_user.username, p_user.eventTitle, "<<<<<<<<");
 
     // insert sent message into database
     async function insertIntoDB() {
       try {
         await client.connect();
-        const database = client.db("My_test_project");
-        const history = database.collection("chatHistory");
+        const database = client.db("TheSnowman");
+        const history = database.collection("chats");
         // create a document to insert
         const doc = {
           username: `${p_user.username}`,

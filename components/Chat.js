@@ -13,7 +13,7 @@ import { UserContext } from "../contexts/user-context.js";
 import { EventContext } from "../contexts/event-context.js";
 import io from "socket.io-client";
 
-const socket = io();
+const socket = io("localhost:8000");
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -23,10 +23,10 @@ export default function CommentCard() {
   const [messages, setMessages] = useState([]);
   const [message_body, setMessage_body] = useState("");
   const messagesEndRef = useRef(null);
+  let username = user.username;
+  let eventTitle = event.title;
 
   useEffect(() => {
-    let username = user.username;
-    let eventTitle = event.title;
     if (user.username !== "" && event.title !== "") {
       socket.emit("joinRoom", { username, eventTitle });
     } else {
@@ -47,7 +47,8 @@ export default function CommentCard() {
     });
 
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [socket, messages]);
+  }, [socket]);
+
   console.log(message_body, "<<<<<<<<<<<<<<<<");
 
   const sendData = () => {

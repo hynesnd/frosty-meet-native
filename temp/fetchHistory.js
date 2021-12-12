@@ -1,15 +1,15 @@
 const { MongoClient } = require("mongodb");
 
 const uri =
-  "mongodb+srv://yzhang4:123456abc@cluster0.rspyf.mongodb.net/My_test_project?retryWrites=true&w=majority";
+  "mongodb+srv://frostythesnowman2021:MeatUp123@thesnowman.1ublf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
-async function fetchHistory(eventId) {
+async function fetchHistory(eventTitle) {
   const chatHistory = [];
   try {
     await client.connect();
-    const database = client.db("My_test_project");
-    const history = database.collection("chatHistory");
+    const database = client.db("TheSnowman");
+    const history = database.collection("chats");
     // query for chatHistory with the matching eventId
     const query = { eventTitle: `${eventTitle}` };
     const options = {
