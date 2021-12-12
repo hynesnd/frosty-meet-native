@@ -22,44 +22,44 @@ export default function CommentCard() {
   const { user, setUser } = useContext(UserContext);
   const { event, setEvent } = useContext(EventContext);
   const [messages, setMessages] = useState([]);
-  const [message_body, setMessage_body] = useState("");
+  const [messageBody, setMessageBody] = useState("");
   const messagesEndRef = useRef(null);
   let username = user.username;
-  let eventTitle = event.title;
+  let title = event.title;
 
+  getHistory(title).then(({ data }) => {
+    console.log(data);
+    setMessages([...data.messages]);
+  });
   useEffect(() => {
     if (user.username !== "" && event.title !== "") {
-      socket.emit("joinRoom", { username, eventTitle });
+      socket.emit("joinRoom", { username, title });
     } else {
       let username = "anonymous";
-      let eventTitle = "Lobby";
-      socket.emit("joinRoom", { username, eventTitle });
+      let title = "Lobby";
+      socket.emit("joinRoom", { username, title });
     }
-    getHistory(eventTitle).then(({ data }) => {
-      console.log(data);
-      setMessages([...data.messages]);
-    });
 
     socket.on("message", (data) => {
       let temp = messages;
 
       temp.push({
         username: data.username,
-        message_body: data.message_body,
-        timestamp: new Date(),
+        messageBody: data.messageBody,
+        dateCreated: new Date(),
       });
       setMessages([...temp]);
     });
 
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [socket, setMessages]);
+  }, [setMessages]);
 
-  console.log(message_body, "<<<<<<<<<<<<<<<<");
+  console.log(messageBody, "<<<<<<<<<<<<<<<<");
 
   const sendData = () => {
-    if (message_body !== "") {
-      socket.emit("chat", message_body);
-      setMessage_body("");
+    if (messageBody !== "") {
+      socket.emit("chat", messageBody);
+      setMessageBody("");
     }
   };
 
@@ -84,14 +84,14 @@ export default function CommentCard() {
             if (msg.username === username) {
               return (
                 <View key={msg.timestamp} style={styles.message}>
-                  <Text>{msg.message_body}</Text>
+                  <Text>{msg.messageBody}</Text>
                   <Text>{msg.username}</Text>
                 </View>
               );
             } else {
               return (
                 <View key={msg.timestamp} style={styles.messageRight}>
-                  <Text>{msg.message_body} </Text>
+                  <Text>{msg.messageBody} </Text>
                   <Text>{msg.username}</Text>
                 </View>
               );
@@ -103,8 +103,8 @@ export default function CommentCard() {
           <TextInput
             style={styles.send}
             placeholder="enter your message"
-            value={message_body}
-            onChangeText={setMessage_body}
+            value={messageBody}
+            onChangeText={setMessageBody}
           ></TextInput>
           <Pressable onPress={sendData} style={styles.sendButton}>
             <Text style={{ fontSize: 20, alignSelf: "center" }}>Send</Text>
