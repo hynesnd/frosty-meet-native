@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
-  Button,
   Image,
   Pressable,
 } from "react-native";
 import { postNewUser } from "../utils/nh-api";
+import { UserContext } from "../contexts/user-context";
 
 export const SignUp = ({ navigation }) => {
+  const { user, setUser } = useContext(UserContext);
   const [photo, setPhoto] = useState(null);
-  const [user, setUser] = useState({});
   const [newUser, setNewUser] = useState({
     username: "",
+    password: "",
     displayName: "",
     pronouns: "",
     email: "",
@@ -102,6 +103,16 @@ export const SignUp = ({ navigation }) => {
             handleFormChanges(text, "username");
           }}
           placeholder="Username:"
+        />
+
+        <TextInput
+          style={styles.input}
+          value={newUser.password}
+          onChangeText={(text) => {
+            handleFormChanges(text, "password");
+          }}
+          placeholder="Password:"
+          secureTextEntry={true}
         />
 
         <TextInput
