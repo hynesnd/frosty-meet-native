@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import EventCard from "../components/EventCard.js";
 import { getParks, getEvents, getCategories } from "../utils/api.js";
-import { useNavigation } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ViewEvent } from "./ViewEvent.js";
 import { ViewUser } from "./ViewUser.js";
@@ -22,7 +22,7 @@ export const Meets = () => {
     { label: "Any type", value: "any type" },
   ]);
   const [events, setEvents] = useState([]);
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   useEffect(() => {
     getCategories().then(({ data }) => {
@@ -156,7 +156,7 @@ export const Meets = () => {
             return (
               <EventCard
                 key={currentEvent._id}
-                navigation={navigation}
+                // navigation={navigation}
                 currentEvent={currentEvent}
               />
             );

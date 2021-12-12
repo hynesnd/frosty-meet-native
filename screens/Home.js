@@ -7,14 +7,8 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { Meets } from "./Meets";
-import { CreateMeets } from "./CreateMeets";
 
 export const Home = ({ navigation }) => {
-  const Stack = createNativeStackNavigator();
-
   return (
     <View>
       <View>
@@ -27,14 +21,14 @@ export const Home = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate("Find Event")}
         >
-          <Text style={styles.buttonText}>Find Event!</Text>
+          <Text style={styles.buttonText}>Find Event</Text>
         </Pressable>
 
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Create Event")}
         >
-          <Text style={styles.buttonText}>Create Event!</Text>
+          <Text style={styles.buttonText}>Create Event</Text>
         </Pressable>
       </View>
     </View>

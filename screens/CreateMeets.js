@@ -31,13 +31,13 @@ export const CreateMeets = () => {
 
   const [event, setEvent] = useState({});
 
-  useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        navigation.goBack();
-      };
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     return () => {
+  //       navigation.goBack();
+  //     };
+  //   }, [])
+  // );
 
   const uploadEventImage = () => {};
 
@@ -55,10 +55,18 @@ export const CreateMeets = () => {
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
-            onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
+            onValueChange={(itemValue, itemIndex) =>
+              setCategoryValue(itemValue)
+            }
           >
             {categories.map((cat) => {
-              return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
+              return (
+                <Picker.Item
+                  key={cat.label}
+                  label={cat.label}
+                  value={cat.value}
+                />
+              );
             })}
           </Picker>
         </View>

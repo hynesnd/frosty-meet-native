@@ -19,6 +19,7 @@ import CommentCard from "../components/CommentCard";
 import SlidingPanel from "react-native-sliding-up-down-panels";
 import Chat from "../components/Chat";
 import { deleteEvent } from "../utils/YizApi.js";
+import { getUsers } from "../utils/api.js";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -132,6 +133,18 @@ export const ViewEvent = () => {
                 <Text>Creator: </Text>{" "}
                 <Pressable
                   onPress={() => {
+                    // ***
+                    // Having to filter users as there's no endpoint to get user by username
+                    // ***
+                    getUsers().then((res) => {
+                      const correctUser = res.data.users.filter((person) => {
+                        return person.username === event.creator;
+                      })[0];
+                      setViewedUser(correctUser);
+                    });
+                    // ***
+                    // ***
+                    // ***
                     return navigation.navigate("ViewUser");
                   }}
                 >
@@ -165,6 +178,18 @@ export const ViewEvent = () => {
                 <Pressable
                   key={participant}
                   onPress={() => {
+                    // ***
+                    // Having to filter users as there's no endpoint to get user by username
+                    // ***
+                    getUsers().then((res) => {
+                      const correctUser = res.data.users.filter((person) => {
+                        return person.username === participant;
+                      })[0];
+                      setViewedUser(correctUser);
+                    });
+                    // ***
+                    // ***
+                    // ***
                     return navigation.navigate("ViewUser");
                   }}
                   style={styles.participant}

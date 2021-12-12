@@ -68,6 +68,10 @@ const styles = StyleSheet.create({
     padding: 25,
     margin: 5,
   },
+  arrow: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
   username: {
     flex: 4,
     fontSize: 25,
