@@ -136,16 +136,19 @@ export const ViewEvent = () => {
                     // ***
                     // Having to filter users as there's no endpoint to get user by username
                     // ***
-                    getUsers().then((res) => {
-                      const correctUser = res.data.users.filter((person) => {
-                        return person.username === event.creator;
-                      })[0];
-                      setViewedUser(correctUser);
-                    });
+                    getUsers()
+                      .then((res) => {
+                        const correctUser = res.data.users.filter((person) => {
+                          return person.username === event.creator;
+                        })[0];
+                        setViewedUser(correctUser);
+                      })
+                      .then(() => {
+                        return navigation.navigate("ViewUser");
+                      });
                     // ***
                     // ***
                     // ***
-                    return navigation.navigate("ViewUser");
                   }}
                 >
                   <Text style={styles.eventCreatorButton}>{event.creator}</Text>
@@ -181,16 +184,19 @@ export const ViewEvent = () => {
                     // ***
                     // Having to filter users as there's no endpoint to get user by username
                     // ***
-                    getUsers().then((res) => {
-                      const correctUser = res.data.users.filter((person) => {
-                        return person.username === participant;
-                      })[0];
-                      setViewedUser(correctUser);
-                    });
+                    getUsers()
+                      .then((res) => {
+                        const correctUser = res.data.users.filter((person) => {
+                          return person.username === participant;
+                        })[0];
+                        setViewedUser(correctUser);
+                      })
+                      .then(() => {
+                        return navigation.navigate("ViewUser");
+                      });
                     // ***
                     // ***
                     // ***
-                    return navigation.navigate("ViewUser");
                   }}
                   style={styles.participant}
                 >
