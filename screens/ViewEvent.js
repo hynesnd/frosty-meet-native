@@ -61,68 +61,69 @@ export const ViewEvent = () => {
         <View style={styles.topContainer}>
           <View style={styles.topRow}>
             <Text style={styles.eventTitle}>{event.title}</Text>
-
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                if (currentEvent.creator === user.username) {
-                  setIsSelf(true);
-                } else {
-                  setIsSelf(false);
-                }
-                deleteEvent(event.event_id);
-                navigation.navigate("MeetsPage");
-              }}
-            >
-              {isSelf ? (
-                <Text style={styles.buttonText}>Delete</Text>
-              ) : (
-                <Text style={styles.buttonText}>Nulete</Text>
-              )}
-            </Pressable>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                if (currentEvent.creator === user.username) {
-                  setIsSelf(true);
-                } else {
-                  setIsSelf(false);
-                }
-                handleEditEvent(event.event_id);
-              }}
-            >
-              {isSelf ? (
-                <Text style={styles.buttonText}>Edit</Text>
-              ) : (
-                <Text style={styles.buttonText}>Nudit</Text>
-              )}
-            </Pressable>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                // backend patch: just send event id and body,
-                // which is an updated event object
-                if (currentEvent.participants.includes(user.username)) {
-                  const newEvent = { ...currentEvent };
-                  newEvent.participants.splice(
-                    newEvent.participants.indexOf(user.username),
-                    1
-                  );
-                  setCurrentEvent(newEvent);
-                  // backend stuff must be done here
-                } else {
-                  const newEvent = { ...currentEvent };
-                  newEvent.participants.push(user.username);
-                  setCurrentEvent(newEvent);
-                  // backend stuff must be done here
-                }
-                console.log(currentEvent.participants);
-              }}
-            >
-              <Text style={styles.buttonText}>
-                {event.participants.includes(user.username) ? "Leave" : "Join"}
-              </Text>
-            </Pressable>
+            <View style={styles.topRowButtons}>
+              <Pressable
+                style={styles.button}
+                onPress={() => {
+                  if (currentEvent.creator === user.username) {
+                    setIsSelf(true);
+                  } else {
+                    setIsSelf(false);
+                  }
+                  deleteEvent(event.event_id);
+                  navigation.navigate("MeetsPage");
+                }}
+              >
+                {isSelf ? (
+                  <Text style={styles.buttonText}>Delete</Text>
+                ) : (
+                  <Text style={styles.buttonText}>Nulete</Text>
+                )}
+              </Pressable>
+              <Pressable
+                style={styles.button}
+                onPress={() => {
+                  if (currentEvent.creator === user.username) {
+                    setIsSelf(true);
+                  } else {
+                    setIsSelf(false);
+                  }
+                  handleEditEvent(event.event_id);
+                }}
+              >
+                {isSelf ? (
+                  <Text style={styles.buttonText}>Edit</Text>
+                ) : (
+                  <Text style={styles.buttonText}>Nudit</Text>
+                )}
+              </Pressable>
+              <Pressable
+                style={styles.button}
+                onPress={() => {
+                  // backend patch: just send event id and body,
+                  // which is an updated event object
+                  if (currentEvent.participants.includes(user.username)) {
+                    const newEvent = { ...currentEvent };
+                    newEvent.participants.splice(
+                      newEvent.participants.indexOf(user.username),
+                      1
+                    );
+                    setCurrentEvent(newEvent);
+                    // backend stuff must be done here
+                  } else {
+                    const newEvent = { ...currentEvent };
+                    newEvent.participants.push(user.username);
+                    setCurrentEvent(newEvent);
+                    // backend stuff must be done here
+                  }
+                  console.log(currentEvent.participants);
+                }}
+              >
+                <Text style={styles.buttonText}>
+                  {event.participants.includes(user.username) ? "Leave" : "Join"}
+                </Text>
+              </Pressable>
+            </View>
           </View>
           <View style={styles.middleRows}>
             <View style={styles.leftMiddleSide}>
@@ -243,6 +244,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 3,
     height: 24,
+    marginHorizontal: 5,
   },
   middleRows: {
     marginVertical: 10,
@@ -341,5 +343,10 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     textDecorationLine: "underline",
     color: "blue",
+  },
+  topRowButtons: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginRight: 5,
   },
 });
