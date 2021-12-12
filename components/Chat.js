@@ -12,6 +12,7 @@ import {
 import { UserContext } from "../contexts/user-context.js";
 import { EventContext } from "../contexts/event-context.js";
 import io from "socket.io-client";
+import { getHistory } from "../utils/YizApi";
 
 const socket = io("localhost:8000");
 const windowWidth = Dimensions.get("window").width;
@@ -34,6 +35,10 @@ export default function CommentCard() {
       let eventTitle = "Lobby";
       socket.emit("joinRoom", { username, eventTitle });
     }
+    getHistory(eventTitle).then(({ data }) => {
+      console.log(data);
+      setMessages([...data.messages]);
+    });
 
     socket.on("message", (data) => {
       let temp = messages;
@@ -47,7 +52,7 @@ export default function CommentCard() {
     });
 
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [socket]);
+  }, [socket, setMessages]);
 
   console.log(message_body, "<<<<<<<<<<<<<<<<");
 

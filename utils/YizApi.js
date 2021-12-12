@@ -10,3 +10,7 @@ export const getUserByUsername = (username) => {
 export const deleteEvent = (id) => {
   return frostyApi.delete(`/events/${id}/`);
 };
+
+export const getHistory = (title) => {
+  return frostyApi.get(`/chat/${title}`);
+};
