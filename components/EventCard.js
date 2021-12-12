@@ -10,7 +10,7 @@ export default function EventCard({ currentEvent }) {
   const [toggleOn, setToggleOn] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { event, setEvent } = useContext(EventContext);
-  const { viewedUser, setViewedUser } = useContext(ViewedUserContext);
+  // const { viewedUser, setViewedUser } = useContext(ViewedUserContext);
 
   // const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
