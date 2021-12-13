@@ -19,6 +19,7 @@ const windowHeight = Dimensions.get("window").height;
 export const SignUp = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [photo, setPhoto] = useState(null);
+  const [error, setError] = useState(null);
   const [newUser, setNewUser] = useState({
     username: "",
     password: "",
@@ -75,6 +76,59 @@ export const SignUp = ({ navigation }) => {
       newState[keyToChange] = text;
       return newState;
     });
+  };
+
+  const handleSubmit = () => {
+    // check if all fields are filled out
+    // set error to null
+    setError(null);
+
+    if (
+      !newUser.username ||
+      !newUser.password ||
+      !newUser.displayName ||
+      !newUser.pronouns ||
+      !newUser.email ||
+      !newUser.dateOfBirth
+    ) {
+      setError("Please fill out all fields.");
+      return;
+    }
+
+    // check if password is at least 8 characters
+    if (newUser.password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+
+    // check if email is valid
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(newUser.email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    // check if date of birth is valid
+    if (
+      !/^\d{4}-\d{2}-\d{2}$/.test(newUser.dateOfBirth) ||
+      newUser.dateOfBirth > new Date().toISOString().substring(0, 10)
+    ) {
+      setError("Please enter a valid date of birth.");
+      return;
+    }
+
+    postNewUser(newUser)
+      .then((res) => {
+        const { User, token } = res.data;
+        setUser({
+          ...User,
+          token: token,
+        });
+        console.log(user);
+        navigation.navigate("User Page");
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
   };
 
   useFocusEffect(
@@ -144,8 +198,9 @@ export const SignUp = ({ navigation }) => {
           style={styles.input}
           value={newUser.dateOfBirth}
           onChangeText={(text) => handleFormChanges(text, "dateOfBirth")}
-          placeholder="Date of birth:"
+          placeholder="Date of birth: (YYYY-MM-DD)"
         />
+        {error && <Text style={styles.error}>{error}</Text>}
       </View>
       <View style={styles.buttons}>
         <View
@@ -180,19 +235,7 @@ export const SignUp = ({ navigation }) => {
               </Pressable>
             </>
           )}
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              postNewUser(newUser)
-                .then((resUser) => {
-                  setUser(resUser);
-                  navigation.navigate("Home");
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }}
-          >
+          <Pressable style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Submit</Text>
           </Pressable>
         </View>
@@ -278,5 +321,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#4A403A",
     margin: 20,
+  },
+  error: {
+    color: "red",
+    fontSize: 18,
   },
 });

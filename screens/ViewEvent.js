@@ -14,7 +14,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { EventContext } from "../contexts/event-context.js";
 import { UserContext } from "../contexts/user-context.js";
 import { ViewedUserContext } from "../contexts/viewed-user-context.js";
-import { getComments } from "../utils/api.js";
+import { getComments } from "../utils/nh-api.js";
 import CommentCard from "../components/CommentCard";
 import SlidingPanel from "react-native-sliding-up-down-panels";
 import Chat from "../components/Chat";
@@ -33,10 +33,14 @@ export const ViewEvent = () => {
   const [isSelf, setIsSelf] = useState(false);
   const navigation = useNavigation();
   useEffect(() => {
-    getComments(event.eventId).then(({ data }) => {
-      setComments(data.comments);
-    });
-    if (event.creator === user.username) {
+    getComments(user.token, event.eventId)
+      .then(({ data }) => {
+        setComments(data);
+      })
+      .catch((err) => {
+        console.dir(err.response.data);
+      });
+    if (event.creator.username === user.username) {
       setIsSelf(true);
     } else {
       setIsSelf(false);
@@ -128,10 +132,9 @@ export const ViewEvent = () => {
           <View style={styles.middleRows}>
             <View style={styles.leftMiddleSide}>
               <Text style={styles.eventDetailText}>
-                Category:{" "}
-                {event.categories.length > 0
-                  ? event.categories[0].categorySlug
-                  : "none"}
+
+                Category:{event.category}
+                {/* {event.categories.length > 0 ? event.categories[0].categorySlug : "none"} */}
               </Text>
               <Text style={styles.eventDetailText}>
                 <Text>Creator: </Text>{" "}
@@ -143,7 +146,7 @@ export const ViewEvent = () => {
                     getUsers()
                       .then((res) => {
                         const correctUser = res.data.users.filter((person) => {
-                          return person.username === event.creator;
+                          return person.username === event.creator.username;
                         })[0];
                         setViewedUser(correctUser);
                       })
@@ -155,7 +158,9 @@ export const ViewEvent = () => {
                     // ***
                   }}
                 >
-                  <Text style={styles.eventCreatorButton}>{event.creator}</Text>
+                  <Text style={styles.eventCreatorButton}>
+                    {event.creator.username}
+                  </Text>
                 </Pressable>
               </Text>
               <Text style={styles.eventDetailText}>

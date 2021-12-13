@@ -18,7 +18,7 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const UserPage = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [editClicked, setEditClicked] = useState(false);
 
   const [hostedEvents, setHostedEvents] = useState([]);
@@ -40,7 +40,7 @@ export const UserPage = () => {
       );
     });
   }, []);
-
+  console.log(user);
   return (
     <View style={styles.wholePage}>
       <View style={styles.pageContainer}>

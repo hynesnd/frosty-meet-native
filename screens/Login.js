@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,8 @@ import {
   Dimensions,
 } from "react-native";
 import { SignUp } from "./SignUp";
+import { loginUser } from "../utils/nh-api";
+import { UserContext } from "../contexts/user-context";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -19,16 +21,41 @@ const Stack = createNativeStackNavigator();
 
 export const Login = ({ navigation }) => {
   const LoginForm = () => {
+    const { user, setUser } = useContext(UserContext);
     const [formData, setFormdata] = useState({
       username: "",
       password: "",
     });
+
+    const [error, setError] = useState(null);
 
     const handleInputs = (text, keyToChange) => {
       setFormdata((prev) => {
         const newState = { ...prev, [keyToChange]: text };
         return newState;
       });
+    };
+
+    // handle login
+    const handleLogin = async () => {
+      try {
+        const res = await loginUser(formData);
+        const resUser = res.data.response.user;
+        const resToken = res.data.response.token;
+
+        setUser({
+          ...resUser,
+          token: resToken,
+        });
+        navigation.navigate("Home");
+      } catch (err) {
+        setError(err.response.data.message);
+        // clear form
+        setFormdata({
+          username: "",
+          password: "",
+        });
+      }
     };
     return (
       <View style={styles.pageContainer}>
@@ -44,20 +71,18 @@ export const Login = ({ navigation }) => {
               placeholder="Username:"
             />
 
-            <TextInput
-              style={styles.input}
-              value={formData.password}
-              onChangeText={(text) => handleInputs(text, "password")}
-              placeholder="Password:"
-              secureTextEntry={true}
-            />
 
-            <Pressable
-              style={styles.button}
-              onPress={() => navigation.navigate("Home")}
-            >
-              <Text style={styles.buttonText}>Login</Text>
-            </Pressable>
+          <TextInput
+            style={styles.input}
+            value={formData.password}
+            onChangeText={(text) => handleInputs(text, "password")}
+            placeholder="Password:"
+            secureTextEntry={true}
+          />
+          {error && <Text style={styles.error}>{error}</Text>}
+          <Pressable style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Login</Text>
+          </Pressable>
 
             <Pressable
               style={styles.button}
@@ -143,5 +168,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 18,
+  },
+  error: {
+    color: "red",
   },
 });

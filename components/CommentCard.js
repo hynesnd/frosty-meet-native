@@ -24,7 +24,7 @@ export default function CommentCard({ comment }) {
             getUsers()
               .then((res) => {
                 const correctUser = res.data.users.filter((person) => {
-                  return person.username === comment.username;
+                  return person.username === comment.user.username;
                 })[0];
                 setViewedUser(correctUser);
               })
@@ -39,7 +39,7 @@ export default function CommentCard({ comment }) {
           {" "}
           <View style={{ flexDirection: "row" }}>
             <Text style={{ color: "white" }}>By: </Text>
-            <Text style={styles.username}>{comment.username}</Text>
+            <Text style={styles.username}>{comment.user.username}</Text>
           </View>
         </Pressable>
         <Text style={{ color: "white" }}>

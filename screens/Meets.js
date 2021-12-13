@@ -13,11 +13,14 @@ import {
   Dimensions,
 } from "react-native";
 import EventCard from "../components/EventCard.js";
-import { getParks, getEvents, getCategories } from "../utils/api.js";
+//import { getParks, getEvents, getCategories } from "../utils/api.js";
+import { getEvents } from "../utils/nh-api.js";
 // import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ViewEvent } from "./ViewEvent.js";
 import { ViewUser } from "./ViewUser.js";
+import { useContext } from "react";
+import { UserContext } from "../contexts/user-context.js";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -26,30 +29,36 @@ export const Meets = () => {
   const [categoryValue, setCategoryValue] = useState("");
   const [categories, setCategories] = useState([
     { label: "Any type", value: "any type" },
+    { label: "Walking", value: "Walking" },
   ]);
   const [events, setEvents] = useState([]);
+  const { user } = useContext(UserContext);
   // const navigation = useNavigation();
 
   useEffect(() => {
-    getCategories().then(({ data }) => {
-      const newCategories = [...categories];
-      data.categories.forEach((category) => {
-        newCategories.push({
-          label:
-            category.categorySlug.slice(0, 1).toUpperCase() +
-            category.categorySlug.slice(1),
-          value: category.categorySlug,
-        });
-      });
-      setCategories(newCategories);
-      setCategoryValue("any type");
-    });
-    getEvents().then(({ data }) => {
-      const newEvents = [];
-      data.events.forEach((event) => {
-        newEvents.push(event);
-      });
-      setEvents(newEvents);
+    // getCategories().then(({ data }) => {
+    //   const newCategories = [...categories];
+    //   data.categories.forEach((category) => {
+    //     newCategories.push({
+    //       label:
+    //         category.categorySlug.slice(0, 1).toUpperCase() +
+    //         category.categorySlug.slice(1),
+    //       value: category.categorySlug,
+    //     });
+    //   });
+    //   setCategories(newCategories);
+    // });
+    setCategoryValue("any type");
+    // getEvents().then(({ data }) => {
+    //   const newEvents = [];
+    //   data.events.forEach((event) => {
+    //     newEvents.push(event);
+    //   });
+    //   setEvents(newEvents);
+    // });
+    getEvents(user.token).then(({ data }) => {
+      console.log(data.events);
+      setEvents(data.events);
     });
   }, []);
 

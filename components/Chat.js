@@ -27,11 +27,16 @@ export default function Chat() {
   const scrollRef = useRef();
   let username = user.username;
   let title = event.title;
+  console.log(title);
 
-  getHistory(title).then(({ data }) => {
-    console.log(data);
-    setMessages([...data.messages]);
-  });
+  getHistory(title)
+    .then(({ data }) => {
+      console.log(data);
+      setMessages([...data.messages]);
+    })
+    .catch((err) => {
+      console.dir(err);
+    });
   useEffect(() => {
     if (user.username !== "" && event.title !== "") {
       socket.emit("joinRoom", { username, title });
