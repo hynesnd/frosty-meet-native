@@ -11,40 +11,49 @@ import {
   Image,
 } from "react-native";
 import EventCard from "../components/EventCard.js";
-import { getParks, getEvents, getCategories } from "../utils/api.js";
+//import { getParks, getEvents, getCategories } from "../utils/api.js";
+import { getEvents } from "../utils/nh-api.js";
 // import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ViewEvent } from "./ViewEvent.js";
 import { ViewUser } from "./ViewUser.js";
+import { useContext } from "react";
+import { UserContext } from "../contexts/user-context.js";
 
 export const Meets = () => {
   const [categoryValue, setCategoryValue] = useState("");
   const [categories, setCategories] = useState([
     { label: "Any type", value: "any type" },
+    { label: "Walking", value: "Walking" },
   ]);
   const [events, setEvents] = useState([]);
+  const { user } = useContext(UserContext);
   // const navigation = useNavigation();
 
   useEffect(() => {
-    getCategories().then(({ data }) => {
-      const newCategories = [...categories];
-      data.categories.forEach((category) => {
-        newCategories.push({
-          label:
-            category.categorySlug.slice(0, 1).toUpperCase() +
-            category.categorySlug.slice(1),
-          value: category.categorySlug,
-        });
-      });
-      setCategories(newCategories);
-      setCategoryValue("any type");
-    });
-    getEvents().then(({ data }) => {
-      const newEvents = [];
-      data.events.forEach((event) => {
-        newEvents.push(event);
-      });
-      setEvents(newEvents);
+    // getCategories().then(({ data }) => {
+    //   const newCategories = [...categories];
+    //   data.categories.forEach((category) => {
+    //     newCategories.push({
+    //       label:
+    //         category.categorySlug.slice(0, 1).toUpperCase() +
+    //         category.categorySlug.slice(1),
+    //       value: category.categorySlug,
+    //     });
+    //   });
+    //   setCategories(newCategories);
+    // });
+    setCategoryValue("any type");
+    // getEvents().then(({ data }) => {
+    //   const newEvents = [];
+    //   data.events.forEach((event) => {
+    //     newEvents.push(event);
+    //   });
+    //   setEvents(newEvents);
+    // });
+    getEvents(user.token).then(({ data }) => {
+      console.log(data.events);
+      setEvents(data.events);
     });
   }, []);
 
@@ -67,10 +76,18 @@ export const Meets = () => {
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
-            onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
+            onValueChange={(itemValue, itemIndex) =>
+              setCategoryValue(itemValue)
+            }
           >
             {categories.map((cat) => {
-              return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
+              return (
+                <Picker.Item
+                  key={cat.label}
+                  label={cat.label}
+                  value={cat.value}
+                />
+              );
             })}
           </Picker>
           {/* <TextInput
@@ -104,7 +121,13 @@ export const Meets = () => {
             onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
           >
             {joinedOptions.map((opt) => {
-              return <Picker.Item key={opt.label} label={opt.label} value={opt.value} />;
+              return (
+                <Picker.Item
+                  key={opt.label}
+                  label={opt.label}
+                  value={opt.value}
+                />
+              );
             })}
           </Picker>
         </View>
