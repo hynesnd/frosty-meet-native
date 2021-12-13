@@ -3,8 +3,8 @@ const frostyApi = axios.create({
   baseURL: "https://frosty-api2.herokuapp.com/api",
 });
 
-export const getEvents = () => {
-  return frostyApi.get("/events");
+export const getEvents = (token) => {
+  return frostyApi.get("/events", { headers: { "x-auth-token": token } });
 };
 export const getUsers = () => {
   return frostyApi.get("/users");
