@@ -37,7 +37,7 @@ export const ViewUser = () => {
   }, []);
 
   return (
-    <View>
+    <View style={{ backgroundColor: "lightgrey" }}>
       <Pressable
         style={styles.backButton}
         onPress={() => {
@@ -52,7 +52,7 @@ export const ViewUser = () => {
         </View>
         <View style={styles.middlePartContainer}>
           <View style={styles.pictureContainer}>
-            <Image source={require("../logo.png")} style={styles.avatar} />
+            <Image source={require("../logo.jpg")} style={styles.avatar} />
           </View>
           <View style={styles.detailsContainer}>
             <Text style={styles.displayName}>{viewedUser.displayName}</Text>
@@ -135,6 +135,8 @@ const styles = StyleSheet.create({
   arrow: {
     fontSize: 30,
     fontWeight: "bold",
+    margin: 20,
+    color: "#4A403A",
   },
   username: {
     flex: 4,
@@ -171,6 +173,7 @@ const styles = StyleSheet.create({
   avatar: {
     height: 150,
     width: 150,
+    borderRadius: 10,
   },
   displayName: {
     height: 40,

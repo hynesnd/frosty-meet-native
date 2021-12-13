@@ -86,123 +86,117 @@ export const SignUp = ({ navigation }) => {
   );
 
   return (
-    <View>
-      <ImageBackground
-        source={"https://media4.giphy.com/media/BDucPOizdZ5AI/giphy.gif"}
-        resizeMode="cover"
-        style={styles.background}
-      >
-        <View style={styles.backContainer}>
-          <Pressable
-            style={styles.backButton}
-            onPress={() => {
-              return navigation.navigate("LoginForm");
-            }}
-          >
-            <Text style={styles.arrow}>⇠</Text>
+    <View style={styles.wholePage}>
+      <View style={styles.backContainer}>
+        <Pressable
+          style={styles.backButton}
+          onPress={() => {
+            return navigation.navigate("LoginForm");
+          }}
+        >
+          <Text style={styles.arrow}>⇠</Text>
+        </Pressable>
+      </View>
+      <View style={styles.formContainer}>
+        <Image style={styles.image} source={require("../logo.jpg")} />
+
+        <TextInput
+          style={styles.input}
+          value={newUser.username}
+          onChangeText={(text) => {
+            handleFormChanges(text, "username");
+          }}
+          placeholder="Username:"
+        />
+
+        <TextInput
+          style={styles.input}
+          value={newUser.password}
+          onChangeText={(text) => {
+            handleFormChanges(text, "password");
+          }}
+          placeholder="Password:"
+          secureTextEntry={true}
+        />
+
+        <TextInput
+          style={styles.input}
+          value={newUser.displayName}
+          onChangeText={(text) => handleFormChanges(text, "displayName")}
+          placeholder="Display Name:"
+        />
+
+        <TextInput
+          style={styles.input}
+          value={newUser.pronouns}
+          onChangeText={(text) => handleFormChanges(text, "pronouns")}
+          placeholder="Pronouns:"
+        />
+
+        <TextInput
+          style={styles.input}
+          value={newUser.email}
+          onChangeText={(text) => handleFormChanges(text, "email")}
+          placeholder="email:"
+        />
+
+        <TextInput
+          style={styles.input}
+          value={newUser.dateOfBirth}
+          onChangeText={(text) => handleFormChanges(text, "dateOfBirth")}
+          placeholder="Date of birth:"
+        />
+      </View>
+      <View style={styles.buttons}>
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          {photo && (
+            <>
+              <Image
+                source={{ uri: photo.uri }}
+                style={{ width: 100, height: 100 }}
+              />
+              <Pressable style={styles.button} onPress={handleUploadPhoto}>
+                <Text style={styles.buttonText}>Upload Avatar</Text>
+              </Pressable>
+            </>
+          )}
+          <Pressable style={styles.button} onPress={handleChoosePhoto}>
+            <Text style={styles.buttonText}>Choose Avatar</Text>
           </Pressable>
         </View>
-        <View style={styles.formContainer}>
-          <Image style={styles.image} source={require("../logo.png")} />
-
-          <TextInput
-            style={styles.input}
-            value={newUser.username}
-            onChangeText={(text) => {
-              handleFormChanges(text, "username");
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          {photo && (
+            <>
+              <Image
+                source={{ uri: photo.uri }}
+                style={{ width: 150, height: 150 }}
+              />
+              <Pressable style={styles.button} onPress={handleUploadPhoto}>
+                <Text style={styles.buttonText}>Upload Profile Picture</Text>
+              </Pressable>
+            </>
+          )}
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              postNewUser(newUser)
+                .then((resUser) => {
+                  setUser(resUser);
+                  navigation.navigate("Home");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             }}
-            placeholder="Username:"
-          />
-
-          <TextInput
-            style={styles.input}
-            value={newUser.password}
-            onChangeText={(text) => {
-              handleFormChanges(text, "password");
-            }}
-            placeholder="Password:"
-            secureTextEntry={true}
-          />
-
-          <TextInput
-            style={styles.input}
-            value={newUser.displayName}
-            onChangeText={(text) => handleFormChanges(text, "displayName")}
-            placeholder="Display Name:"
-          />
-
-          <TextInput
-            style={styles.input}
-            value={newUser.pronouns}
-            onChangeText={(text) => handleFormChanges(text, "pronouns")}
-            placeholder="Pronouns:"
-          />
-
-          <TextInput
-            style={styles.input}
-            value={newUser.email}
-            onChangeText={(text) => handleFormChanges(text, "email")}
-            placeholder="email:"
-          />
-
-          <TextInput
-            style={styles.input}
-            value={newUser.dateOfBirth}
-            onChangeText={(text) => handleFormChanges(text, "dateOfBirth")}
-            placeholder="Date of birth:"
-          />
-        </View>
-        <View style={styles.buttons}>
-          <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            {photo && (
-              <>
-                <Image
-                  source={{ uri: photo.uri }}
-                  style={{ width: 100, height: 100 }}
-                />
-                <Pressable style={styles.button} onPress={handleUploadPhoto}>
-                  <Text style={styles.buttonText}>Upload Avatar</Text>
-                </Pressable>
-              </>
-            )}
-            <Pressable style={styles.button} onPress={handleChoosePhoto}>
-              <Text style={styles.buttonText}>Choose Avatar</Text>
-            </Pressable>
-          </View>
-          <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-          >
-            {photo && (
-              <>
-                <Image
-                  source={{ uri: photo.uri }}
-                  style={{ width: 150, height: 150 }}
-                />
-                <Pressable style={styles.button} onPress={handleUploadPhoto}>
-                  <Text style={styles.buttonText}>Upload Profile Picture</Text>
-                </Pressable>
-              </>
-            )}
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                postNewUser(newUser)
-                  .then((resUser) => {
-                    setUser(resUser);
-                    navigation.navigate("Home");
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              }}
-            >
-              <Text style={styles.buttonText}>Submit</Text>
-            </Pressable>
-          </View>
+            <Text style={styles.buttonText}>Submit</Text>
+          </Pressable>
         </View>
-      </ImageBackground>
+      </View>
     </View>
   );
 };
@@ -211,6 +205,7 @@ const styles = StyleSheet.create({
   wholePage: {
     width: windowWidth,
     height: Number(parseInt(windowHeight) - 50),
+    backgroundColor: "lightgrey",
   },
   title: {
     marginTop: 16,
@@ -237,7 +232,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     borderWidth: 1,
-    borderColor: "red",
+    borderColor: "#8E806A",
     padding: 3,
     fontSize: 18,
     borderRadius: 4,
@@ -259,11 +254,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
     elevation: 3,
-    backgroundColor: "navy",
-    margin: 10,
+    marginVertical: 10,
+    width: 150,
   },
 
   buttonText: {
@@ -272,13 +268,15 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 150,
-    height: 150,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
     margin: 20,
   },
   arrow: {
     fontSize: 30,
     fontWeight: "bold",
+    color: "#4A403A",
     margin: 20,
   },
 });

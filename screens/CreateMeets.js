@@ -9,7 +9,6 @@ import {
   Pressable,
   Image,
   Dimensions,
-  ImageBackground,
 } from "react-native";
 
 const windowWidth = Dimensions.get("window").width;
@@ -48,118 +47,106 @@ export const CreateMeets = () => {
 
   return (
     <View>
-      <ImageBackground
-        source={
-          // "https://c.tenor.com/k27nbm27xAkAAAAC/daffodils-breeze.gif"
-          // "https://images.squarespace-cdn.com/content/v1/58a273c1a5790a100dc7d153/1523374039760-M5KA2VFHH4E9LSI4D3KS/Kite_jjjvcq.gif?format=2500w"
-          // "https://p.favim.com/orig/2018/10/26/rain-spring-nature-Favim.com-6497175.gif"
-          // "https://media3.giphy.com/media/zuj3kcjbGj9qE/giphy.gif"
-          "https://images.unsplash.com/photo-1588714477688-cf28a50e94f7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGFya3xlbnwwfHwwfHw%3D&w=1000&q=80"
-        }
-        resizeMode="cover"
-        style={styles.background}
-      >
-        <View style={styles.titleContainer}></View>
-        <View style={styles.formContainer}>
-          <View style={styles.formRow1}>
-            <TextInput
-              style={styles.input}
-              value={meetTitle}
-              onChangeText={setMeetTitle}
-              placeholder="Title:"
-            />
-            <Picker
-              style={styles.pickerStyle}
-              selectedValue={categoryValue}
-              onValueChange={(itemValue, itemIndex) =>
-                setCategoryValue(itemValue)
-              }
-            >
-              {categories.map((cat) => {
-                return (
-                  <Picker.Item
-                    key={cat.label}
-                    label={cat.label}
-                    value={cat.value}
-                  />
-                );
-              })}
-            </Picker>
-          </View>
-          <View style={styles.formRow2}>
-            <TextInput
-              style={styles.inputDescription}
-              value={meetDescription}
-              onChangeText={setMeetDescription}
-              placeholder="Please give a description ..."
-              multiline={true}
-              numberOfLines={4}
-            />
-          </View>
-          <View style={styles.formRow3}>
-            <Text style={styles.row3Labels}>Start:</Text>
-            <Text style={styles.row3Labels}>End:</Text>
-          </View>
-          <View style={styles.formRow4}>
-            <View style={styles.eventStartContainer}>
-              <TextInput
-                style={styles.dateInput}
-                value={startDate}
-                onChangeText={setStartDate}
-                placeholder="DD/MM/YYYY"
-              />
-              <TextInput
-                style={styles.timeInput}
-                value={startTime}
-                onChangeText={setStartTime}
-                placeholder="HH:MM"
-              />
-            </View>
-            <View style={styles.eventEndContainer}>
-              <TextInput
-                style={styles.dateInput}
-                value={endDate}
-                onChangeText={setEndDate}
-                placeholder="DD/MM/YYYY"
-              />
-              <TextInput
-                style={styles.timeInput}
-                value={endTime}
-                onChangeText={setEndTime}
-                placeholder="HH:MM"
-              />
-            </View>
-          </View>
-        </View>
-        <View>
-          <View style={styles.mapContainer}>
-            <Image
-              source={{ uri: "https://source.unsplash.com/random/300x300" }}
-              style={styles.map}
-            />
-          </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              uploadEventImage;
-            }}
+      <View style={styles.titleContainer}></View>
+      <View style={styles.formContainer}>
+        <View style={styles.formRow1}>
+          <TextInput
+            style={styles.input}
+            value={meetTitle}
+            onChangeText={setMeetTitle}
+            placeholder="Title:"
+          />
+          <Picker
+            style={styles.pickerStyle}
+            selectedValue={categoryValue}
+            onValueChange={(itemValue, itemIndex) =>
+              setCategoryValue(itemValue)
+            }
           >
-            <Text style={styles.buttonText}>Upload Image</Text>
-          </Pressable>
+            {categories.map((cat) => {
+              return (
+                <Picker.Item
+                  key={cat.label}
+                  label={cat.label}
+                  value={cat.value}
+                />
+              );
+            })}
+          </Picker>
+        </View>
+        <View style={styles.formRow2}>
+          <TextInput
+            style={styles.inputDescription}
+            value={meetDescription}
+            onChangeText={setMeetDescription}
+            placeholder="Please give a description ..."
+            multiline={true}
+            numberOfLines={4}
+          />
+        </View>
+        <View style={styles.formRow3}>
+          <Text style={styles.row3Labels}>Start:</Text>
+          <Text style={styles.row3Labels}>End:</Text>
+        </View>
+        <View style={styles.formRow4}>
+          <View style={styles.eventStartContainer}>
+            <TextInput
+              style={styles.dateInput}
+              value={startDate}
+              onChangeText={setStartDate}
+              placeholder="DD/MM/YYYY"
+            />
+            <TextInput
+              style={styles.timeInput}
+              value={startTime}
+              onChangeText={setStartTime}
+              placeholder="HH:MM"
+            />
+          </View>
+          <View style={styles.eventEndContainer}>
+            <TextInput
+              style={styles.dateInput}
+              value={endDate}
+              onChangeText={setEndDate}
+              placeholder="DD/MM/YYYY"
+            />
+            <TextInput
+              style={styles.timeInput}
+              value={endTime}
+              onChangeText={setEndTime}
+              placeholder="HH:MM"
+            />
+          </View>
+        </View>
+      </View>
+      <View>
+        <View style={styles.mapContainer}>
+          <Image
+            source={{ uri: "https://source.unsplash.com/random/300x300" }}
+            style={styles.map}
+          />
+        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            uploadEventImage;
+          }}
+        >
+          <Text style={styles.buttonText}>Upload Image</Text>
+        </Pressable>
 
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              setEvent;
-              navigation.navigate("View Event");
-            }}
-          >
-            <Text style={styles.buttonText}>Submit!</Text>
-          </Pressable>
-        </View>
-      </ImageBackground>
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            setEvent;
+            navigation.navigate("View Event");
+          }}
+        >
+          <Text style={styles.buttonText}>Submit!</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -168,16 +155,17 @@ const styles = StyleSheet.create({
   wholePage: {
     width: windowWidth,
     height: Number(parseInt(windowHeight) - 50),
+    backgroundColor: "lightgrey",
   },
   title: {
     marginTop: 16,
     marginBottom: 20,
     paddingVertical: 8,
     borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
+    borderColor: "#8E806A",
+    borderRadius: 5,
     backgroundColor: "#61dafb",
-    color: "#20232a",
+    color: "#8E806A",
     textAlign: "center",
     fontSize: 25,
     fontWeight: "bold",
@@ -204,10 +192,10 @@ const styles = StyleSheet.create({
     marginRight: 5,
     maxWidth: 150,
     borderWidth: 1,
-    borderColor: "lightgrey",
+    borderColor: "#8E806A",
     padding: 1,
     fontSize: 18,
-    borderRadius: 4,
+    borderRadius: 5,
     backgroundColor: "white",
   },
 
@@ -218,10 +206,10 @@ const styles = StyleSheet.create({
     marginRight: 40,
     flex: 1,
     borderWidth: 1,
-    borderColor: "lightgrey",
+    borderColor: "#8E806A",
     padding: 1,
     fontSize: 18,
-    borderRadius: 4,
+    borderRadius: 5,
     alignSelf: "stretch",
     backgroundColor: "white",
   },
@@ -237,11 +225,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
     elevation: 3,
-    backgroundColor: "navy",
-    margin: 10,
+    marginVertical: 10,
+    width: 150,
   },
 
   buttonText: {
@@ -295,15 +284,15 @@ const styles = StyleSheet.create({
   dateInput: {
     maxWidth: 90,
     borderWidth: 1,
-    borderColor: "lightgrey",
-    borderRadius: 4,
+    borderColor: "#8E806A",
+    borderRadius: 5,
     backgroundColor: "white",
   },
   timeInput: {
     maxWidth: 50,
     borderWidth: 1,
-    borderColor: "lightgrey",
-    borderRadius: 4,
+    borderColor: "#8E806A",
+    borderRadius: 5,
     backgroundColor: "white",
   },
   mapContainer: {
@@ -313,6 +302,7 @@ const styles = StyleSheet.create({
   map: {
     width: 300,
     height: 300,
+    borderRadius: 10,
     margin: 50,
   },
 });

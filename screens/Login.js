@@ -9,7 +9,6 @@ import {
   Pressable,
   Image,
   Dimensions,
-  ImageBackground,
 } from "react-native";
 import { SignUp } from "./SignUp";
 
@@ -33,47 +32,41 @@ export const Login = ({ navigation }) => {
     };
     return (
       <View style={styles.pageContainer}>
-        <ImageBackground
-          source={"https://media4.giphy.com/media/BDucPOizdZ5AI/giphy.gif"}
-          resizeMode="cover"
-          style={styles.background}
-        >
-          <View style={styles.wholePage}>
-            <View style={styles.logoContainer}>
-              <Image style={styles.logo} source={require("../logo.png")} />
-            </View>
-            <View style={styles.formContainer}>
-              <TextInput
-                style={styles.input}
-                value={formData.username}
-                onChangeText={(text) => handleInputs(text, "username")}
-                placeholder="Username:"
-              />
-
-              <TextInput
-                style={styles.input}
-                value={formData.password}
-                onChangeText={(text) => handleInputs(text, "password")}
-                placeholder="Password:"
-                secureTextEntry={true}
-              />
-
-              <Pressable
-                style={styles.button}
-                onPress={() => navigation.navigate("Home")}
-              >
-                <Text style={styles.buttonText}>Login</Text>
-              </Pressable>
-
-              <Pressable
-                style={styles.button}
-                onPress={() => navigation.navigate("SignUp")}
-              >
-                <Text style={styles.buttonText}>Sign up</Text>
-              </Pressable>
-            </View>
+        <View style={styles.wholePage}>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logo} source={require("../logo.jpg")} />
           </View>
-        </ImageBackground>
+          <View style={styles.formContainer}>
+            <TextInput
+              style={styles.input}
+              value={formData.username}
+              onChangeText={(text) => handleInputs(text, "username")}
+              placeholder="Username:"
+            />
+
+            <TextInput
+              style={styles.input}
+              value={formData.password}
+              onChangeText={(text) => handleInputs(text, "password")}
+              placeholder="Password:"
+              secureTextEntry={true}
+            />
+
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("Home")}
+            >
+              <Text style={styles.buttonText}>Login</Text>
+            </Pressable>
+
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("SignUp")}
+            >
+              <Text style={styles.buttonText}>Sign up</Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
     );
   };
@@ -98,11 +91,12 @@ const styles = StyleSheet.create({
   wholePage: {
     width: windowWidth,
     height: Number(parseInt(windowHeight) - 50),
+    backgroundColor: "lightgrey",
   },
   logo: {
-    height: 300,
-    width: 300,
-    borderRadius: 150,
+    height: 200,
+    width: 200,
+    borderRadius: 100,
     alignSelf: "center",
   },
   logoContainer: {
@@ -116,7 +110,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     borderWidth: 1,
-    borderColor: "red",
+    borderColor: "#8E806A",
     padding: 3,
     fontSize: 18,
     borderRadius: 4,
@@ -138,11 +132,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
     elevation: 3,
-    backgroundColor: "navy",
-    margin: 10,
+    marginVertical: 10,
+    width: 150,
   },
 
   buttonText: {

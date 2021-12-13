@@ -7,7 +7,6 @@ import {
   Pressable,
   Image,
   ScrollView,
-  ImageBackground,
   Dimensions,
 } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
@@ -44,125 +43,119 @@ export const UserPage = () => {
 
   return (
     <View>
-      <ImageBackground
-        source={"https://i.makeagif.com/media/8-27-2015/1NpjsX.gif"}
-        resizeMode="cover"
-        style={styles.wholePage}
-      >
-        <View style={styles.pageContainer}>
-          <View style={styles.firstRowContainer}>
-            <Text style={styles.username}>{user.username}</Text>
+      <View style={styles.pageContainer}>
+        <View style={styles.firstRowContainer}>
+          <Text style={styles.username}>{user.username}</Text>
+          {editClicked ? (
+            <Pressable
+              onPress={() => {
+                setEditClicked(false);
+              }}
+              style={styles.editButton}
+            >
+              <Text style={styles.editButtonText}>cancel</Text>
+            </Pressable>
+          ) : (
+            <Pressable
+              onPress={() => {
+                setEditClicked(true);
+              }}
+              style={styles.editButton}
+            >
+              <Text style={styles.editButtonText}>edit</Text>
+            </Pressable>
+          )}
+        </View>
+        <View style={styles.middlePartContainer}>
+          <View style={styles.pictureContainer}>
+            <Image source={require("../logo.jpg")} style={styles.avatar} />
+            <Pressable style={styles.uploadImage} onPress={() => {}}>
+              <Text style={styles.uploadImageText}>Upload Photo</Text>
+            </Pressable>
+          </View>
+          <View style={styles.detailsContainer}>
             {editClicked ? (
-              <Pressable
-                onPress={() => {
-                  setEditClicked(false);
-                }}
-                style={styles.editButton}
-              >
-                <Text style={styles.editButtonText}>cancel</Text>
-              </Pressable>
+              <TextInput
+                placeholder="Display name..."
+                style={styles.textInputDetails}
+              />
             ) : (
-              <Pressable
-                onPress={() => {
-                  setEditClicked(true);
-                }}
-                style={styles.editButton}
-              >
-                <Text style={styles.editButtonText}>edit</Text>
-              </Pressable>
+              <Text style={styles.displayName}>{user.displayName}</Text>
             )}
-          </View>
-          <View style={styles.middlePartContainer}>
-            <View style={styles.pictureContainer}>
-              <Image source={require("../logo.png")} style={styles.avatar} />
-              <Pressable style={styles.uploadImage} onPress={() => {}}>
-                <Text style={styles.uploadImageText}>Upload Photo</Text>
-              </Pressable>
-            </View>
-            <View style={styles.detailsContainer}>
-              {editClicked ? (
-                <TextInput
-                  placeholder="Display name..."
-                  style={styles.textInputDetails}
-                />
-              ) : (
-                <Text style={styles.displayName}>{user.displayName}</Text>
-              )}
-              {editClicked ? (
-                <TextInput
-                  placeholder="Pronouns..."
-                  style={styles.textInputDetails}
-                />
-              ) : (
-                <Text style={styles.pronouns}>{user.pronouns}</Text>
-              )}
-              <Text style={styles.dateOfBirth}>{user.dateOfBirth}</Text>
-            </View>
-          </View>
-          <View style={styles.eventListBox}>
-            <Text>Hosted:</Text>
-            {hostedEvents.length > 0 ? (
-              !hostedClicked ? (
-                <Pressable
-                  onPress={() => {
-                    setHostedClicked(true);
-                  }}
-                >
-                  <Text>View {hostedEvents.length} events</Text>
-                </Pressable>
-              ) : (
-                <>
-                  <Pressable
-                    onPress={() => {
-                      setHostedClicked(false);
-                    }}
-                  >
-                    <Text>Hide {hostedEvents.length} events</Text>
-                  </Pressable>
-                  <ScrollView style={styles.eventListScroller}>
-                    {hostedEvents.map((event) => {
-                      return <EventCardUserPage currentEvent={event} />;
-                    })}
-                  </ScrollView>
-                </>
-              )
+            {editClicked ? (
+              <TextInput
+                placeholder="Pronouns..."
+                style={styles.textInputDetails}
+              />
             ) : (
-              <Text>No hosted events</Text>
+              <Text style={styles.pronouns}>{user.pronouns}</Text>
             )}
-          </View>
-          <View style={styles.eventListBox}>
-            <Text>Attended:</Text>
-            {attendedEvents.length > 0 ? (
-              !attendedClicked ? (
-                <Pressable
-                  onPress={() => {
-                    setAttendedClicked(true);
-                  }}
-                >
-                  <Text>View {attendedEvents.length} events</Text>
-                </Pressable>
-              ) : (
-                <>
-                  <Pressable
-                    onPress={() => {
-                      setAttendedClicked(false);
-                    }}
-                  >
-                    <Text>Hide {attendedEvents.length} events</Text>
-                  </Pressable>
-                  <ScrollView style={styles.eventListScroller}>
-                    {attendedEvents.map((event) => {
-                      return <EventCardUserPage currentEvent={event} />;
-                    })}
-                  </ScrollView>
-                </>
-              )
-            ) : (
-              <Text>No hosted events</Text>
-            )}
+            <Text style={styles.dateOfBirth}>{user.dateOfBirth}</Text>
           </View>
         </View>
-      </ImageBackground>
+        <View style={styles.eventListBox}>
+          <Text>Hosted:</Text>
+          {hostedEvents.length > 0 ? (
+            !hostedClicked ? (
+              <Pressable
+                onPress={() => {
+                  setHostedClicked(true);
+                }}
+              >
+                <Text>View {hostedEvents.length} events</Text>
+              </Pressable>
+            ) : (
+              <>
+                <Pressable
+                  onPress={() => {
+                    setHostedClicked(false);
+                  }}
+                >
+                  <Text>Hide {hostedEvents.length} events</Text>
+                </Pressable>
+                <ScrollView style={styles.eventListScroller}>
+                  {hostedEvents.map((event) => {
+                    return <EventCardUserPage currentEvent={event} />;
+                  })}
+                </ScrollView>
+              </>
+            )
+          ) : (
+            <Text>No hosted events</Text>
+          )}
+        </View>
+        <View style={styles.eventListBox}>
+          <Text>Attended:</Text>
+          {attendedEvents.length > 0 ? (
+            !attendedClicked ? (
+              <Pressable
+                onPress={() => {
+                  setAttendedClicked(true);
+                }}
+              >
+                <Text>View {attendedEvents.length} events</Text>
+              </Pressable>
+            ) : (
+              <>
+                <Pressable
+                  onPress={() => {
+                    setAttendedClicked(false);
+                  }}
+                >
+                  <Text>Hide {attendedEvents.length} events</Text>
+                </Pressable>
+                <ScrollView style={styles.eventListScroller}>
+                  {attendedEvents.map((event) => {
+                    return <EventCardUserPage currentEvent={event} />;
+                  })}
+                </ScrollView>
+              </>
+            )
+          ) : (
+            <Text>No hosted events</Text>
+          )}
+        </View>
+      </View>
     </View>
   );
 };
@@ -171,6 +164,7 @@ const styles = StyleSheet.create({
   wholePage: {
     width: windowWidth,
     height: Number(parseInt(windowHeight) - 50),
+    backgroundColor: "lightgrey",
   },
   pageContainer: {
     padding: 15,
@@ -211,10 +205,9 @@ const styles = StyleSheet.create({
   avatar: {
     height: 150,
     width: 150,
+    borderRadius: 10,
   },
   displayName: {
-    backgroundColor: "white",
-
     height: 40,
     fontSize: 30,
   },

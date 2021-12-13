@@ -267,7 +267,15 @@ export const ViewEvent = () => {
           headerLayoutHeight={100}
           headerLayout={() => (
             <View style={styles.headerLayoutStyle}>
-              <Text style={styles.arrow}>⇡</Text>
+              <Text
+                style={{
+                  fontSize: 30,
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
+                ⇡
+              </Text>
               <Text style={styles.commonTextStyle}>Live Chat!</Text>
             </View>
           )}
@@ -369,6 +377,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginTop: 10,
+    borderRadius: 10,
   },
   commentsContainer: {
     flexDirection: "column",
@@ -407,6 +416,8 @@ const styles = StyleSheet.create({
   arrow: {
     fontSize: 30,
     fontWeight: "bold",
+    color: "#4A403A",
+    marginTop: 10,
   },
 
   participantButtonText: {

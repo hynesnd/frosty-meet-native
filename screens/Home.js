@@ -6,7 +6,6 @@ import {
   TextInput,
   Image,
   Pressable,
-  ImageBackground,
   Dimensions,
 } from "react-native";
 
@@ -16,15 +15,9 @@ const windowHeight = Dimensions.get("window").height;
 export const Home = ({ navigation }) => {
   return (
     <View style={styles.wholePage}>
-      <ImageBackground
-        source={"https://media4.giphy.com/media/BDucPOizdZ5AI/giphy.gif"}
-        resizeMode="cover"
-        style={styles.background}
-      >
-        <View>
-          <View style={styles.logoContainer}>
-            <Image source={require("../logo.png")} style={styles.logo} />
-          </View>
+      <View style={styles.contentsContainer}>
+        <View style={styles.logoContainer}>
+          <Image source={require("../logo.jpg")} style={styles.logo} />
         </View>
         <View style={styles.buttonContainer}>
           <Pressable
@@ -41,7 +34,7 @@ export const Home = ({ navigation }) => {
             <Text style={styles.buttonText}>Create Event</Text>
           </Pressable>
         </View>
-      </ImageBackground>
+      </View>
     </View>
   );
 };
@@ -50,15 +43,20 @@ const styles = StyleSheet.create({
   wholePage: {
     width: windowWidth,
     height: Number(parseInt(windowHeight)),
-  },
-  background: {
-    flex: 1,
+    flexDirection: "column",
     justifyContent: "center",
+    backgroundColor: "lightgrey",
   },
   pageContainer: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
+  },
+
+  contentsContainer: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    height: 650,
   },
 
   buttonContainer: {
@@ -74,11 +72,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
     elevation: 3,
-    backgroundColor: "navy",
-    margin: 10,
+    marginVertical: 10,
+    width: 150,
   },
 
   buttonText: {
@@ -87,9 +86,9 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 300,
-    height: 300,
+    width: 200,
+    height: 200,
     margin: 50,
-    borderRadius: 150,
+    borderRadius: 100,
   },
 });
