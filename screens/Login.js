@@ -11,11 +11,22 @@ import {
 } from "react-native";
 import { SignUp } from "./SignUp";
 
+const Stack = createNativeStackNavigator();
+
 export const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [formData, setFormdata] = useState({
+    username: "",
+    password: "",
+  });
 
-  const Stack = createNativeStackNavigator();
+  const handleInputs = (text, keyToChange) => {
+    setFormdata((prev) => {
+      const newState = { ...prev, [keyToChange]: text };
+      return newState;
+    });
+  };
 
   const LoginForm = () => {
     return (
@@ -39,11 +50,17 @@ export const Login = ({ navigation }) => {
             secureTextEntry={true}
           />
 
-          <Pressable style={styles.button} onPress={() => navigation.navigate("Home")}>
+          <Pressable
+            style={styles.button}
+            onPress={() => navigation.navigate("Home")}
+          >
             <Text style={styles.buttonText}>Login</Text>
           </Pressable>
 
-          <Pressable style={styles.button} onPress={() => navigation.navigate("SignUp")}>
+          <Pressable
+            style={styles.button}
+            onPress={() => navigation.navigate("SignUp")}
+          >
             <Text style={styles.buttonText}>Sign up</Text>
           </Pressable>
         </View>
@@ -52,13 +69,17 @@ export const Login = ({ navigation }) => {
   };
 
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="LoginForm">
       <Stack.Screen
         name="LoginForm"
         component={LoginForm}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
