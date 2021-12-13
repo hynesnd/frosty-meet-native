@@ -5,6 +5,7 @@ import { EventContext } from "../contexts/event-context.js";
 import { ViewedUserContext } from "../contexts/viewed-user-context.js";
 
 import { useNavigation } from "@react-navigation/native";
+import { withSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function EventCard({ currentEvent }) {
   const [toggleOn, setToggleOn] = useState(false);
@@ -106,16 +107,17 @@ export default function EventCard({ currentEvent }) {
 
 const styles = StyleSheet.create({
   cardContainer: {
+    backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "center",
+    borderRadius: 4,
+    borderColor: "lightgrey",
+    borderWidth: 1,
+    margin: 5,
   },
   mainContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    borderRadius: 4,
-    borderColor: "lightgrey",
-    borderWidth: 1,
-    margin: 10,
     height: 100,
   },
   eventImage: {

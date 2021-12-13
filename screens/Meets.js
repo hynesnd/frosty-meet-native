@@ -9,6 +9,8 @@ import {
   DatePicker,
   ScrollView,
   Image,
+  ImageBackground,
+  Dimensions,
 } from "react-native";
 import EventCard from "../components/EventCard.js";
 import { getParks, getEvents, getCategories } from "../utils/api.js";
@@ -16,6 +18,9 @@ import { getParks, getEvents, getCategories } from "../utils/api.js";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ViewEvent } from "./ViewEvent.js";
 import { ViewUser } from "./ViewUser.js";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export const Meets = () => {
   const [categoryValue, setCategoryValue] = useState("");
@@ -62,25 +67,38 @@ export const Meets = () => {
 
   const MeetsPage = () => {
     return (
-      <View>
-        <View style={styles.topSelectorRow}>
-          <Picker
-            style={styles.pickerStyle}
-            selectedValue={categoryValue}
-            onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
-          >
-            {categories.map((cat) => {
-              return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
-            })}
-          </Picker>
-          {/* <TextInput
+      <View style={styles.wholePage}>
+        <ImageBackground
+          source={"https://i.makeagif.com/media/8-27-2015/1NpjsX.gif"}
+          resizeMode="cover"
+          style={styles.background}
+        >
+          <View style={styles.topSelectorRow}>
+            <Picker
+              style={styles.pickerStyle}
+              selectedValue={categoryValue}
+              onValueChange={(itemValue, itemIndex) =>
+                setCategoryValue(itemValue)
+              }
+            >
+              {categories.map((cat) => {
+                return (
+                  <Picker.Item
+                    key={cat.label}
+                    label={cat.label}
+                    value={cat.value}
+                  />
+                );
+              })}
+            </Picker>
+            {/* <TextInput
             style={styles.dateInput}
             value={eventDate}
             onChangeText={setEventDate}
             placeholder="DD/MM/YYYY"
           /> */}
 
-          {/* <DatePicker
+            {/* <DatePicker
             defaultDate={new Date(2021, 4, 4)}
             minimumDate={new Date(2021, 1, 1)}
             maximumDate={new Date(2021, 12, 31)}
@@ -98,59 +116,70 @@ export const Meets = () => {
           />
           <Text>{eventDate.toString().substr(4, 12)}</Text> */}
 
-          <Picker
-            style={styles.pickerStyle}
-            selectedValue={joinedValue}
-            onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
-          >
-            {joinedOptions.map((opt) => {
-              return <Picker.Item key={opt.label} label={opt.label} value={opt.value} />;
-            })}
-          </Picker>
-        </View>
-        <View style={styles.secondRowContainer}>
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              if (mapOpened) {
-                setMapOpened(false);
-              } else {
-                setMapOpened(true);
+            <Picker
+              style={styles.pickerStyle}
+              selectedValue={joinedValue}
+              onValueChange={(itemValue, itemIndex) =>
+                setJoinedValue(itemValue)
               }
-            }}
-          >
+            >
+              {joinedOptions.map((opt) => {
+                return (
+                  <Picker.Item
+                    key={opt.label}
+                    label={opt.label}
+                    value={opt.value}
+                  />
+                );
+              })}
+            </Picker>
+          </View>
+          <View style={styles.secondRowContainer}>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                if (mapOpened) {
+                  setMapOpened(false);
+                } else {
+                  setMapOpened(true);
+                }
+              }}
+            >
+              {mapOpened ? (
+                <Text style={styles.buttonText}>Collapse map</Text>
+              ) : (
+                <Text style={styles.buttonText}>Open map</Text>
+              )}
+            </Pressable>
             {mapOpened ? (
-              <Text style={styles.buttonText}>Collapse map</Text>
-            ) : (
-              <Text style={styles.buttonText}>Open map</Text>
-            )}
-          </Pressable>
-          {mapOpened ? (
-            <View>
-              <View style={styles.mapContainer}>
-                <Image
-                  source={{ uri: "https://source.unsplash.com/random/300x300" }}
-                  style={styles.map}
-                />
+              <View>
+                <View style={styles.mapContainer}>
+                  <Image
+                    source={{
+                      uri: "https://source.unsplash.com/random/300x300",
+                    }}
+                    style={styles.map}
+                  />
+                </View>
               </View>
-            </View>
-          ) : null}
-        </View>
-        <ScrollView>
-          {events.length === 0 ? (
-            <Text>No events here</Text>
-          ) : (
-            events.map((currentEvent) => {
-              return (
-                <EventCard
-                  key={currentEvent._id}
-                  // navigation={navigation}
-                  currentEvent={currentEvent}
-                />
-              );
-            })
-          )}
-        </ScrollView>
+            ) : null}
+          </View>
+          <ScrollView>
+            {events.length === 0 ? (
+              <Text>No events here</Text>
+            ) : (
+              events.map((currentEvent) => {
+                return (
+                  <EventCard
+                    key={currentEvent._id}
+                    // navigation={navigation}
+                    currentEvent={currentEvent}
+                  />
+                );
+              })
+            )}
+          </ScrollView>
+        </ImageBackground>
       </View>
     );
   };
@@ -177,6 +206,15 @@ export const Meets = () => {
 };
 
 const styles = StyleSheet.create({
+  wholePage: {
+    width: windowWidth,
+    height: Number(parseInt(windowHeight) - 50),
+  },
+  background: {
+    flex: 1,
+    justifyContent: "center",
+  },
+
   topSelectorRow: {
     flexDirection: "row",
     justifyContent: "space-evenly",

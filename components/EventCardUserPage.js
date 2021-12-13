@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "column",
     justifyContent: "center",
+    backgroundColor: "white",
   },
   mainContainer: {
     flexDirection: "row",

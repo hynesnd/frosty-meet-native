@@ -42,7 +42,9 @@ export default function CommentCard({ comment }) {
             <Text style={styles.username}>{comment.username}</Text>
           </View>
         </Pressable>
-        <Text style={styles.createdAt}>Posted: {comment.dateCreated.slice(0, 10)}</Text>
+        <Text style={styles.createdAt}>
+          Posted: {comment.dateCreated.slice(0, 10)}
+        </Text>
       </View>
       <View style={styles.middleRow}>
         <Text style={styles.body}>{comment.commentBody}</Text>
