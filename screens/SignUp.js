@@ -80,7 +80,6 @@ export const SignUp = ({ navigation }) => {
     }, [])
   );
 
-  console.log(newUser);
   return (
     <View>
       <View style={styles.backContainer}>

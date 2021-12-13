@@ -11,13 +11,21 @@ import {
 } from "react-native";
 import { SignUp } from "./SignUp";
 
+const Stack = createNativeStackNavigator();
+
 export const Login = ({ navigation }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const Stack = createNativeStackNavigator();
-
   const LoginForm = () => {
+    const [formData, setFormdata] = useState({
+      username: "",
+      password: "",
+    });
+
+    const handleInputs = (text, keyToChange) => {
+      setFormdata((prev) => {
+        const newState = { ...prev, [keyToChange]: text };
+        return newState;
+      });
+    };
     return (
       <View style={styles.pageContainer}>
         <View style={styles.logoContainer}>
@@ -26,24 +34,30 @@ export const Login = ({ navigation }) => {
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
-            value={username}
-            onChangeText={setUsername}
+            value={formData.username}
+            onChangeText={(text) => handleInputs(text, "username")}
             placeholder="Username:"
           />
 
           <TextInput
             style={styles.input}
-            value={password}
-            onChangeText={setPassword}
+            value={formData.password}
+            onChangeText={(text) => handleInputs(text, "password")}
             placeholder="Password:"
             secureTextEntry={true}
           />
 
-          <Pressable style={styles.button} onPress={() => navigation.navigate("Home")}>
+          <Pressable
+            style={styles.button}
+            onPress={() => navigation.navigate("Home")}
+          >
             <Text style={styles.buttonText}>Login</Text>
           </Pressable>
 
-          <Pressable style={styles.button} onPress={() => navigation.navigate("SignUp")}>
+          <Pressable
+            style={styles.button}
+            onPress={() => navigation.navigate("SignUp")}
+          >
             <Text style={styles.buttonText}>Sign up</Text>
           </Pressable>
         </View>
@@ -52,13 +66,17 @@ export const Login = ({ navigation }) => {
   };
 
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="LoginForm">
       <Stack.Screen
         name="LoginForm"
         component={LoginForm}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
