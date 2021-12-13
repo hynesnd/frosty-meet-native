@@ -67,7 +67,7 @@ export default function Chat() {
   return (
     <View style={styles.chatRoomContainer}>
       <View style={styles.chat}>
-        <View style={styles.username}>
+        <View style={styles.usernameContainer}>
           <Text style={styles.roomTitle}>
             {user.username} <Text style={{ fontSize: 16 }}>in {event.title}</Text>
           </Text>
@@ -143,24 +143,25 @@ export default function Chat() {
 const styles = StyleSheet.create({
   chatRoomContainer: {
     flexDirection: "column",
+    height: Number(parseInt(windowHeight) - 100),
   },
   chat: {
     width: windowWidth,
-    height: Number(parseInt(windowHeight) - 150),
+    height: Number(parseInt(windowHeight) - 110),
     padding: 1,
     flexDirection: "column",
     justifyContent: "space-between",
   },
-  username: {
+  usernameContainer: {
     width: windowWidth,
     alignSelf: "flex-start",
     fontWeight: "bold",
-    borderWidth: 1,
-    paddingBottom: 1,
+    borderWidth: 2,
+    borderColor: "grey",
+    paddingBottom: 3,
     marginBottom: 5,
   },
   roomTitle: {
-    color: "Purple",
     fontSize: 25,
   },
   chatMessage: {
@@ -197,7 +198,6 @@ const styles = StyleSheet.create({
   },
   send: {
     width: windowWidth,
-    height: 50,
     flex: 4,
     borderColor: "orange",
     backgroundColor: "white",
@@ -213,5 +213,6 @@ const styles = StyleSheet.create({
   },
   sender: {
     flexDirection: "row",
+    height: 50,
   },
 });
