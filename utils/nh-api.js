@@ -27,3 +27,7 @@ export const postComment = (id) => {
 export const postNewUser = (newUser) => {
   return frostyApi.post("/users/register", newUser);
 };
+
+export const loginUser = (newUser) => {
+  return frostyApi.post("/users/login", newUser);
+};
