@@ -113,7 +113,13 @@ export const SignUp = ({ navigation }) => {
 
     postNewUser(newUser)
       .then((res) => {
-        console.log(res);
+        const { User, token } = res.data;
+        setUser({
+          ...User,
+          token: token,
+        });
+        console.log(user);
+        navigation.navigate("User Page");
       })
       .catch((err) => {
         setError(err.response.data.message);

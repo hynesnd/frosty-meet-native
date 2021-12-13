@@ -14,7 +14,7 @@ import { getEvents } from "../utils/api.js";
 import EventCardUserPage from "../components/EventCardUserPage";
 
 export const UserPage = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [editClicked, setEditClicked] = useState(false);
 
   const [hostedEvents, setHostedEvents] = useState([]);
@@ -36,7 +36,7 @@ export const UserPage = () => {
       );
     });
   }, []);
-
+  console.log(user);
   return (
     <View>
       <View style={styles.pageContainer}>
