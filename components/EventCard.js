@@ -5,6 +5,7 @@ import { EventContext } from "../contexts/event-context.js";
 import { ViewedUserContext } from "../contexts/viewed-user-context.js";
 
 import { useNavigation } from "@react-navigation/native";
+import { withSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function EventCard({ currentEvent }) {
   const [toggleOn, setToggleOn] = useState(false);
@@ -34,24 +35,26 @@ export default function EventCard({ currentEvent }) {
         />
         <View style={styles.textContainer}>
           <View style={styles.textRow}>
-            <Text style={styles.eventTitle}>
+            <Text style={{ color: "white" }}>
               {currentEvent.title.length > 25
                 ? `${currentEvent.title.slice(0, 20)}...`
                 : currentEvent.title}
             </Text>
-            <Text style={styles.eventDateTime}>
+            <Text style={{ color: "white" }}>
               {currentEvent.eventStart.slice(0, 10).replaceAll("-", "/")}
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>Creator: {currentEvent.creator.username}</Text>
-            <Text style={styles.eventDateTime}>
+            <Text style={{ color: "white" }}>
+              Creator: {currentEvent.creator.username}
+            </Text>
+            <Text style={{ color: "white" }}>
               {currentEvent.eventStart.slice(11, 16)} -{" "}
               {currentEvent.eventEnd.slice(11, 16)}
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>
+            <Text style={{ color: "white" }}>
               Info:{" "}
               {currentEvent.description.length > 100
                 ? `${currentEvent.description.slice(0, 60)}...`
@@ -106,20 +109,22 @@ export default function EventCard({ currentEvent }) {
 
 const styles = StyleSheet.create({
   cardContainer: {
+    backgroundColor: "#8E806A",
     flexDirection: "column",
     justifyContent: "center",
+    borderRadius: 10,
+    borderColor: "lightgrey",
+    borderWidth: 1,
+    margin: 5,
   },
   mainContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    borderRadius: 4,
-    borderColor: "lightgrey",
-    borderWidth: 1,
-    margin: 10,
     height: 100,
   },
   eventImage: {
     flex: 1,
+    borderRadius: 10,
   },
   textContainer: {
     flexDirection: "column",
@@ -141,6 +146,7 @@ const styles = StyleSheet.create({
   buttonText: {
     width: 80,
     justifyContent: "center",
+    color: "white",
   },
   creatorButtonText: {
     fontStyle: "italic",

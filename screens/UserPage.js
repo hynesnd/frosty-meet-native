@@ -7,11 +7,15 @@ import {
   Pressable,
   Image,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getEvents } from "../utils/api.js";
 import EventCardUserPage from "../components/EventCardUserPage";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export const UserPage = () => {
   const { user } = useContext(UserContext);
@@ -19,8 +23,8 @@ export const UserPage = () => {
 
   const [hostedEvents, setHostedEvents] = useState([]);
   const [attendedEvents, setAttendedEvents] = useState([]);
-  const [hostedClicked, setHostedClicked] = useState(false);
-  const [attendedClicked, setAttendedClicked] = useState(false);
+  const [hostedClicked, setHostedClicked] = useState(true);
+  const [attendedClicked, setAttendedClicked] = useState(true);
 
   const navigation = useNavigation();
 
@@ -38,7 +42,7 @@ export const UserPage = () => {
   }, []);
   console.log(user);
   return (
-    <View>
+    <View style={styles.wholePage}>
       <View style={styles.pageContainer}>
         <View style={styles.firstRowContainer}>
           <Text style={styles.username}>{user.username}</Text>
@@ -64,9 +68,9 @@ export const UserPage = () => {
         </View>
         <View style={styles.middlePartContainer}>
           <View style={styles.pictureContainer}>
-            <Image source={require("../logo.png")} style={styles.avatar} />
+            <Image source={require("../logo.jpg")} style={styles.avatar} />
             <Pressable style={styles.uploadImage} onPress={() => {}}>
-              <Text style={styles.uploadImageText}>Upload Photo</Text>
+              <Text style={{ color: "white" }}>Upload Photo</Text>
             </Pressable>
           </View>
           <View style={styles.detailsContainer}>
@@ -157,9 +161,25 @@ export const UserPage = () => {
 };
 
 const styles = StyleSheet.create({
+  wholePage: {
+    width: windowWidth,
+    height: Number(parseInt(windowHeight) - 50),
+    backgroundColor: "lightgrey",
+  },
   pageContainer: {
     padding: 15,
     margin: 5,
+  },
+  uploadImage: {
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
+    fontSize: 16,
+    padding: 5,
+    marginTop: 5,
+    height: 24,
+    marginHorizontal: 5,
+    alignSelf: "center",
+    marginRight: 10,
   },
   username: {
     flex: 4,
@@ -196,6 +216,7 @@ const styles = StyleSheet.create({
   avatar: {
     height: 150,
     width: 150,
+    borderRadius: 10,
   },
   displayName: {
     height: 40,
@@ -219,14 +240,13 @@ const styles = StyleSheet.create({
   },
 
   eventListBox: {
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 5,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    backgroundColor: "white",
     marginTop: 10,
   },
   eventListScroller: {
-    borderWidth: 1,
-    borderRadius: 5,
-    maxHeight: 200,
+    maxHeight: 225,
   },
 });

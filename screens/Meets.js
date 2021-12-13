@@ -9,6 +9,8 @@ import {
   DatePicker,
   ScrollView,
   Image,
+  ImageBackground,
+  Dimensions,
 } from "react-native";
 import EventCard from "../components/EventCard.js";
 //import { getParks, getEvents, getCategories } from "../utils/api.js";
@@ -19,6 +21,9 @@ import { ViewEvent } from "./ViewEvent.js";
 import { ViewUser } from "./ViewUser.js";
 import { useContext } from "react";
 import { UserContext } from "../contexts/user-context.js";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export const Meets = () => {
   const [categoryValue, setCategoryValue] = useState("");
@@ -71,7 +76,12 @@ export const Meets = () => {
 
   const MeetsPage = () => {
     return (
-      <View>
+      <View style={styles.wholePage}>
+        {/* <ImageBackground
+          source={"https://i.makeagif.com/media/8-27-2015/1NpjsX.gif"}
+          resizeMode="cover"
+          style={styles.background}
+        > */}
         <View style={styles.topSelectorRow}>
           <Picker
             style={styles.pickerStyle}
@@ -152,7 +162,9 @@ export const Meets = () => {
             <View>
               <View style={styles.mapContainer}>
                 <Image
-                  source={{ uri: "https://source.unsplash.com/random/300x300" }}
+                  source={{
+                    uri: "https://source.unsplash.com/random/300x300",
+                  }}
                   style={styles.map}
                 />
               </View>
@@ -174,6 +186,7 @@ export const Meets = () => {
             })
           )}
         </ScrollView>
+        {/* </ImageBackground> */}
       </View>
     );
   };
@@ -200,6 +213,16 @@ export const Meets = () => {
 };
 
 const styles = StyleSheet.create({
+  wholePage: {
+    width: windowWidth,
+    height: Number(parseInt(windowHeight) - 50),
+    backgroundColor: "lightgrey",
+  },
+  background: {
+    flex: 1,
+    justifyContent: "center",
+  },
+
   topSelectorRow: {
     flexDirection: "row",
     justifyContent: "space-evenly",
@@ -208,6 +231,10 @@ const styles = StyleSheet.create({
     height: 25,
     width: 100,
     marginTop: 10,
+    backgroundColor: "#8E806A",
+    borderRadius: 10,
+    borderWidth: 1,
+    color: "white",
   },
   dateInput: {
     maxWidth: 100,
@@ -215,7 +242,7 @@ const styles = StyleSheet.create({
     height: 25,
     borderWidth: 1,
     borderColor: "lightgrey",
-    borderRadius: 4,
+    borderRadius: 10,
   },
 
   secondRowContainer: {
@@ -227,10 +254,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 4,
-    paddingHorizontal: 32,
-    borderRadius: 4,
+    paddingHorizontal: 24,
+    borderRadius: 10,
     elevation: 3,
-    backgroundColor: "navy",
+    backgroundColor: "#8E806A",
     marginVertical: 10,
     marginHorizontal: 100,
   },
@@ -247,5 +274,6 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     marginHorizontal: 50,
+    borderRadius: 10,
   },
 });

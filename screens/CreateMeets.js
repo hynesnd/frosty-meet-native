@@ -8,7 +8,11 @@ import {
   Picker,
   Pressable,
   Image,
+  Dimensions,
 } from "react-native";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export const CreateMeets = () => {
   const [meetTitle, setMeetTitle] = useState("");
@@ -148,15 +152,20 @@ export const CreateMeets = () => {
 };
 
 const styles = StyleSheet.create({
+  wholePage: {
+    width: windowWidth,
+    height: Number(parseInt(windowHeight) - 50),
+    backgroundColor: "lightgrey",
+  },
   title: {
     marginTop: 16,
     marginBottom: 20,
     paddingVertical: 8,
     borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
+    borderColor: "#8E806A",
+    borderRadius: 5,
     backgroundColor: "#61dafb",
-    color: "#20232a",
+    color: "#8E806A",
     textAlign: "center",
     fontSize: 25,
     fontWeight: "bold",
@@ -183,10 +192,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
     maxWidth: 150,
     borderWidth: 1,
-    borderColor: "lightgrey",
+    borderColor: "#8E806A",
     padding: 1,
     fontSize: 18,
-    borderRadius: 4,
+    borderRadius: 5,
+    backgroundColor: "white",
   },
 
   inputDescription: {
@@ -196,11 +206,12 @@ const styles = StyleSheet.create({
     marginRight: 40,
     flex: 1,
     borderWidth: 1,
-    borderColor: "lightgrey",
+    borderColor: "#8E806A",
     padding: 1,
     fontSize: 18,
-    borderRadius: 4,
+    borderRadius: 5,
     alignSelf: "stretch",
+    backgroundColor: "white",
   },
 
   formContainer: {
@@ -214,11 +225,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
     elevation: 3,
-    backgroundColor: "navy",
-    margin: 10,
+    marginVertical: 10,
+    width: 150,
   },
 
   buttonText: {
@@ -272,14 +284,16 @@ const styles = StyleSheet.create({
   dateInput: {
     maxWidth: 90,
     borderWidth: 1,
-    borderColor: "lightgrey",
-    borderRadius: 4,
+    borderColor: "#8E806A",
+    borderRadius: 5,
+    backgroundColor: "white",
   },
   timeInput: {
     maxWidth: 50,
     borderWidth: 1,
-    borderColor: "lightgrey",
-    borderRadius: 4,
+    borderColor: "#8E806A",
+    borderRadius: 5,
+    backgroundColor: "white",
   },
   mapContainer: {
     flex: 1,
@@ -288,6 +302,7 @@ const styles = StyleSheet.create({
   map: {
     width: 300,
     height: 300,
+    borderRadius: 10,
     margin: 50,
   },
 });

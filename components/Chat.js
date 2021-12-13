@@ -75,7 +75,9 @@ export default function Chat() {
         <View style={styles.usernameContainer}>
           <Text style={styles.roomTitle}>
             {user.username}{" "}
-            <Text style={{ fontSize: 16 }}>in {event.title}</Text>
+            <Text style={{ fontSize: 16, color: "#4A403A" }}>
+              in {event.title}
+            </Text>
           </Text>
         </View>
         <ScrollView
@@ -92,17 +94,18 @@ export default function Chat() {
                   <View style={styles.messageInnerLeft}>
                     <Text
                       style={{
-                        backgroundColor: "orange",
+                        backgroundColor: "#99A799",
                         fontSize: 20,
                         borderRadius: 10,
                         padding: 10,
+                        color: "white",
                       }}
                     >
                       {msg.messageBody}
                     </Text>
                   </View>
                   <View style={styles.messageInnerLeft}>
-                    <Text style={{ fontStyle: "italic" }}>
+                    <Text style={{ fontStyle: "italic", color: "#4A403A" }}>
                       by {msg.username}
                     </Text>
                   </View>
@@ -114,7 +117,7 @@ export default function Chat() {
                   <View style={styles.messageInnerRight}>
                     <Text
                       style={{
-                        backgroundColor: "purple",
+                        backgroundColor: "#C37B89",
                         fontSize: 20,
                         borderRadius: 10,
                         padding: 10,
@@ -125,7 +128,7 @@ export default function Chat() {
                     </Text>
                   </View>
                   <View style={styles.messageInnerRight}>
-                    <Text style={{ fontStyle: "italic" }}>
+                    <Text style={{ fontStyle: "italic", color: "#4A403A" }}>
                       by {msg.username}
                     </Text>
                   </View>
@@ -142,7 +145,9 @@ export default function Chat() {
             onChangeText={setMessageBody}
           ></TextInput>
           <Pressable onPress={sendData} style={styles.sendButton}>
-            <Text style={{ fontSize: 20, alignSelf: "center" }}>Send</Text>
+            <Text style={{ fontSize: 20, alignSelf: "center", color: "white" }}>
+              Send
+            </Text>
           </Pressable>
         </View>
       </View>
@@ -167,12 +172,14 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     fontWeight: "bold",
     borderWidth: 2,
+    borderRadius: 10,
     borderColor: "grey",
-    paddingBottom: 3,
+    padding: 3,
     marginBottom: 5,
   },
   roomTitle: {
     fontSize: 25,
+    color: "#4A403A",
   },
   chatMessage: {
     height: Number(parseInt(windowHeight) * 0.75),
@@ -207,13 +214,13 @@ const styles = StyleSheet.create({
   send: {
     width: windowWidth,
     flex: 4,
-    borderColor: "orange",
+    borderColor: "#99A799",
     backgroundColor: "white",
     paddingLeft: 5,
   },
   sendButton: {
     width: Number(parseInt(windowWidth) * 0.2),
-    backgroundColor: "orange",
+    backgroundColor: "#99A799",
     borderRadius: 3,
     flex: 1,
     flexDirection: "column",

@@ -7,9 +7,14 @@ import {
   TextInput,
   Image,
   Pressable,
+  Dimensions,
+  ImageBackground,
 } from "react-native";
 import { postNewUser } from "../utils/nh-api";
 import { UserContext } from "../contexts/user-context";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export const SignUp = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -135,7 +140,7 @@ export const SignUp = ({ navigation }) => {
   );
 
   return (
-    <View>
+    <View style={styles.wholePage}>
       <View style={styles.backContainer}>
         <Pressable
           style={styles.backButton}
@@ -147,7 +152,7 @@ export const SignUp = ({ navigation }) => {
         </Pressable>
       </View>
       <View style={styles.formContainer}>
-        <Image style={styles.image} source={require("../logo.png")} />
+        <Image style={styles.image} source={require("../logo.jpg")} />
 
         <TextInput
           style={styles.input}
@@ -240,6 +245,11 @@ export const SignUp = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  wholePage: {
+    width: windowWidth,
+    height: Number(parseInt(windowHeight) - 50),
+    backgroundColor: "lightgrey",
+  },
   title: {
     marginTop: 16,
     marginBottom: 20,
@@ -265,10 +275,11 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     borderWidth: 1,
-    borderColor: "red",
+    borderColor: "#8E806A",
     padding: 3,
     fontSize: 18,
     borderRadius: 4,
+    backgroundColor: "white",
   },
 
   formContainer: {
@@ -286,11 +297,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
     elevation: 3,
-    backgroundColor: "navy",
-    margin: 10,
+    marginVertical: 10,
+    width: 150,
   },
 
   buttonText: {
@@ -299,13 +311,15 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 150,
-    height: 150,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
     margin: 20,
   },
   arrow: {
     fontSize: 30,
     fontWeight: "bold",
+    color: "#4A403A",
     margin: 20,
   },
   error: {

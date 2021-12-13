@@ -58,7 +58,11 @@ export const ViewEvent = () => {
   const handleEditEvent = (id) => {};
 
   return (
-    <View>
+    <View
+      style={{
+        backgroundColor: "lightgrey",
+      }}
+    >
       <ScrollView style={styles.contentsContainer}>
         <View style={styles.backContainer}>
           <Pressable
@@ -128,6 +132,7 @@ export const ViewEvent = () => {
           <View style={styles.middleRows}>
             <View style={styles.leftMiddleSide}>
               <Text style={styles.eventDetailText}>
+
                 Category:{event.category}
                 {/* {event.categories.length > 0 ? event.categories[0].categorySlug : "none"} */}
               </Text>
@@ -178,7 +183,9 @@ export const ViewEvent = () => {
           <Text style={styles.eventDescription}>{event.description}</Text>
         </View>
         <View style={styles.participantsContainer}>
-          <Text>Participants: </Text>
+          <Text style={{ color: "white", paddingTop: 5, fontWeight: "bold" }}>
+            Participants:{" "}
+          </Text>
           <View style={{ flexDirection: "row", padding: 5 }}>
             {event.participants.map((participant) => {
               return (
@@ -237,7 +244,9 @@ export const ViewEvent = () => {
         </Pressable>
         <View style={styles.commentsContainer}>
           <View style={styles.commentTopRow}>
-            <Text style={{ fontWeight: "bold" }}>Comments</Text>
+            <Text style={{ fontWeight: "bold", color: "white", padding: 5 }}>
+              Comments
+            </Text>
             {user.username ? (
               <Pressable
                 style={styles.button}
@@ -263,7 +272,15 @@ export const ViewEvent = () => {
           headerLayoutHeight={100}
           headerLayout={() => (
             <View style={styles.headerLayoutStyle}>
-              <Text style={styles.arrow}>⇡</Text>
+              <Text
+                style={{
+                  fontSize: 30,
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
+                ⇡
+              </Text>
               <Text style={styles.commonTextStyle}>Live Chat!</Text>
             </View>
           )}
@@ -279,6 +296,10 @@ export const ViewEvent = () => {
 };
 
 const styles = StyleSheet.create({
+  wholePage: {
+    width: windowWidth,
+    height: Number(parseInt(windowHeight)),
+  },
   contentsContainer: {
     flexDirection: "column",
     marginHorizontal: 30,
@@ -287,19 +308,26 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flexDirection: "column",
+    padding: 10,
+    backgroundColor: "#8E806A",
+    borderRadius: 10,
   },
   topRow: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  buttonText: {
+    color: "#4A403A",
+  },
   eventTitle: {
     fontSize: 20,
+    color: "white",
   },
   button: {
-    borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 10,
+    backgroundColor: "lightgrey",
     fontSize: 16,
-    padding: 3,
+    padding: 5,
     height: 24,
     marginHorizontal: 5,
   },
@@ -318,51 +346,61 @@ const styles = StyleSheet.create({
   eventImage: {
     width: 150,
     height: 150,
+    borderRadius: 10,
   },
   eventDetailText: {
     fontSize: 16,
+    color: "white",
   },
   eventDescription: {
     fontSize: 12,
     marginVertical: 5,
-    borderRadius: 5,
-    borderWidth: 1,
+    borderRadius: 10,
+    color: "white",
     padding: 10,
+    backgroundColor: "#8E806A",
   },
   participantsContainer: {
     flexDirection: "column",
     justifyContent: "space-evenly",
-    borderRadius: 5,
-    borderWidth: 1,
+    borderRadius: 10,
+
     paddingHorizontal: 10,
     marginVertical: 5,
+    backgroundColor: "#8E806A",
   },
   galleryContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    borderRadius: 5,
-    borderWidth: 1,
+    borderRadius: 10,
+
     height: 100,
     marginVertical: 5,
+    backgroundColor: "#8E806A",
   },
   galleryImage: {
     width: 80,
     height: 80,
     marginTop: 10,
+    borderRadius: 10,
   },
   commentsContainer: {
     flexDirection: "column",
     justifyContent: "space-evenly",
-    borderRadius: 5,
-    borderWidth: 1,
+    borderRadius: 10,
+
     padding: 5,
     marginVertical: 5,
     marginBottom: 50,
+    backgroundColor: "#8E806A",
   },
   headerLayoutStyle: {
     width: windowWidth,
     height: 100,
-    backgroundColor: "grey",
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "white",
+    backgroundColor: "#8E806A",
     justifyContent: "space-evenly",
     alignItems: "center",
   },
@@ -383,6 +421,8 @@ const styles = StyleSheet.create({
   arrow: {
     fontSize: 30,
     fontWeight: "bold",
+    color: "#4A403A",
+    marginTop: 10,
   },
 
   participantButtonText: {
