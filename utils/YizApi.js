@@ -4,7 +4,7 @@ const frostyApi = axios.create({
 });
 
 export const getUserByUsername = (username) => {
-  return frostyApi.get(`/users/${id}`);
+  return frostyApi.get(`/users/${username}`);
 };
 
 export const deleteEvent = (id) => {

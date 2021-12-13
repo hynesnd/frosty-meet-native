@@ -114,9 +114,7 @@ export const ViewEvent = () => {
                 }}
               >
                 <Text style={styles.buttonText}>
-                  {event.participants.includes(user.username)
-                    ? "Leave"
-                    : "Join"}
+                  {event.participants.includes(user.username) ? "Leave" : "Join"}
                 </Text>
               </Pressable>
             </View>
@@ -125,9 +123,7 @@ export const ViewEvent = () => {
             <View style={styles.leftMiddleSide}>
               <Text style={styles.eventDetailText}>
                 Category:{" "}
-                {event.categories.length > 0
-                  ? event.categories[0].categorySlug
-                  : "none"}
+                {event.categories.length > 0 ? event.categories[0].categorySlug : "none"}
               </Text>
               <Text style={styles.eventDetailText}>
                 <Text>Creator: </Text>{" "}
@@ -158,8 +154,7 @@ export const ViewEvent = () => {
                 Date: {event.eventStart.slice(0, 10).replaceAll("-", "/")}
               </Text>
               <Text style={styles.eventDetailText}>
-                Time: {event.eventStart.slice(11, 16)} -{" "}
-                {event.eventEnd.slice(11, 16)}
+                Time: {event.eventStart.slice(11, 16)} - {event.eventEnd.slice(11, 16)}
               </Text>
             </View>
             <View style={styles.rightMiddleSide}>
@@ -202,9 +197,7 @@ export const ViewEvent = () => {
                 >
                   <View style={{ flexDirection: "row" }}>
                     <Text style={{ textDecorationLine: "none" }}> </Text>
-                    <Text style={styles.participantButtonText}>
-                      {participant}
-                    </Text>
+                    <Text style={styles.participantButtonText}>{participant}</Text>
                   </View>
                 </Pressable>
               );
@@ -226,7 +219,21 @@ export const ViewEvent = () => {
           />
         </Pressable>
         <View style={styles.commentsContainer}>
-          <Text>Comments</Text>
+          <View style={styles.commentTopRow}>
+            <Text style={{ fontWeight: "bold" }}>Comments</Text>
+            {user.username ? (
+              <Pressable
+                style={styles.button}
+                onPress={() => {
+                  // *** need to make postComment at backend
+                  // postComment(event.event_id);
+                  // isPosting... state
+                }}
+              >
+                <Text style={styles.buttonText}>Post Comment</Text>
+              </Pressable>
+            ) : null}
+          </View>
           {comments.map((comment) => {
             return <CommentCard key={comment._id} comment={comment} />;
           })}
@@ -244,9 +251,7 @@ export const ViewEvent = () => {
             </View>
           )}
           slidingPanelLayout={() => (
-            <View style={styles.slidingPanelLayoutStyle}>
-              {chatOn ? <Chat /> : null}
-            </View>
+            <View style={styles.slidingPanelLayoutStyle}>{chatOn ? <Chat /> : null}</View>
           )}
         />
       </View>
@@ -381,5 +386,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     marginRight: 5,
+  },
+  commentTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
