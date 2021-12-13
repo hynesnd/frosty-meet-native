@@ -6,33 +6,35 @@ import {
   TextInput,
   Pressable,
   Image,
+  ScrollView,
 } from "react-native";
-import { UserContext } from "../contexts/user-context.js";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ViewedUserContext } from "../contexts/viewed-user-context.js";
+import { getEvents } from "../utils/api.js";
+import EventCardUserPage from "../components/EventCardUserPage";
 
 export const ViewUser = () => {
   const { viewedUser } = useContext(ViewedUserContext);
+
+  const [hostedEvents, setHostedEvents] = useState([]);
+  const [attendedEvents, setAttendedEvents] = useState([]);
+  const [hostedClicked, setHostedClicked] = useState(false);
+  const [attendedClicked, setAttendedClicked] = useState(false);
+
   const navigation = useNavigation();
 
-  //   useFocusEffect(
-  //     React.useCallback(() => {
-  //       return () => {
-  //         navigation.goBack();
-  //       };
-  //     }, [])
-  //   );
-
-  // const { viewedUser, setViewedUser } = useContext(ViewedUserContext);
-  // const
-  // useEffect(() => {
-  //   if (!viewedUser.username) {
-  //     setViewedUser(user);
-  //     setItself(true);
-  //   } else {
-  //     setItself(false);
-  //   }
-  // }, []);
+  useEffect(() => {
+    getEvents().then(({ data }) => {
+      setHostedEvents(
+        data.events.filter((event) => event.creator === viewedUser.username)
+      );
+      setAttendedEvents(
+        data.events.filter((event) =>
+          event.participants.includes(viewedUser.username)
+        )
+      );
+    });
+  }, []);
 
   return (
     <View>
@@ -58,6 +60,68 @@ export const ViewUser = () => {
             <Text style={styles.dateOfBirth}>{viewedUser.dateOfBirth}</Text>
           </View>
         </View>
+        <View style={styles.eventListBox}>
+          <Text>Hosted:</Text>
+          {hostedEvents.length > 0 ? (
+            !hostedClicked ? (
+              <Pressable
+                onPress={() => {
+                  setHostedClicked(true);
+                }}
+              >
+                <Text>View {hostedEvents.length} events</Text>
+              </Pressable>
+            ) : (
+              <>
+                <Pressable
+                  onPress={() => {
+                    setHostedClicked(false);
+                  }}
+                >
+                  <Text>Hide {hostedEvents.length} events</Text>
+                </Pressable>
+                <ScrollView style={styles.eventListScroller}>
+                  {hostedEvents.map((event) => {
+                    return <EventCardUserPage currentEvent={event} />;
+                  })}
+                </ScrollView>
+              </>
+            )
+          ) : (
+            <Text>No hosted events</Text>
+          )}
+        </View>
+        <View style={styles.eventListBox}>
+          <Text>Attended:</Text>
+          {attendedEvents.length > 0 ? (
+            !attendedClicked ? (
+              <Pressable
+                onPress={() => {
+                  setAttendedClicked(true);
+                }}
+              >
+                <Text>View {attendedEvents.length} events</Text>
+              </Pressable>
+            ) : (
+              <>
+                <Pressable
+                  onPress={() => {
+                    setAttendedClicked(false);
+                  }}
+                >
+                  <Text>Hide {attendedEvents.length} events</Text>
+                </Pressable>
+                <ScrollView style={styles.eventListScroller}>
+                  {attendedEvents.map((event) => {
+                    return <EventCardUserPage currentEvent={event} />;
+                  })}
+                </ScrollView>
+              </>
+            )
+          ) : (
+            <Text>No attended events</Text>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -65,7 +129,7 @@ export const ViewUser = () => {
 
 const styles = StyleSheet.create({
   pageContainer: {
-    padding: 25,
+    padding: 15,
     margin: 5,
   },
   arrow: {
@@ -127,5 +191,17 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderWidth: 1,
     borderRadius: 5,
+  },
+
+  eventListBox: {
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+    marginTop: 10,
+  },
+  eventListScroller: {
+    borderWidth: 1,
+    borderRadius: 5,
+    maxHeight: 200,
   },
 });

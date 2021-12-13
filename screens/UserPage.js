@@ -1,32 +1,41 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Image,
+  ScrollView,
+} from "react-native";
 import { UserContext } from "../contexts/user-context.js";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-// import { ViewedUserContext } from "../contexts/viewed-user-context.js";
+import { getEvents } from "../utils/api.js";
+import EventCardUserPage from "../components/EventCardUserPage";
 
 export const UserPage = () => {
   const { user, setUser } = useContext(UserContext);
   const [editClicked, setEditClicked] = useState(false);
+
+  const [hostedEvents, setHostedEvents] = useState([]);
+  const [attendedEvents, setAttendedEvents] = useState([]);
+  const [hostedClicked, setHostedClicked] = useState(false);
+  const [attendedClicked, setAttendedClicked] = useState(false);
+
   const navigation = useNavigation();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        navigation.goBack();
-      };
-    }, [])
-  );
-
-  // const { viewedUser, setViewedUser } = useContext(ViewedUserContext);
-  // const
-  // useEffect(() => {
-  //   if (!viewedUser.username) {
-  //     setViewedUser(user);
-  //     setItself(true);
-  //   } else {
-  //     setItself(false);
-  //   }
-  // }, []);
+  useEffect(() => {
+    getEvents().then(({ data }) => {
+      setHostedEvents(
+        data.events.filter((event) => event.creator === user.username)
+      );
+      setAttendedEvents(
+        data.events.filter((event) =>
+          event.participants.includes(user.username)
+        )
+      );
+    });
+  }, []);
 
   return (
     <View>
@@ -62,17 +71,85 @@ export const UserPage = () => {
           </View>
           <View style={styles.detailsContainer}>
             {editClicked ? (
-              <TextInput placeholder="Display name..." style={styles.textInputDetails} />
+              <TextInput
+                placeholder="Display name..."
+                style={styles.textInputDetails}
+              />
             ) : (
               <Text style={styles.displayName}>{user.displayName}</Text>
             )}
             {editClicked ? (
-              <TextInput placeholder="Pronouns..." style={styles.textInputDetails} />
+              <TextInput
+                placeholder="Pronouns..."
+                style={styles.textInputDetails}
+              />
             ) : (
               <Text style={styles.pronouns}>{user.pronouns}</Text>
             )}
             <Text style={styles.dateOfBirth}>{user.dateOfBirth}</Text>
           </View>
+        </View>
+        <View style={styles.eventListBox}>
+          <Text>Hosted:</Text>
+          {hostedEvents.length > 0 ? (
+            !hostedClicked ? (
+              <Pressable
+                onPress={() => {
+                  setHostedClicked(true);
+                }}
+              >
+                <Text>View {hostedEvents.length} events</Text>
+              </Pressable>
+            ) : (
+              <>
+                <Pressable
+                  onPress={() => {
+                    setHostedClicked(false);
+                  }}
+                >
+                  <Text>Hide {hostedEvents.length} events</Text>
+                </Pressable>
+                <ScrollView style={styles.eventListScroller}>
+                  {hostedEvents.map((event) => {
+                    return <EventCardUserPage currentEvent={event} />;
+                  })}
+                </ScrollView>
+              </>
+            )
+          ) : (
+            <Text>No hosted events</Text>
+          )}
+        </View>
+        <View style={styles.eventListBox}>
+          <Text>Attended:</Text>
+          {attendedEvents.length > 0 ? (
+            !attendedClicked ? (
+              <Pressable
+                onPress={() => {
+                  setAttendedClicked(true);
+                }}
+              >
+                <Text>View {attendedEvents.length} events</Text>
+              </Pressable>
+            ) : (
+              <>
+                <Pressable
+                  onPress={() => {
+                    setAttendedClicked(false);
+                  }}
+                >
+                  <Text>Hide {attendedEvents.length} events</Text>
+                </Pressable>
+                <ScrollView style={styles.eventListScroller}>
+                  {attendedEvents.map((event) => {
+                    return <EventCardUserPage currentEvent={event} />;
+                  })}
+                </ScrollView>
+              </>
+            )
+          ) : (
+            <Text>No hosted events</Text>
+          )}
         </View>
       </View>
     </View>
@@ -81,7 +158,7 @@ export const UserPage = () => {
 
 const styles = StyleSheet.create({
   pageContainer: {
-    padding: 25,
+    padding: 15,
     margin: 5,
   },
   username: {
@@ -139,5 +216,17 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderWidth: 1,
     borderRadius: 5,
+  },
+
+  eventListBox: {
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+    marginTop: 10,
+  },
+  eventListScroller: {
+    borderWidth: 1,
+    borderRadius: 5,
+    maxHeight: 200,
   },
 });
