@@ -14,21 +14,18 @@ import { SignUp } from "./SignUp";
 const Stack = createNativeStackNavigator();
 
 export const Login = ({ navigation }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [formData, setFormdata] = useState({
-    username: "",
-    password: "",
-  });
-
-  const handleInputs = (text, keyToChange) => {
-    setFormdata((prev) => {
-      const newState = { ...prev, [keyToChange]: text };
-      return newState;
-    });
-  };
-
   const LoginForm = () => {
+    const [formData, setFormdata] = useState({
+      username: "",
+      password: "",
+    });
+
+    const handleInputs = (text, keyToChange) => {
+      setFormdata((prev) => {
+        const newState = { ...prev, [keyToChange]: text };
+        return newState;
+      });
+    };
     return (
       <View style={styles.pageContainer}>
         <View style={styles.logoContainer}>
@@ -37,15 +34,15 @@ export const Login = ({ navigation }) => {
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
-            value={username}
-            onChangeText={setUsername}
+            value={formData.username}
+            onChangeText={(text) => handleInputs(text, "username")}
             placeholder="Username:"
           />
 
           <TextInput
             style={styles.input}
-            value={password}
-            onChangeText={setPassword}
+            value={formData.password}
+            onChangeText={(text) => handleInputs(text, "password")}
             placeholder="Password:"
             secureTextEntry={true}
           />
