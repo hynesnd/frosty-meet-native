@@ -12,27 +12,33 @@ import {
 import { UserContext } from "../contexts/user-context.js";
 import { EventContext } from "../contexts/event-context.js";
 import io from "socket.io-client";
+import { getHistory } from "../utils/YizApi";
 
-const socket = io();
+const socket = io("localhost:8000");
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function CommentCard() {
+export default function Chat() {
   const { user, setUser } = useContext(UserContext);
   const { event, setEvent } = useContext(EventContext);
   const [messages, setMessages] = useState([]);
-  const [message_body, setMessage_body] = useState("");
-  const messagesEndRef = useRef(null);
+  const [messageBody, setMessageBody] = useState("");
 
+  const scrollRef = useRef();
+  let username = user.username;
+  let title = event.title;
+
+  getHistory(title).then(({ data }) => {
+    console.log(data);
+    setMessages([...data.messages]);
+  });
   useEffect(() => {
-    let username = user.username;
-    let eventTitle = event.title;
     if (user.username !== "" && event.title !== "") {
-      socket.emit("joinRoom", { username, eventTitle });
+      socket.emit("joinRoom", { username, title });
     } else {
       let username = "anonymous";
-      let eventTitle = "Lobby";
-      socket.emit("joinRoom", { username, eventTitle });
+      let title = "Lobby";
+      socket.emit("joinRoom", { username, title });
     }
 
     socket.on("message", (data) => {
@@ -40,65 +46,90 @@ export default function CommentCard() {
 
       temp.push({
         username: data.username,
-        message_body: data.message_body,
-        timestamp: new Date(),
+        messageBody: data.messageBody,
+        dateCreated: new Date(),
       });
       setMessages([...temp]);
     });
+  }, [setMessages]);
 
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [socket, messages]);
-  console.log(message_body, "<<<<<<<<<<<<<<<<");
+  console.log(messageBody, "<<<<<<<<<<<<<<<<");
 
   const sendData = () => {
-    if (message_body !== "") {
-      socket.emit("chat", message_body);
-      setMessage_body("");
+    if (messageBody !== "") {
+      socket.emit("chat", messageBody);
+      setMessageBody("");
     }
   };
-
-  //   const scrollToBottom = () => {
-  //     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  //   };
-
-  //   useEffect(scrollToBottom, [messages]);
 
   console.log(messages, "messages");
 
   return (
     <View style={styles.chatRoomContainer}>
       <View style={styles.chat}>
-        <View style={styles.username}>
+        <View style={styles.usernameContainer}>
           <Text style={styles.roomTitle}>
-            {user.username} <Text style={{ fontSize: 15 }}>in {event.title}</Text>
+            {user.username} <Text style={{ fontSize: 16 }}>in {event.title}</Text>
           </Text>
         </View>
-        <ScrollView style={styles.chatMessage}>
+        <ScrollView
+          ref={scrollRef}
+          onContentSizeChange={(contentWidth, contentHeight) => {
+            scrollRef.current.scrollToEnd({ animated: true });
+          }}
+          style={styles.chatMessage}
+        >
           {messages.map((msg) => {
             if (msg.username === username) {
               return (
-                <View key={msg.timestamp} style={styles.message}>
-                  <Text>{msg.message_body}</Text>
-                  <Text>{msg.username}</Text>
+                <View key={msg._id} style={styles.message}>
+                  <View style={styles.messageInnerLeft}>
+                    <Text
+                      style={{
+                        backgroundColor: "orange",
+                        fontSize: 20,
+                        borderRadius: 10,
+                        padding: 10,
+                      }}
+                    >
+                      {msg.messageBody}
+                    </Text>
+                  </View>
+                  <View style={styles.messageInnerLeft}>
+                    <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
+                  </View>
                 </View>
               );
             } else {
               return (
-                <View key={msg.timestamp} style={styles.messageRight}>
-                  <Text>{msg.message_body} </Text>
-                  <Text>{msg.username}</Text>
+                <View key={msg._id} style={styles.messageRight}>
+                  <View style={styles.messageInnerRight}>
+                    <Text
+                      style={{
+                        backgroundColor: "purple",
+                        fontSize: 20,
+                        borderRadius: 10,
+                        padding: 10,
+                        color: "white",
+                      }}
+                    >
+                      {msg.messageBody}{" "}
+                    </Text>
+                  </View>
+                  <View style={styles.messageInnerRight}>
+                    <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
+                  </View>
                 </View>
               );
             }
           })}
-          <View ref={messagesEndRef} />
         </ScrollView>
         <View style={styles.sender}>
           <TextInput
             style={styles.send}
             placeholder="enter your message"
-            value={message_body}
-            onChangeText={setMessage_body}
+            value={messageBody}
+            onChangeText={setMessageBody}
           ></TextInput>
           <Pressable onPress={sendData} style={styles.sendButton}>
             <Text style={{ fontSize: 20, alignSelf: "center" }}>Send</Text>
@@ -112,50 +143,65 @@ export default function CommentCard() {
 const styles = StyleSheet.create({
   chatRoomContainer: {
     flexDirection: "column",
+    height: Number(parseInt(windowHeight) - 100),
   },
   chat: {
     width: windowWidth,
-    height: Number(parseInt(windowHeight) - 150),
+    height: Number(parseInt(windowHeight) - 110),
     padding: 1,
     flexDirection: "column",
     justifyContent: "space-between",
   },
-  username: {
+  usernameContainer: {
     width: windowWidth,
     alignSelf: "flex-start",
     fontWeight: "bold",
-    borderWidth: 1,
-    paddingBottom: 1,
+    borderWidth: 2,
+    borderColor: "grey",
+    paddingBottom: 3,
+    marginBottom: 5,
   },
   roomTitle: {
-    color: "purple",
     fontSize: 25,
   },
   chatMessage: {
-    height: Number(parseInt(windowHeight) * 0.7),
+    height: Number(parseInt(windowHeight) * 0.75),
     overflow: "visible",
     flexDirection: "column",
     width: windowWidth,
-    alignContent: "flex-start",
   },
   message: {
     marginLeft: 0,
-    maxWidth: 200,
+    maxWidth: 250,
     paddingLeft: 5,
+    border: 1,
+    borderRadius: 5,
+    flexDirection: "column",
+    marginVertical: 5,
+  },
+  messageInnerLeft: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
   messageRight: {
     marginLeft: "auto",
     marginRight: 0,
     flexDirection: "column",
-    maxWidth: 200,
+    maxWidth: 250,
     paddingRight: 5,
+    border: 1,
+    marginVertical: 5,
+  },
+  messageInnerRight: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   send: {
     width: windowWidth,
-    height: 50,
     flex: 4,
     borderColor: "orange",
     backgroundColor: "white",
+    paddingLeft: 5,
   },
   sendButton: {
     width: Number(parseInt(windowWidth) * 0.2),
@@ -167,5 +213,6 @@ const styles = StyleSheet.create({
   },
   sender: {
     flexDirection: "row",
+    height: 50,
   },
 });

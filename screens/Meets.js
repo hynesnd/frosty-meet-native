@@ -7,6 +7,7 @@ import {
   Pressable,
   Picker,
   DatePicker,
+  ScrollView,
   Image,
 } from "react-native";
 import EventCard from "../components/EventCard.js";
@@ -66,18 +67,10 @@ export const Meets = () => {
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setCategoryValue(itemValue)
-            }
+            onValueChange={(itemValue, itemIndex) => setCategoryValue(itemValue)}
           >
             {categories.map((cat) => {
-              return (
-                <Picker.Item
-                  key={cat.label}
-                  label={cat.label}
-                  value={cat.value}
-                />
-              );
+              return <Picker.Item key={cat.label} label={cat.label} value={cat.value} />;
             })}
           </Picker>
           {/* <TextInput
@@ -111,13 +104,7 @@ export const Meets = () => {
             onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
           >
             {joinedOptions.map((opt) => {
-              return (
-                <Picker.Item
-                  key={opt.label}
-                  label={opt.label}
-                  value={opt.value}
-                />
-              );
+              return <Picker.Item key={opt.label} label={opt.label} value={opt.value} />;
             })}
           </Picker>
         </View>
@@ -149,19 +136,21 @@ export const Meets = () => {
             </View>
           ) : null}
         </View>
-        {events.length === 0 ? (
-          <Text>No events here</Text>
-        ) : (
-          events.map((currentEvent) => {
-            return (
-              <EventCard
-                key={currentEvent._id}
-                // navigation={navigation}
-                currentEvent={currentEvent}
-              />
-            );
-          })
-        )}
+        <ScrollView>
+          {events.length === 0 ? (
+            <Text>No events here</Text>
+          ) : (
+            events.map((currentEvent) => {
+              return (
+                <EventCard
+                  key={currentEvent._id}
+                  // navigation={navigation}
+                  currentEvent={currentEvent}
+                />
+              );
+            })
+          )}
+        </ScrollView>
       </View>
     );
   };
