@@ -69,7 +69,8 @@ export default function Chat() {
       <View style={styles.chat}>
         <View style={styles.usernameContainer}>
           <Text style={styles.roomTitle}>
-            {user.username} <Text style={{ fontSize: 16 }}>in {event.title}</Text>
+            {user.username}{" "}
+            <Text style={{ fontSize: 16 }}>in {event.title}</Text>
           </Text>
         </View>
         <ScrollView
@@ -96,7 +97,9 @@ export default function Chat() {
                     </Text>
                   </View>
                   <View style={styles.messageInnerLeft}>
-                    <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
+                    <Text style={{ fontStyle: "italic" }}>
+                      by {msg.username}
+                    </Text>
                   </View>
                 </View>
               );
@@ -117,7 +120,9 @@ export default function Chat() {
                     </Text>
                   </View>
                   <View style={styles.messageInnerRight}>
-                    <Text style={{ fontStyle: "italic" }}>by {msg.username}</Text>
+                    <Text style={{ fontStyle: "italic" }}>
+                      by {msg.username}
+                    </Text>
                   </View>
                 </View>
               );
@@ -174,7 +179,6 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     maxWidth: 250,
     paddingLeft: 5,
-    border: 1,
     borderRadius: 5,
     flexDirection: "column",
     marginVertical: 5,
@@ -189,7 +193,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     maxWidth: 250,
     paddingRight: 5,
-    border: 1,
     marginVertical: 5,
   },
   messageInnerRight: {
