@@ -205,18 +205,24 @@ export const ViewEvent = () => {
           </View>
         </View>
         <Pressable style={styles.galleryContainer}>
-          <Image
-            source={{ uri: "https://source.unsplash.com/random/200x200" }}
-            style={styles.galleryImage}
-          />
-          <Image
-            source={{ uri: "https://source.unsplash.com/random/200x200" }}
-            style={styles.galleryImage}
-          />
-          <Image
-            source={{ uri: "https://source.unsplash.com/random/200x200" }}
-            style={styles.galleryImage}
-          />
+          <View style={styles.galleryItem}>
+            <Image
+              source={{ uri: "https://source.unsplash.com/random/200x200" }}
+              style={styles.galleryImage}
+            />
+          </View>
+          <View style={styles.galleryItem}>
+            <Image
+              source={{ uri: "https://source.unsplash.com/random/200x200" }}
+              style={styles.galleryImage}
+            />
+          </View>
+          <View style={styles.galleryItem}>
+            <Image
+              source={{ uri: "https://source.unsplash.com/random/200x200" }}
+              style={styles.galleryImage}
+            />
+          </View>
         </Pressable>
         <View style={styles.commentsContainer}>
           <View style={styles.commentTopRow}>
