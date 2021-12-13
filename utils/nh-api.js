@@ -18,8 +18,10 @@ export const getCategories = () => {
 export const getParks = () => {
   return frostyApi.get("/parks");
 };
-export const getComments = (id) => {
-  return frostyApi.get(`/events/${id}/comments`);
+export const getComments = (token, id) => {
+  return frostyApi.get(`/comments/event/${id}`, {
+    headers: { "x-auth-token": token },
+  });
 };
 export const postComment = (id) => {
   //
