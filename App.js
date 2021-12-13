@@ -31,7 +31,7 @@ export default function App() {
               drawerType="front"
               initialRouteName="Login"
               drawerContentOptions={{
-                activeTintColor: "#e91e63",
+                activeTintColor: "#C37B89",
                 itemStyle: { marginVertical: 10 },
               }}
             >
@@ -56,19 +56,19 @@ export default function App() {
                         <MaterialCommunityIcons
                           name={drawer.iconName}
                           size={24}
-                          color={focused ? "#e91e63" : "black"}
+                          color={focused ? "#C37B89" : "black"}
                         />
                       ) : drawer.iconType === "Feather" ? (
                         <Feather
                           name={drawer.iconName}
                           size={24}
-                          color={focused ? "#e91e63" : "black"}
+                          color={focused ? "#C37B89" : "black"}
                         />
                       ) : (
                         <FontAwesome5
                           name={drawer.iconName}
                           size={24}
-                          color={focused ? "#e91e63" : "black"}
+                          color={focused ? "#C37B89" : "black"}
                         />
                       ),
                     headerShown: true,

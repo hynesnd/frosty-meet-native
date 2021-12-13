@@ -17,24 +17,26 @@ export default function EventCardUserPage({ currentEvent }) {
         />
         <View style={styles.textContainer}>
           <View style={styles.textRow}>
-            <Text style={styles.eventTitle}>
+            <Text style={{ color: "white" }}>
               {currentEvent.title.length > 25
                 ? `${currentEvent.title.slice(0, 20)}...`
                 : currentEvent.title}
             </Text>
-            <Text style={styles.eventDateTime}>
+            <Text style={{ color: "white" }}>
               {currentEvent.eventStart.slice(0, 10).replaceAll("-", "/")}
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>Creator: {currentEvent.creator}</Text>
-            <Text style={styles.eventDateTime}>
+            <Text style={{ color: "white" }}>
+              Creator: {currentEvent.creator}
+            </Text>
+            <Text style={{ color: "white" }}>
               {currentEvent.eventStart.slice(11, 16)} -{" "}
               {currentEvent.eventEnd.slice(11, 16)}
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>
+            <Text style={{ color: "white" }}>
               Info:{" "}
               {currentEvent.description.length > 100
                 ? `${currentEvent.description.slice(0, 60)}...`
@@ -51,18 +53,22 @@ const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "column",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "#8E806A",
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: "white",
   },
   mainContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    borderRadius: 4,
+    borderRadius: 10,
     borderColor: "lightgrey",
     borderWidth: 1,
     height: 100,
   },
   eventImage: {
     flex: 1,
+    borderRadius: 10,
   },
   textContainer: {
     flexDirection: "column",

@@ -23,8 +23,8 @@ export const UserPage = () => {
 
   const [hostedEvents, setHostedEvents] = useState([]);
   const [attendedEvents, setAttendedEvents] = useState([]);
-  const [hostedClicked, setHostedClicked] = useState(false);
-  const [attendedClicked, setAttendedClicked] = useState(false);
+  const [hostedClicked, setHostedClicked] = useState(true);
+  const [attendedClicked, setAttendedClicked] = useState(true);
 
   const navigation = useNavigation();
 
@@ -42,7 +42,7 @@ export const UserPage = () => {
   }, []);
 
   return (
-    <View>
+    <View style={styles.wholePage}>
       <View style={styles.pageContainer}>
         <View style={styles.firstRowContainer}>
           <Text style={styles.username}>{user.username}</Text>
@@ -70,7 +70,7 @@ export const UserPage = () => {
           <View style={styles.pictureContainer}>
             <Image source={require("../logo.jpg")} style={styles.avatar} />
             <Pressable style={styles.uploadImage} onPress={() => {}}>
-              <Text style={styles.uploadImageText}>Upload Photo</Text>
+              <Text style={{ color: "white" }}>Upload Photo</Text>
             </Pressable>
           </View>
           <View style={styles.detailsContainer}>
@@ -170,6 +170,17 @@ const styles = StyleSheet.create({
     padding: 15,
     margin: 5,
   },
+  uploadImage: {
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
+    fontSize: 16,
+    padding: 5,
+    marginTop: 5,
+    height: 24,
+    marginHorizontal: 5,
+    alignSelf: "center",
+    marginRight: 10,
+  },
   username: {
     flex: 4,
     fontSize: 25,
@@ -229,14 +240,13 @@ const styles = StyleSheet.create({
   },
 
   eventListBox: {
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 5,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    backgroundColor: "white",
     marginTop: 10,
   },
   eventListScroller: {
-    borderWidth: 1,
-    borderRadius: 5,
-    maxHeight: 200,
+    maxHeight: 225,
   },
 });
