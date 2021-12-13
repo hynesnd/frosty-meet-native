@@ -38,16 +38,16 @@ export default function CommentCard({ comment }) {
         >
           {" "}
           <View style={{ flexDirection: "row" }}>
-            <Text>By: </Text>
+            <Text style={{ color: "white" }}>By: </Text>
             <Text style={styles.username}>{comment.username}</Text>
           </View>
         </Pressable>
-        <Text style={styles.createdAt}>
+        <Text style={{ color: "white" }}>
           Posted: {comment.dateCreated.slice(0, 10)}
         </Text>
       </View>
       <View style={styles.middleRow}>
-        <Text style={styles.body}>{comment.commentBody}</Text>
+        <Text style={{ color: "white" }}>{comment.commentBody}</Text>
       </View>
       <View style={styles.bottomRow}>
         <Pressable
@@ -58,7 +58,9 @@ export default function CommentCard({ comment }) {
             });
           }}
         >
-          <Text>👍 {comment.votes + addedVote}</Text>
+          <Text style={{ color: "#4A403A" }}>
+            👍 {comment.votes + addedVote}
+          </Text>
           {/* // need backend patch request to send added vote */}
         </Pressable>
       </View>
@@ -75,8 +77,7 @@ const styles = StyleSheet.create({
   commentContainer: {
     flexDirection: "column",
     justifyContent: "space-evenly",
-    borderRadius: 5,
-    borderWidth: 1,
+    borderRadius: 10,
     padding: 5,
     marginVertical: 5,
   },
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
 
   votesButton: {
     alignSelf: "flex-end",
-    borderWidth: 1,
-    borderRadius: 5,
+    padding: 5,
+    backgroundColor: "lightgrey",
+    borderRadius: 10,
   },
 });
