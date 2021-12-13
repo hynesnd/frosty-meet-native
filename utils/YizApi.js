@@ -1,6 +1,6 @@
 import axios from "axios";
 const frostyApi = axios.create({
-  baseURL: "https://frostyapi.herokuapp.com/api",
+  baseURL: "https://frosty-api2.herokuapp.com/api",
 });
 
 export const getUserByUsername = (username) => {

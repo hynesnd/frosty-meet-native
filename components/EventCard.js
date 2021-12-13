@@ -44,7 +44,7 @@ export default function EventCard({ currentEvent }) {
             </Text>
           </View>
           <View style={styles.textRow}>
-            <Text>Creator: {currentEvent.creator}</Text>
+            <Text>Creator: {currentEvent.creator.username}</Text>
             <Text style={styles.eventDateTime}>
               {currentEvent.eventStart.slice(11, 16)} -{" "}
               {currentEvent.eventEnd.slice(11, 16)}
