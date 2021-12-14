@@ -182,6 +182,7 @@ export const Meets = () => {
                           latitude: park.latitude,
                           longitude: park.longitude,
                         }}
+                        onPress={() => console.log(park)}
                       />
                     );
                   })}
