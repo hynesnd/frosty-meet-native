@@ -20,6 +20,7 @@ import SlidingPanel from "react-native-sliding-up-down-panels";
 import Chat from "../components/Chat";
 import { deleteEvent } from "../utils/YizApi.js";
 import { getUsers } from "../utils/api.js";
+import MapView from "react-native-maps";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -31,6 +32,7 @@ export const ViewEvent = () => {
   const [comments, setComments] = useState([]);
   const [chatOn, setChatOn] = useState(false);
   const [isSelf, setIsSelf] = useState(false);
+  const [mapOpened, setMapOpened] = useState(true);
   const navigation = useNavigation();
   useEffect(() => {
     getComments(user.token, event.eventId)
@@ -62,8 +64,12 @@ export const ViewEvent = () => {
       style={{
         backgroundColor: "lightgrey",
       }}
+      showsVerticalScrollIndicator={false}
     >
-      <ScrollView style={styles.contentsContainer}>
+      <ScrollView
+        style={styles.contentsContainer}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.backContainer}>
           <Pressable
             style={styles.backButton}
@@ -132,7 +138,6 @@ export const ViewEvent = () => {
           <View style={styles.middleRows}>
             <View style={styles.leftMiddleSide}>
               <Text style={styles.eventDetailText}>
-
                 Category:{event.category}
                 {/* {event.categories.length > 0 ? event.categories[0].categorySlug : "none"} */}
               </Text>
@@ -222,26 +227,54 @@ export const ViewEvent = () => {
             })}
           </View>
         </View>
-        <Pressable style={styles.galleryContainer}>
-          <View style={styles.galleryItem}>
-            <Image
-              source={{ uri: "https://source.unsplash.com/random/200x200" }}
-              style={styles.galleryImage}
-            />
-          </View>
-          <View style={styles.galleryItem}>
-            <Image
-              source={{ uri: "https://source.unsplash.com/random/200x200" }}
-              style={styles.galleryImage}
-            />
-          </View>
-          <View style={styles.galleryItem}>
-            <Image
-              source={{ uri: "https://source.unsplash.com/random/200x200" }}
-              style={styles.galleryImage}
-            />
-          </View>
-        </Pressable>
+        <View style={styles.mapWrapper}>
+          <Pressable
+            style={styles.mapButton}
+            onPress={() => {
+              if (mapOpened) {
+                setMapOpened(false);
+              } else {
+                setMapOpened(true);
+              }
+            }}
+          >
+            {mapOpened ? (
+              <Text style={styles.buttonText}>Collapse map</Text>
+            ) : (
+              <Text style={styles.buttonText}>Open map</Text>
+            )}
+          </Pressable>
+          {mapOpened ? (
+            <View>
+              <View style={styles.mapContainer}>
+                <MapView
+                  style={styles.map}
+                  initialRegion={{
+                    latitude: 53.47791641806832,
+                    longitude: -2.242188787189367,
+                    latitudeDelta: 0.4522,
+                    longitudeDelta: 1.1421,
+                  }}
+                >
+                  {/* {MapMarkers.map((park) => {
+                    return (
+                      <MapView.Marker
+                        key={park.parkId}
+                        title={park.name}
+                        description={park.description}
+                        coordinate={{
+                          latitude: park.latitude,
+                          longitude: park.longitude,
+                        }}
+                        onPress={() => console.log(park)}
+                      />
+                    );
+                  })} */}
+                </MapView>
+              </View>
+            </View>
+          ) : null}
+        </View>
         <View style={styles.commentsContainer}>
           <View style={styles.commentTopRow}>
             <Text style={{ fontWeight: "bold", color: "white", padding: 5 }}>
@@ -331,6 +364,17 @@ const styles = StyleSheet.create({
     height: 24,
     marginHorizontal: 5,
   },
+  mapButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    elevation: 3,
+    backgroundColor: "lightgrey",
+    marginVertical: 10,
+    marginHorizontal: 100,
+  },
   middleRows: {
     marginVertical: 10,
     flexDirection: "row",
@@ -369,21 +413,25 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: "#8E806A",
   },
-  galleryContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+  mapWrapper: {
+    flexDirection: "column",
+    justifyContent: "center",
     borderRadius: 10,
-
-    height: 100,
     marginVertical: 5,
     backgroundColor: "#8E806A",
   },
-  galleryImage: {
-    width: 80,
-    height: 80,
-    marginTop: 10,
-    borderRadius: 10,
+  mapContainer: {
+    flex: 1,
+    alignItems: "center",
   },
+  map: {
+    width: 290,
+    height: 290,
+    marginBottom: 10,
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+
   commentsContainer: {
     flexDirection: "column",
     justifyContent: "space-evenly",

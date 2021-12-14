@@ -21,6 +21,8 @@ import { ViewEvent } from "./ViewEvent.js";
 import { ViewUser } from "./ViewUser.js";
 import { useContext } from "react";
 import { UserContext } from "../contexts/user-context.js";
+import MapView from "react-native-maps";
+import MapMarkers from "../constants/MapMarkers.js";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -161,12 +163,30 @@ export const Meets = () => {
           {mapOpened ? (
             <View>
               <View style={styles.mapContainer}>
-                <Image
-                  source={{
-                    uri: "https://source.unsplash.com/random/300x300",
-                  }}
+                <MapView
                   style={styles.map}
-                />
+                  initialRegion={{
+                    latitude: 53.47791641806832,
+                    longitude: -2.242188787189367,
+                    latitudeDelta: 0.4522,
+                    longitudeDelta: 1.1421,
+                  }}
+                >
+                  {MapMarkers.map((park) => {
+                    return (
+                      <MapView.Marker
+                        key={park.parkId}
+                        title={park.name}
+                        description={park.description}
+                        coordinate={{
+                          latitude: park.latitude,
+                          longitude: park.longitude,
+                        }}
+                        onPress={() => console.log(park)}
+                      />
+                    );
+                  })}
+                </MapView>
               </View>
             </View>
           ) : null}
@@ -275,5 +295,6 @@ const styles = StyleSheet.create({
     height: 300,
     marginHorizontal: 50,
     borderRadius: 10,
+    overflow: "hidden",
   },
 });
