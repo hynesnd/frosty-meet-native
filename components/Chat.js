@@ -86,6 +86,7 @@ export default function Chat() {
             scrollRef.current.scrollToEnd({ animated: true });
           }}
           style={styles.chatMessage}
+          showsVerticalScrollIndicator={false}
         >
           {messages.map((msg) => {
             if (msg.username === username) {
