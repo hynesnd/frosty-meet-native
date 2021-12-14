@@ -32,24 +32,16 @@ export const Meets = () => {
   const [categories, setCategories] = useState([
     { label: "Any type", value: "any type" },
     { label: "Walking", value: "Walking" },
+    { label: "Running", value: "Running" },
+    { label: "Cycling", value: "Cycling" },
+    { label: "Movie", value: "movies" },
+    { label: "coding", value: "coding" },
   ]);
   const [events, setEvents] = useState([]);
   const { user } = useContext(UserContext);
   // const navigation = useNavigation();
 
   useEffect(() => {
-    // getCategories().then(({ data }) => {
-    //   const newCategories = [...categories];
-    //   data.categories.forEach((category) => {
-    //     newCategories.push({
-    //       label:
-    //         category.categorySlug.slice(0, 1).toUpperCase() +
-    //         category.categorySlug.slice(1),
-    //       value: category.categorySlug,
-    //     });
-    //   });
-    //   setCategories(newCategories);
-    // });
     setCategoryValue("any type");
     // getEvents().then(({ data }) => {
     //   const newEvents = [];
@@ -58,7 +50,7 @@ export const Meets = () => {
     //   });
     //   setEvents(newEvents);
     // });
-    getEvents(user.token).then(({ data }) => {
+    getEvents(user.token, categoryValue).then(({ data }) => {
       console.log(data.events);
       setEvents(data.events);
     });
@@ -76,6 +68,15 @@ export const Meets = () => {
 
   const Stack = createNativeStackNavigator();
 
+  const handleCategoryChange = async (value) => {
+    try {
+      const { data } = await getEvents(user.token, value);
+      setEvents(data.events);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const MeetsPage = () => {
     return (
       <View style={styles.wholePage}>
@@ -88,9 +89,9 @@ export const Meets = () => {
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setCategoryValue(itemValue)
-            }
+            onValueChange={(itemValue, itemIndex) => {
+              handleCategoryChange(itemValue);
+            }}
           >
             {categories.map((cat) => {
               return (
