@@ -1,27 +1,22 @@
 export default [
   {
     name: "Home",
-    iconType: "Home",
-    iconName: "face-profile",
+    iconName: "home",
   },
   {
     name: "Find Event",
-    iconType: "Find Event",
-    iconName: "face-profile",
+    iconName: "search",
   },
   {
     name: "Create Event",
-    iconType: "Create Event",
-    iconName: "face-profile",
+    iconName: "pen",
   },
   {
     name: "User Page",
-    iconType: "User Page",
-    iconName: "face-profile",
+    iconName: "user-circle",
   },
   {
     name: "Login",
-    iconType: "Login",
-    iconName: "settings",
+    iconName: "cog",
   },
 ];

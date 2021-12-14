@@ -7,9 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./screens/Login";
 import { Home } from "./screens/Home";
 import DrawerItems from "./constants/DrawerItems";
-
 import { FontAwesome5 } from "@expo/vector-icons";
-
 import { CreateMeets } from "./screens/CreateMeets";
 import { Meets } from "./screens/Meets";
 import { UserPage } from "./screens/UserPage";
@@ -50,38 +48,13 @@ export default function App() {
                       : Home
                   }
                   options={{
-                    drawerIcon: ({ focused }) =>
-                      drawer.iconType === "Home" ? (
-                        <FontAwesome5
-                          name={drawer.iconName}
-                          size={24}
-                          color={focused ? "#C37B89" : "black"}
-                        />
-                      ) : drawer.iconType === "Find Event" ? (
-                        <FontAwesome5
-                          name={drawer.iconName}
-                          size={24}
-                          color={focused ? "#C37B89" : "black"}
-                        />
-                      ) : drawer.iconType === "Create Event" ? (
-                        <FontAwesome5
-                          name={drawer.iconName}
-                          size={24}
-                          color={focused ? "#C37B89" : "black"}
-                        />
-                      ) : drawer.iconType === "User Page" ? (
-                        <FontAwesome5
-                          name={drawer.iconName}
-                          size={24}
-                          color={focused ? "#C37B89" : "black"}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name={drawer.iconName}
-                          size={24}
-                          color={focused ? "#C37B89" : "black"}
-                        />
-                      ),
+                    drawerIcon: ({ focused }) => (
+                      <FontAwesome5
+                        name={drawer.iconName}
+                        size={24}
+                        color={focused ? "#C37B89" : "black"}
+                      />
+                    ),
                     headerShown: true,
                   }}
                 />
