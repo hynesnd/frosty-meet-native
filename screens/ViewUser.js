@@ -6,12 +6,16 @@ import {
   TextInput,
   Pressable,
   Image,
+  Dimensions,
   ScrollView,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ViewedUserContext } from "../contexts/viewed-user-context.js";
 import { getEvents } from "../utils/api.js";
 import EventCardUserPage from "../components/EventCardUserPage";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export const ViewUser = () => {
   const { viewedUser } = useContext(ViewedUserContext);
@@ -37,7 +41,7 @@ export const ViewUser = () => {
   }, []);
 
   return (
-    <View style={{ backgroundColor: "lightgrey" }}>
+    <View style={styles.wholePage}>
       <Pressable
         style={styles.backButton}
         onPress={() => {
@@ -128,6 +132,11 @@ export const ViewUser = () => {
 };
 
 const styles = StyleSheet.create({
+  wholePage: {
+    width: windowWidth,
+    height: Number(parseInt(windowHeight)),
+    backgroundColor: "lightgrey",
+  },
   pageContainer: {
     padding: 15,
     margin: 5,

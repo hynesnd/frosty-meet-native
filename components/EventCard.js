@@ -7,6 +7,8 @@ import { ViewedUserContext } from "../contexts/viewed-user-context.js";
 import { useNavigation } from "@react-navigation/native";
 import { withSafeAreaInsets } from "react-native-safe-area-context";
 
+import Categories from "../constants/Categories.js";
+
 export default function EventCard({ currentEvent }) {
   const [toggleOn, setToggleOn] = useState(false);
   const { user, setUser } = useContext(UserContext);
@@ -30,7 +32,13 @@ export default function EventCard({ currentEvent }) {
         }}
       >
         <Image
-          source={{ uri: "https://source.unsplash.com/random/200x200" }}
+          source={{
+            uri: `${
+              Categories.filter(
+                (cat) => cat.category_name === currentEvent.category
+              )[0]["image_url"]
+            }`,
+          }}
           style={styles.eventImage}
         />
         <View style={styles.textContainer}>

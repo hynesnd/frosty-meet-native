@@ -22,11 +22,6 @@ export const CreateMeets = () => {
   const [open, setOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
   const navigation = useNavigation();
-  const [categories, setCategories] = useState([
-    { label: "Social", value: "social" },
-    { label: "Climbing", value: "climbing" },
-    { label: "Cinema", value: "cinema" },
-  ]);
 
   // const [chosenDate, setChosenDate] = useState(new Date());
 
@@ -48,7 +43,7 @@ export const CreateMeets = () => {
   const uploadEventImage = () => {};
 
   return (
-    <View>
+    <View style={{ backgroundColor: "lightgrey" }}>
       <View style={styles.titleContainer}></View>
       <View style={styles.formContainer}>
         <View style={styles.formRow1}>

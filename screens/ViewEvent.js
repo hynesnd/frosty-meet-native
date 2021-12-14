@@ -178,7 +178,13 @@ export const ViewEvent = () => {
             </View>
             <View style={styles.rightMiddleSide}>
               <Image
-                source={{ uri: "https://source.unsplash.com/random/200x200" }}
+                source={{
+                  uri: `${
+                    Categories.filter(
+                      (cat) => cat.category_name === event.category
+                    )[0]["image_url"]
+                  }`,
+                }}
                 style={styles.eventImage}
               />
             </View>
