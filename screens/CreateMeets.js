@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import {
   View,
@@ -10,6 +10,8 @@ import {
   Image,
   Dimensions,
 } from "react-native";
+import MapView from "react-native-maps";
+import MapMarkers from "../constants/MapMarkers.js";
 
 import Categories from "../constants/Categories.js";
 
@@ -37,7 +39,7 @@ export const CreateMeets = () => {
     eventStart: "",
     eventEnd: "",
   });
-
+  const [markerClicked, setMarkerClicked] = useState(false);
   // const [chosenDate, setChosenDate] = useState(new Date());
 
   const [startDate, setStartDate] = useState("");
@@ -70,6 +72,14 @@ export const CreateMeets = () => {
       if (category !== "Pick a category:") {
         newState.category = category;
       }
+      return newState;
+    });
+  };
+
+  const handleLocationPick = (park) => {
+    setFormResult((prev) => {
+      const newState = { ...prev };
+      newState.location = park;
       return newState;
     });
   };
@@ -156,12 +166,41 @@ export const CreateMeets = () => {
           </View>
         </View>
       </View>
-      <View>
+      <View style={styles.formRow5}>
         <View style={styles.mapContainer}>
-          <Image
-            source={{ uri: "https://source.unsplash.com/random/300x300" }}
+          <Text>Pick a park to hold your event:</Text>
+          <MapView
             style={styles.map}
-          />
+            initialRegion={{
+              latitude: 53.47791641806832,
+              longitude: -2.242188787189367,
+              latitudeDelta: 0.4522,
+              longitudeDelta: 1.1421,
+            }}
+          >
+            {MapMarkers.map((park) => {
+              return (
+                <MapView.Marker
+                  key={park.parkId}
+                  title={park.name}
+                  description={park.description}
+                  coordinate={{
+                    latitude: park.latitude,
+                    longitude: park.longitude,
+                  }}
+                  onPress={() => {
+                    handleLocationPick(park);
+                    setMarkerClicked(true);
+                  }}
+                />
+              );
+            })}
+          </MapView>
+          {markerClicked ? (
+            <Text style={styles.mapText}>
+              {formResult.location.name} selected!
+            </Text>
+          ) : null}
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -307,6 +346,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     paddingHorizontal: 20,
+    marginBottom: 10,
+  },
+
+  formRow5: {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    marginBottom: 10,
   },
   eventStartContainer: {
     flexDirection: "row",
@@ -333,13 +381,19 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   mapContainer: {
+    flexDirection: "column",
+    marginTop: 10,
     flex: 1,
     alignItems: "center",
+  },
+  mapText: {
+    fontSize: 18,
   },
   map: {
     width: 300,
     height: 300,
+    marginHorizontal: 50,
     borderRadius: 10,
-    margin: 50,
+    overflow: "hidden",
   },
 });
