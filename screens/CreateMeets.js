@@ -11,6 +11,8 @@ import {
   Dimensions,
 } from "react-native";
 
+import Categories from "../constants/Categories.js";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -63,12 +65,12 @@ export const CreateMeets = () => {
               setCategoryValue(itemValue)
             }
           >
-            {categories.map((cat) => {
+            {Categories.map((cat) => {
               return (
                 <Picker.Item
-                  key={cat.label}
-                  label={cat.label}
-                  value={cat.value}
+                  key={cat.category_name}
+                  label={cat.category_name}
+                  value={cat.category_name}
                 />
               );
             })}

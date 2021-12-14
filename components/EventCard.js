@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    height: 100,
+    height: 96,
   },
   eventImage: {
     flex: 1,
