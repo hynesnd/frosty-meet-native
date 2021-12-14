@@ -13,6 +13,7 @@ export default function EventCard({ currentEvent }) {
   const [toggleOn, setToggleOn] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { event, setEvent } = useContext(EventContext);
+
   // const { viewedUser, setViewedUser } = useContext(ViewedUserContext);
 
   // const Stack = createNativeStackNavigator();
@@ -32,13 +33,13 @@ export default function EventCard({ currentEvent }) {
         }}
       >
         <Image
-          // source={{
-          //   uri: `${
-          //     Categories.filter(
-          //       (cat) => cat.category_name === currentEvent.category
-          //     )[0]["image_url"]
-          //   }`,
-          // }}
+          source={{
+            uri: `${
+              Categories.filter(
+                (cat) => cat.category_name === currentEvent.category
+              )[0]["image_url"]
+            }`,
+          }}
           style={styles.eventImage}
         />
         <View style={styles.textContainer}>

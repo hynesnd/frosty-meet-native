@@ -31,7 +31,7 @@ export const UserPage = () => {
   useEffect(() => {
     getEvents(user.token).then(({ data }) => {
       setHostedEvents(
-        data.events.filter((event) => event.creator === user.username)
+        data.events.filter((event) => event.creator.username === user.username)
       );
       setAttendedEvents(
         data.events.filter((event) =>

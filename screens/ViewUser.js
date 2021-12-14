@@ -32,7 +32,9 @@ export const ViewUser = () => {
   useEffect(() => {
     getEvents(user.token).then(({ data }) => {
       setHostedEvents(
-        data.events.filter((event) => event.creator === viewedUser.username)
+        data.events.filter(
+          (event) => event.creator.username === viewedUser.username
+        )
       );
       setAttendedEvents(
         data.events.filter((event) =>

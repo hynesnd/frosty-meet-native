@@ -37,6 +37,7 @@ export const ViewEvent = () => {
   const [mapOpened, setMapOpened] = useState(true);
   const navigation = useNavigation();
   useEffect(() => {
+    console.log(event);
     getComments(user.token, event.eventId)
       .then(({ data }) => {
         setComments(data);
@@ -58,8 +59,6 @@ export const ViewEvent = () => {
   //     };
   //   }, [])
   // );
-
-  const handleEditEvent = (id) => {};
 
   return (
     <View
@@ -181,13 +180,13 @@ export const ViewEvent = () => {
             </View>
             <View style={styles.rightMiddleSide}>
               <Image
-                // source={{
-                //   uri: `${
-                //     Categories.filter(
-                //       (cat) => cat.category_name === event.category
-                //     )[0]["image_url"]
-                //   }`,
-                // }}
+                source={{
+                  uri: `${
+                    Categories.filter(
+                      (cat) => cat.category_name === currentEvent.category
+                    )[0]["image_url"]
+                  }`,
+                }}
                 style={styles.eventImage}
               />
             </View>
