@@ -2,8 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const socket = require("socket.io");
 
-const { get_Current_User, user_Disconnect, join_User } = require("./socketUser");
-const { fetchHistory } = require("./fetchHistory");
+const {
+  get_Current_User,
+  user_Disconnect,
+  join_User,
+} = require("./socketUser");
 
 const app = express();
 app.use(cors());
@@ -13,8 +16,11 @@ const { MongoClient } = require("mongodb");
 // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const uri =
-  "mongodb+srv://Yiz:MeatUp123@thesnowman.1ublf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+  "mongodb+srv://balli2:balli2@frosty.wq0ip.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 // client.connect(err => {
 //   const collection = client.db("test").collection("devices");
 //   // perform actions on the collection object
@@ -25,7 +31,10 @@ app.use(express());
 
 const port = 8000;
 
-const server = app.listen(port, console.log(`Server is running on port: ${port} `));
+const server = app.listen(
+  port,
+  console.log(`Server is running on port: ${port} `)
+);
 
 const io = socket(server);
 
@@ -70,7 +79,7 @@ io.on("connection", (socket) => {
     async function insertIntoDB() {
       try {
         await client.connect();
-        const database = client.db("myFirstDatabase");
+        const database = client.db("frosty");
         const history = database.collection("chats");
         // create a document to insert
         const doc = {
@@ -80,7 +89,9 @@ io.on("connection", (socket) => {
           dateCreated: new Date(),
         };
         const result = await history.insertOne(doc);
-        console.log(`A document was inserted with the _id: ${result.insertedId}`);
+        console.log(
+          `A document was inserted with the _id: ${result.insertedId}`
+        );
       } finally {
         await client.close();
       }
