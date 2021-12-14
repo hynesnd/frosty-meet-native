@@ -186,14 +186,6 @@ export const Meets = () => {
                       />
                     );
                   })}
-                  {/* <MapView.Marker
-                    title="Marker"
-                    description="A park"
-                    coordinate={{
-                      latitude: 53.45158362764606,
-                      longitude: -2.2492806001642487,
-                    }}
-                  /> */}
                 </MapView>
               </View>
             </View>
@@ -303,5 +295,6 @@ const styles = StyleSheet.create({
     height: 300,
     marginHorizontal: 50,
     borderRadius: 10,
+    overflow: "hidden",
   },
 });
