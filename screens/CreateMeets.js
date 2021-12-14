@@ -27,6 +27,16 @@ export const CreateMeets = () => {
     { label: "Climbing", value: "climbing" },
     { label: "Cinema", value: "cinema" },
   ]);
+  const [formResult, setFormResult] = useState({
+    title: "",
+    description: "",
+    creator: "",
+    category: "",
+    location: {},
+    eventImage: "",
+    eventStart: "",
+    eventEnd: "",
+  });
 
   // const [chosenDate, setChosenDate] = useState(new Date());
 
@@ -44,9 +54,29 @@ export const CreateMeets = () => {
   //     };
   //   }, [])
   // );
+  const handleFormInput = (text, keyToChange) => {
+    setFormResult((prev) => {
+      const newState = { ...prev };
+      newState[keyToChange] = text;
+      return newState;
+    });
+  };
+
+  const handleCategoryPicker = (category) => {
+    setCategoryValue(category);
+    setFormResult((prev) => {
+      const newState = { ...prev };
+      newState.category = "";
+      if (category !== "Pick a category:") {
+        newState.category = category;
+      }
+      return newState;
+    });
+  };
 
   const uploadEventImage = () => {};
 
+  console.log(formResult);
   return (
     <View>
       <View style={styles.titleContainer}></View>
@@ -54,17 +84,22 @@ export const CreateMeets = () => {
         <View style={styles.formRow1}>
           <TextInput
             style={styles.input}
-            value={meetTitle}
-            onChangeText={setMeetTitle}
+            value={formResult.title}
+            onChangeText={(text) => handleFormInput(text, "title")}
             placeholder="Title:"
           />
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
             onValueChange={(itemValue, itemIndex) =>
-              setCategoryValue(itemValue)
+              handleCategoryPicker(itemValue)
             }
           >
+            <Picker.Item
+              key="Pick a category:"
+              label="Pick a category:"
+              value="Pick a category:"
+            />
             {Categories.map((cat) => {
               return (
                 <Picker.Item
@@ -79,8 +114,8 @@ export const CreateMeets = () => {
         <View style={styles.formRow2}>
           <TextInput
             style={styles.inputDescription}
-            value={meetDescription}
-            onChangeText={setMeetDescription}
+            value={formResult.description}
+            onChangeText={(text) => handleFormInput(text, "description")}
             placeholder="Please give a description ..."
             multiline={true}
             numberOfLines={4}
