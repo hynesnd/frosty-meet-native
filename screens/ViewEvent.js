@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
+import Categories from "../constants/Categories.js";
+
 import { EventContext } from "../contexts/event-context.js";
 import { UserContext } from "../contexts/user-context.js";
 import { ViewedUserContext } from "../contexts/viewed-user-context.js";
@@ -19,7 +21,7 @@ import CommentCard from "../components/CommentCard";
 import SlidingPanel from "react-native-sliding-up-down-panels";
 import Chat from "../components/Chat";
 import { deleteEvent } from "../utils/YizApi.js";
-import { getUsers } from "../utils/api.js";
+import { getUsers } from "../utils/nh-api.js";
 import MapView from "react-native-maps";
 
 const windowWidth = Dimensions.get("window").width;
@@ -148,8 +150,9 @@ export const ViewEvent = () => {
                     // ***
                     // Having to filter users as there's no endpoint to get user by username
                     // ***
-                    getUsers()
+                    getUsers(user.token)
                       .then((res) => {
+                        console.log(res.data.users, event.creator);
                         const correctUser = res.data.users.filter((person) => {
                           return person.username === event.creator.username;
                         })[0];
@@ -178,13 +181,13 @@ export const ViewEvent = () => {
             </View>
             <View style={styles.rightMiddleSide}>
               <Image
-                source={{
-                  uri: `${
-                    Categories.filter(
-                      (cat) => cat.category_name === event.category
-                    )[0]["image_url"]
-                  }`,
-                }}
+                // source={{
+                //   uri: `${
+                //     Categories.filter(
+                //       (cat) => cat.category_name === event.category
+                //     )[0]["image_url"]
+                //   }`,
+                // }}
                 style={styles.eventImage}
               />
             </View>

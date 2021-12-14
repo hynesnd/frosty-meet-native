@@ -32,13 +32,13 @@ export default function EventCard({ currentEvent }) {
         }}
       >
         <Image
-          source={{
-            uri: `${
-              Categories.filter(
-                (cat) => cat.category_name === currentEvent.category
-              )[0]["image_url"]
-            }`,
-          }}
+          // source={{
+          //   uri: `${
+          //     Categories.filter(
+          //       (cat) => cat.category_name === currentEvent.category
+          //     )[0]["image_url"]
+          //   }`,
+          // }}
           style={styles.eventImage}
         />
         <View style={styles.textContainer}>

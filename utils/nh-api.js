@@ -6,8 +6,8 @@ const frostyApi = axios.create({
 export const getEvents = (token) => {
   return frostyApi.get("/events", { headers: { "x-auth-token": token } });
 };
-export const getUsers = () => {
-  return frostyApi.get("/users");
+export const getUsers = (token) => {
+  return frostyApi.get("/users", { headers: { "x-auth-token": token } });
 };
 export const getUser = (id) => {
   return frostyApi.get(`/users/${id}`);
