@@ -19,16 +19,9 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const CreateMeets = () => {
-  const [meetTitle, setMeetTitle] = useState("");
-  const [meetDescription, setMeetDescription] = useState("");
   const [open, setOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
   const navigation = useNavigation();
-  const [categories, setCategories] = useState([
-    { label: "Social", value: "social" },
-    { label: "Climbing", value: "climbing" },
-    { label: "Cinema", value: "cinema" },
-  ]);
   const [formResult, setFormResult] = useState({
     title: "",
     description: "",
@@ -83,6 +76,8 @@ export const CreateMeets = () => {
       return newState;
     });
   };
+
+  const handleSubmit = () => {};
 
   const uploadEventImage = () => {};
 
@@ -141,13 +136,15 @@ export const CreateMeets = () => {
               style={styles.dateInput}
               value={startDate}
               onChangeText={setStartDate}
-              placeholder="DD/MM/YYYY"
+              placeholder="YYYY-MM-DD"
+              maxLength={10}
             />
             <TextInput
               style={styles.timeInput}
               value={startTime}
               onChangeText={setStartTime}
               placeholder="HH:MM"
+              maxLength={5}
             />
           </View>
           <View style={styles.eventEndContainer}>
@@ -155,13 +152,15 @@ export const CreateMeets = () => {
               style={styles.dateInput}
               value={endDate}
               onChangeText={setEndDate}
-              placeholder="DD/MM/YYYY"
+              placeholder="YYYY-MM-DD"
+              maxLength={10}
             />
             <TextInput
               style={styles.timeInput}
               value={endTime}
               onChangeText={setEndTime}
               placeholder="HH:MM"
+              maxLength={5}
             />
           </View>
         </View>
