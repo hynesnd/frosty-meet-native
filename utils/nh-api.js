@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Pressable } from "react-native";
 const frostyApi = axios.create({
   baseURL: "https://frosty-api2.herokuapp.com/api",
 });
@@ -10,11 +11,18 @@ export const getEvents = (token, category) => {
   }
   return frostyApi.get(path, { headers: { "x-auth-token": token } });
 };
+export const getProfile = (token) => {
+  return frostyApi.get("/users/profile/me", {
+    headers: { "x-auth-token": token },
+  });
+};
 export const getUsers = (token) => {
   return frostyApi.get("/users", { headers: { "x-auth-token": token } });
 };
-export const getUser = (token, id) => {
-  return frostyApi.get(`/users/${id}`, { headers: { "x-auth-token": token } });
+export const getUser = (token, username) => {
+  return frostyApi.get(`/users/${username}`, {
+    headers: { "x-auth-token": token },
+  });
 };
 export const getCategories = () => {
   return frostyApi.get("/categories");

@@ -93,7 +93,6 @@ export default function EventCard({ currentEvent }) {
                 setCurrentEvent(newEvent);
                 // backend stuff must be done here
               }
-              console.log(currentEvent.participants);
             }}
           >
             <Text style={styles.buttonText}>

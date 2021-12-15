@@ -21,7 +21,7 @@ import CommentCard from "../components/CommentCard";
 import SlidingPanel from "react-native-sliding-up-down-panels";
 import Chat from "../components/Chat";
 import { deleteEvent } from "../utils/YizApi.js";
-import { getUsers } from "../utils/nh-api.js";
+import { getUser } from "../utils/nh-api.js";
 import MapView from "react-native-maps";
 
 const windowWidth = Dimensions.get("window").width;
@@ -37,7 +37,6 @@ export const ViewEvent = () => {
   const [mapOpened, setMapOpened] = useState(true);
   const navigation = useNavigation();
   useEffect(() => {
-    console.log(event);
     getComments(user.token, event.eventId)
       .then(({ data }) => {
         setComments(data);
@@ -125,7 +124,6 @@ export const ViewEvent = () => {
                     setEvent(newEvent);
                     // backend stuff must be done here
                   }
-                  console.log(event.participants);
                 }}
               >
                 <Text style={styles.buttonText}>
@@ -146,23 +144,10 @@ export const ViewEvent = () => {
                 <Text>Creator: </Text>{" "}
                 <Pressable
                   onPress={() => {
-                    // ***
-                    // Having to filter users as there's no endpoint to get user by username
-                    // ***
-                    getUsers(user.token)
-                      .then((res) => {
-                        console.log(res.data.users, event.creator);
-                        const correctUser = res.data.users.filter((person) => {
-                          return person.username === event.creator.username;
-                        })[0];
-                        setViewedUser(correctUser);
-                      })
-                      .then(() => {
-                        return navigation.navigate("ViewUser");
-                      });
-                    // ***
-                    // ***
-                    // ***
+                    getUser(user.token, event.creator.username).then((res) => {
+                      setViewedUser(res.data);
+                      return navigation.navigate("ViewUser");
+                    });
                   }}
                 >
                   <Text style={styles.eventCreatorButton}>
@@ -205,22 +190,10 @@ export const ViewEvent = () => {
                 <Pressable
                   key={participant.username}
                   onPress={() => {
-                    // ***
-                    // Having to filter users as there's no endpoint to get user by username
-                    // ***
-                    getUsers(user.token)
-                      .then((res) => {
-                        const correctUser = res.data.users.filter((person) => {
-                          return person.username === participant.username;
-                        })[0];
-                        setViewedUser(correctUser);
-                      })
-                      .then(() => {
-                        return navigation.navigate("ViewUser");
-                      });
-                    // ***
-                    // ***
-                    // ***
+                    getUser(user.token, participant.username).then((res) => {
+                      setViewedUser(res.data);
+                      return navigation.navigate("ViewUser");
+                    });
                   }}
                   style={styles.participant}
                 >
@@ -263,22 +236,7 @@ export const ViewEvent = () => {
                     latitudeDelta: 0.4522,
                     longitudeDelta: 1.1421,
                   }}
-                >
-                  {/* {MapMarkers.map((park) => {
-                    return (
-                      <MapView.Marker
-                        key={park.parkId}
-                        title={park.name}
-                        description={park.description}
-                        coordinate={{
-                          latitude: park.latitude,
-                          longitude: park.longitude,
-                        }}
-                        onPress={() => console.log(park)}
-                      />
-                    );
-                  })} */}
-                </MapView>
+                ></MapView>
               </View>
             </View>
           ) : null}

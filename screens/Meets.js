@@ -176,7 +176,6 @@ export const Meets = () => {
                   }}
                 >
                   {events.map((eachEvent) => {
-                    console.log(eachEvent);
                     return (
                       <MapView.Marker
                         key={eachEvent.location.name}
