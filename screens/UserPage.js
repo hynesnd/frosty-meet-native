@@ -46,7 +46,7 @@ export const UserPage = () => {
               }}
               style={styles.editButton}
             >
-              <Text style={styles.editButtonText}>cancel</Text>
+              <Text style={{ color: "white" }}>Cancel</Text>
             </Pressable>
           ) : (
             <Pressable
@@ -55,7 +55,7 @@ export const UserPage = () => {
               }}
               style={styles.editButton}
             >
-              <Text style={styles.editButtonText}>edit</Text>
+              <Text style={{ color: "white" }}>Edit</Text>
             </Pressable>
           )}
         </View>
@@ -180,14 +180,13 @@ const styles = StyleSheet.create({
   },
   editButton: {
     flex: 1,
-    borderWidth: 1,
-    borderRadius: 5,
-    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
+    fontSize: 16,
+    padding: 5,
+    height: 24,
     flexDirection: "row",
     justifyContent: "center",
-  },
-  editButtonText: {
-    fontSize: 18,
   },
   firstRowContainer: {
     flexDirection: "row",
@@ -224,12 +223,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   textInputDetails: {
-    height: 35,
+    height: 30,
     fontSize: 16,
-    marginTop: 5,
+    marginVertical: 5,
     marginRight: 10,
+    paddingLeft: 3,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 10,
+    backgroundColor: "white",
   },
 
   eventListBox: {

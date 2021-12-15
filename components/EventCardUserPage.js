@@ -9,7 +9,7 @@ import Categories from "../constants/Categories.js";
 export default function EventCardUserPage({ currentEvent }) {
   // const Stack = createNativeStackNavigator();
   //   const navigation = useNavigation();
-
+  console.log(currentEvent);
   return (
     <View style={styles.cardContainer}>
       <View style={styles.mainContainer}>
@@ -36,7 +36,8 @@ export default function EventCardUserPage({ currentEvent }) {
           </View>
           <View style={styles.textRow}>
             <Text style={{ color: "white" }}>
-              Creator: {currentEvent.creator}
+              Creator:{" "}
+              {currentEvent.creator ? currentEvent.creator.username : null}
             </Text>
             <Text style={{ color: "white" }}>
               {currentEvent.eventStart.slice(11, 16)} -{" "}
@@ -46,8 +47,8 @@ export default function EventCardUserPage({ currentEvent }) {
           <View style={styles.textRow}>
             <Text style={{ color: "white" }}>
               Info:{" "}
-              {currentEvent.description.length > 100
-                ? `${currentEvent.description.slice(0, 60)}...`
+              {currentEvent.description.length > 60
+                ? `${currentEvent.description.slice(0, 55)}...`
                 : currentEvent.description}
             </Text>
           </View>
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "lightgrey",
     borderWidth: 1,
-    height: 100,
+    height: 90,
   },
   eventImage: {
     flex: 1,
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   textRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    margin: 5,
+    margin: 3,
   },
   extraContainer: {
     flexDirection: "row",
