@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
 import { EventContext } from "../contexts/event-context.js";
 import { ViewedUserContext } from "../contexts/viewed-user-context.js";
+import { joinEvent, leaveEvent } from "../utils/YizApi";
 
 import { useNavigation } from "@react-navigation/native";
 import { withSafeAreaInsets } from "react-native-safe-area-context";
@@ -18,6 +19,15 @@ export default function EventCard({ currentEvent }) {
 
   // const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
+  const [joined, setJoined] = useState(false);
+
+  useEffect(() => {
+    currentEvent.participants.forEach((person) => {
+      if (person.username === user.username) {
+        joined = true;
+      }
+    });
+  }, [joined]);
 
   return (
     <View style={styles.cardContainer}>
@@ -35,9 +45,9 @@ export default function EventCard({ currentEvent }) {
         <Image
           source={{
             uri: `${
-              Categories.filter(
-                (cat) => cat.category_name === currentEvent.category
-              )[0]["image_url"]
+              Categories.filter((cat) => cat.category_name === currentEvent.category)[0][
+                "image_url"
+              ]
             }`,
           }}
           style={styles.eventImage}
@@ -79,27 +89,17 @@ export default function EventCard({ currentEvent }) {
             onPress={() => {
               // backend patch: just send event id and body,
               // which is a new participants array
-              if (currentEvent.participants.includes(user.username)) {
-                const newEvent = { ...currentEvent };
-                newEvent.participants.splice(
-                  newEvent.participants.indexOf(user.username),
-                  1
-                );
-                setCurrentEvent(newEvent);
-                // backend stuff must be done here
+              console.log(user);
+              if (joined) {
+                leaveEvent(user.token, event.eventId).catch((err) => console.dir(err));
+                setJoined(false);
               } else {
-                const newEvent = { ...currentEvent };
-                newEvent.participants.push(user.username);
-                setCurrentEvent(newEvent);
-                // backend stuff must be done here
+                joinEvent(user.token, event.eventId).catch((err) => console.dir(err));
+                setJoined(true);
               }
             }}
           >
-            <Text style={styles.buttonText}>
-              {currentEvent.participants.includes(user.username)
-                ? "Leave"
-                : "Join"}
-            </Text>
+            <Text style={styles.buttonText}>{joined ? "Leave" : "Join"}</Text>
           </Pressable>
           <Pressable
             style={styles.button}

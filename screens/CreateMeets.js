@@ -229,26 +229,26 @@ export const CreateMeets = () => {
           ) : null}
           {error ? <Text style={styles.error}>{error}</Text> : null}
         </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            uploadEventImage;
-          }}
-        >
-          <Text style={styles.buttonText}>Upload Image</Text>
-        </Pressable>
+        <View style={styles.buttonContainer}>
+          {/* <Pressable
+            style={styles.button}
+            onPress={() => {
+              uploadEventImage;
+            }}
+          >
+            <Text style={styles.buttonText}>Upload Image</Text>
+          </Pressable> */}
 
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            handleSubmit();
-            navigation.navigate("Find Event");
-          }}
-        >
-          <Text style={styles.buttonText}>Submit!</Text>
-        </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              handleSubmit();
+              navigation.navigate("Find Event");
+            }}
+          >
+            <Text style={styles.buttonText}>Submit!</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -287,6 +287,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     alignItems: "center",
+    marginTop: 50,
+    paddingTop: 10,
   },
 
   input: {
@@ -333,6 +335,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#8E806A",
     elevation: 3,
     marginVertical: 10,
+    marginTop: 40,
     width: 150,
   },
 
@@ -378,7 +381,7 @@ const styles = StyleSheet.create({
 
   formRow5: {
     marginTop: 10,
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
     paddingHorizontal: 20,
     marginBottom: 10,
@@ -412,9 +415,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flex: 1,
     alignItems: "center",
+    marginBottom: 20,
   },
   mapText: {
     fontSize: 18,
+    marginBottom: 10,
   },
   map: {
     width: 300,
@@ -422,10 +427,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,
     borderRadius: 10,
     overflow: "hidden",
+    marginBottom: 10,
   },
 
   error: {
     color: "red",
     fontSize: 18,
+    marginBottom: 10,
   },
 });

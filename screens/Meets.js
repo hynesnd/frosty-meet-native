@@ -136,13 +136,7 @@ export const Meets = () => {
             onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
           >
             {joinedOptions.map((opt) => {
-              return (
-                <Picker.Item
-                  key={opt.label}
-                  label={opt.label}
-                  value={opt.value}
-                />
-              );
+              return <Picker.Item key={opt.label} label={opt.label} value={opt.value} />;
             })}
           </Picker>
         </View>
