@@ -4,6 +4,8 @@ import { UserContext } from "../contexts/user-context.js";
 
 import { useNavigation } from "@react-navigation/native";
 
+import Categories from "../constants/Categories.js";
+
 export default function EventCardUserPage({ currentEvent }) {
   // const Stack = createNativeStackNavigator();
   //   const navigation = useNavigation();
@@ -12,7 +14,13 @@ export default function EventCardUserPage({ currentEvent }) {
     <View style={styles.cardContainer}>
       <View style={styles.mainContainer}>
         <Image
-          source={{ uri: "https://source.unsplash.com/random/200x200" }}
+          source={{
+            uri: `${
+              Categories.filter(
+                (cat) => cat.category_name === currentEvent.category
+              )[0]["image_url"]
+            }`,
+          }}
           style={styles.eventImage}
         />
         <View style={styles.textContainer}>

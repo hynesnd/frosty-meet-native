@@ -22,6 +22,7 @@ export const CreateMeets = () => {
   const [open, setOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
   const navigation = useNavigation();
+
   const [formResult, setFormResult] = useState({
     title: "",
     description: "",
@@ -33,6 +34,7 @@ export const CreateMeets = () => {
     eventEnd: "",
   });
   const [markerClicked, setMarkerClicked] = useState(false);
+
   // const [chosenDate, setChosenDate] = useState(new Date());
 
   const [startDate, setStartDate] = useState("");
@@ -83,7 +85,7 @@ export const CreateMeets = () => {
 
   console.log(formResult);
   return (
-    <View>
+    <View style={{ backgroundColor: "lightgrey" }}>
       <View style={styles.titleContainer}></View>
       <View style={styles.formContainer}>
         <View style={styles.formRow1}>
