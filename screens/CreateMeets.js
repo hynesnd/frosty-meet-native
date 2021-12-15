@@ -19,16 +19,9 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const CreateMeets = () => {
-  const [meetTitle, setMeetTitle] = useState("");
-  const [meetDescription, setMeetDescription] = useState("");
   const [open, setOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
   const navigation = useNavigation();
-  const [categories, setCategories] = useState([
-    { label: "Social", value: "social" },
-    { label: "Climbing", value: "climbing" },
-    { label: "Cinema", value: "cinema" },
-  ]);
   const [formResult, setFormResult] = useState({
     title: "",
     description: "",
