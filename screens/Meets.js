@@ -37,12 +37,13 @@ export const Meets = () => {
   ]);
 
   const [joinedValue, setJoinedValue] = useState("All events");
-
+  const [joinedClicked, setJoinedClicked] = useState(false);
   const [events, setEvents] = useState([]);
   const { user } = useContext(UserContext);
   // const navigation = useNavigation();
 
   useEffect(() => {
+    if (joinedClicked) setJoinedClicked(false);
     getEvents(user.token, categoryValue).then(({ data }) => {
       const events = [];
 
@@ -68,7 +69,7 @@ export const Meets = () => {
 
       setEvents(events);
     });
-  }, [categoryValue, joinedValue]);
+  }, [categoryValue, joinedValue, joinedClicked]);
 
   const [mapOpened, setMapOpened] = useState(true);
 
@@ -136,7 +137,13 @@ export const Meets = () => {
             onValueChange={(itemValue, itemIndex) => setJoinedValue(itemValue)}
           >
             {joinedOptions.map((opt) => {
-              return <Picker.Item key={opt.label} label={opt.label} value={opt.value} />;
+              return (
+                <Picker.Item
+                  key={opt.label}
+                  label={opt.label}
+                  value={opt.value}
+                />
+              );
             })}
           </Picker>
         </View>
@@ -172,9 +179,9 @@ export const Meets = () => {
                   {events.map((eachEvent) => {
                     return (
                       <MapView.Marker
-                        key={eachEvent.location.name}
-                        title={eachEvent.location.name}
-                        description={eachEvent.location.description}
+                        key={eachEvent.title}
+                        title={eachEvent.title}
+                        description={eachEvent.description}
                         coordinate={{
                           latitude: eachEvent.location.latitude,
                           longitude: eachEvent.location.longitude,
@@ -197,6 +204,7 @@ export const Meets = () => {
                   key={currentEvent._id}
                   // navigation={navigation}
                   currentEvent={currentEvent}
+                  setJoinedClicked={setJoinedClicked}
                 />
               );
             })
