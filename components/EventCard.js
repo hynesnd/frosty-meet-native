@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   eventImage: {
     flex: 1,
     borderRadius: 10,
-    margin: 5,
+    margin: 3,
   },
   textContainer: {
     flexDirection: "column",
