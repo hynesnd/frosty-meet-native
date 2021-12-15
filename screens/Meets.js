@@ -23,26 +23,29 @@ import { useContext } from "react";
 import { UserContext } from "../contexts/user-context.js";
 import MapView from "react-native-maps";
 import MapMarkers from "../constants/MapMarkers.js";
+import Categories from "../constants/Categories.js";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const Meets = () => {
   const [categoryValue, setCategoryValue] = useState("");
-  const [categories, setCategories] = useState([
-    { label: "Any type", value: "any type" },
-    { label: "Walking", value: "Walking" },
-    { label: "Running", value: "Running" },
-    { label: "Cycling", value: "Cycling" },
-    { label: "Movie", value: "movies" },
-    { label: "coding", value: "coding" },
+
+  const [joinedValue, setJoinedValue] = useState("");
+  const [joinedOptions, setJoinedOptions] = useState([
+    { label: "All events", value: "All events" },
+    { label: "Joined events", value: "Joined events" },
+    { label: "Not Joined", value: "Not joined"}
   ]);
+
   const [events, setEvents] = useState([]);
   const { user } = useContext(UserContext);
   // const navigation = useNavigation();
 
   useEffect(() => {
-    setCategoryValue("any type");
+
+    // setCategoryValue("any type");
+
     // getEvents().then(({ data }) => {
     //   const newEvents = [];
     //   data.events.forEach((event) => {
@@ -50,21 +53,15 @@ export const Meets = () => {
     //   });
     //   setEvents(newEvents);
     // });
+
     getEvents(user.token, categoryValue).then(({ data }) => {
       console.log(data.events);
+
       setEvents(data.events);
     });
-  }, []);
-
-  const [joinedValue, setJoinedValue] = useState("");
-  const [joinedOptions, setJoinedOptions] = useState([
-    { label: "Any Meet", value: "all" },
-    { label: "Joined", value: "joined" },
-  ]);
+  }, [categoryValue, joinedValue]);
 
   const [mapOpened, setMapOpened] = useState(true);
-
-  const [eventDate, setEventDate] = useState("");
 
   const Stack = createNativeStackNavigator();
 
@@ -93,12 +90,17 @@ export const Meets = () => {
               handleCategoryChange(itemValue);
             }}
           >
-            {categories.map((cat) => {
+            <Picker.Item
+              key="All categories"
+              label="All categories"
+              value="All categories"
+            />
+            {Categories.map((cat) => {
               return (
                 <Picker.Item
-                  key={cat.label}
-                  label={cat.label}
-                  value={cat.value}
+                  key={cat.category_name}
+                  label={cat.category_name}
+                  value={cat.category_name}
                 />
               );
             })}
@@ -250,7 +252,7 @@ const styles = StyleSheet.create({
   },
   pickerStyle: {
     height: 25,
-    width: 100,
+    width: 130,
     marginTop: 10,
     backgroundColor: "#8E806A",
     borderRadius: 10,

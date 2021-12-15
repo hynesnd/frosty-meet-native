@@ -27,6 +27,7 @@ export const CreateMeets = () => {
   const [open, setOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
   const navigation = useNavigation();
+
   const [formResult, setFormResult] = useState({
     title: "",
     description: "",
@@ -105,7 +106,7 @@ export const CreateMeets = () => {
   const uploadEventImage = () => {};
 
   return (
-    <View>
+    <View style={{ backgroundColor: "lightgrey" }}>
       <View style={styles.titleContainer}></View>
       <View style={styles.formContainer}>
         <View style={styles.formRow1}>

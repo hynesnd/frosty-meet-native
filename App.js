@@ -7,9 +7,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./screens/Login";
 import { Home } from "./screens/Home";
 import DrawerItems from "./constants/DrawerItems";
-import Header from "./components/Header";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { CreateMeets } from "./screens/CreateMeets";
 import { Meets } from "./screens/Meets";
@@ -51,26 +48,13 @@ export default function App() {
                       : Home
                   }
                   options={{
-                    drawerIcon: ({ focused }) =>
-                      drawer.iconType === "Material" ? (
-                        <MaterialCommunityIcons
-                          name={drawer.iconName}
-                          size={24}
-                          color={focused ? "#C37B89" : "black"}
-                        />
-                      ) : drawer.iconType === "Feather" ? (
-                        <Feather
-                          name={drawer.iconName}
-                          size={24}
-                          color={focused ? "#C37B89" : "black"}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name={drawer.iconName}
-                          size={24}
-                          color={focused ? "#C37B89" : "black"}
-                        />
-                      ),
+                    drawerIcon: ({ focused }) => (
+                      <FontAwesome5
+                        name={drawer.iconName}
+                        size={24}
+                        color={focused ? "#C37B89" : "black"}
+                      />
+                    ),
                     headerShown: true,
                   }}
                 />

@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { getEvents } from "../utils/api.js";
+import { getEvents } from "../utils/nh-api.js";
 import EventCardUserPage from "../components/EventCardUserPage";
 
 const windowWidth = Dimensions.get("window").width;
@@ -29,9 +29,9 @@ export const UserPage = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    getEvents().then(({ data }) => {
+    getEvents(user.token).then(({ data }) => {
       setHostedEvents(
-        data.events.filter((event) => event.creator === user.username)
+        data.events.filter((event) => event.creator.username === user.username)
       );
       setAttendedEvents(
         data.events.filter((event) =>

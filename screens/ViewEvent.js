@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
+import Categories from "../constants/Categories.js";
+
 import { EventContext } from "../contexts/event-context.js";
 import { UserContext } from "../contexts/user-context.js";
 import { ViewedUserContext } from "../contexts/viewed-user-context.js";
@@ -35,6 +37,7 @@ export const ViewEvent = () => {
   const [mapOpened, setMapOpened] = useState(true);
   const navigation = useNavigation();
   useEffect(() => {
+    console.log(event);
     getComments(user.token, event.eventId)
       .then(({ data }) => {
         setComments(data);
@@ -56,8 +59,6 @@ export const ViewEvent = () => {
   //     };
   //   }, [])
   // );
-
-  const handleEditEvent = (id) => {};
 
   return (
     <View
@@ -150,6 +151,7 @@ export const ViewEvent = () => {
                     // ***
                     getUsers(user.token)
                       .then((res) => {
+                        console.log(res.data.users, event.creator);
                         const correctUser = res.data.users.filter((person) => {
                           return person.username === event.creator.username;
                         })[0];
@@ -178,7 +180,13 @@ export const ViewEvent = () => {
             </View>
             <View style={styles.rightMiddleSide}>
               <Image
-                source={{ uri: "https://source.unsplash.com/random/200x200" }}
+                source={{
+                  uri: `${
+                    Categories.filter(
+                      (cat) => cat.category_name === currentEvent.category
+                    )[0]["image_url"]
+                  }`,
+                }}
                 style={styles.eventImage}
               />
             </View>

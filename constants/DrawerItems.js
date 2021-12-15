@@ -1,27 +1,22 @@
 export default [
   {
     name: "Home",
-    iconType: "Material",
-    iconName: "face-profile",
+    iconName: "home",
   },
   {
     name: "Find Event",
-    iconType: "Material",
-    iconName: "face-profile",
+    iconName: "search",
   },
   {
     name: "Create Event",
-    iconType: "Material",
-    iconName: "face-profile",
+    iconName: "pen",
   },
   {
     name: "User Page",
-    iconType: "Material",
-    iconName: "face-profile",
+    iconName: "user-circle",
   },
   {
     name: "Login",
-    iconType: "Feather",
-    iconName: "settings",
+    iconName: "cog",
   },
 ];
