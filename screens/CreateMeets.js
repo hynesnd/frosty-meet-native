@@ -77,6 +77,8 @@ export const CreateMeets = () => {
     });
   };
 
+  const handleSubmit = () => {};
+
   const uploadEventImage = () => {};
 
   console.log(formResult);
@@ -134,13 +136,15 @@ export const CreateMeets = () => {
               style={styles.dateInput}
               value={startDate}
               onChangeText={setStartDate}
-              placeholder="DD/MM/YYYY"
+              placeholder="YYYY-MM-DD"
+              maxLength={10}
             />
             <TextInput
               style={styles.timeInput}
               value={startTime}
               onChangeText={setStartTime}
               placeholder="HH:MM"
+              maxLength={5}
             />
           </View>
           <View style={styles.eventEndContainer}>
@@ -148,13 +152,15 @@ export const CreateMeets = () => {
               style={styles.dateInput}
               value={endDate}
               onChangeText={setEndDate}
-              placeholder="DD/MM/YYYY"
+              placeholder="YYYY-MM-DD"
+              maxLength={10}
             />
             <TextInput
               style={styles.timeInput}
               value={endTime}
               onChangeText={setEndTime}
               placeholder="HH:MM"
+              maxLength={5}
             />
           </View>
         </View>
