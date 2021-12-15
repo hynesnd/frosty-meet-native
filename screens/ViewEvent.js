@@ -21,7 +21,7 @@ import CommentCard from "../components/CommentCard";
 import SlidingPanel from "react-native-sliding-up-down-panels";
 import Chat from "../components/Chat";
 import { deleteEvent } from "../utils/YizApi.js";
-import { getUsers } from "../utils/nh-api.js";
+import { getUser } from "../utils/nh-api.js";
 import MapView from "react-native-maps";
 import { joinEvent, leaveEvent } from "../utils/YizApi";
 
@@ -46,7 +46,6 @@ export const ViewEvent = () => {
   });
 
   useEffect(() => {
-    console.log(event);
     getComments(user.token, event.eventId)
       .then(({ data }) => {
         setComments(data);
@@ -124,7 +123,6 @@ export const ViewEvent = () => {
                     joinEvent(user.token, event._id).catch((err) => console.dir(err));
                     setJoined(true);
                   }
-                  console.log(event.participants);
                 }}
               >
                 <Text style={styles.buttonText}>
@@ -143,23 +141,10 @@ export const ViewEvent = () => {
                 <Text>Creator: </Text>{" "}
                 <Pressable
                   onPress={() => {
-                    // ***
-                    // Having to filter users as there's no endpoint to get user by username
-                    // ***
-                    getUsers(user.token)
-                      .then((res) => {
-                        console.log(res.data.users, event.creator);
-                        const correctUser = res.data.users.filter((person) => {
-                          return person.username === event.creator.username;
-                        })[0];
-                        setViewedUser(correctUser);
-                      })
-                      .then(() => {
-                        return navigation.navigate("ViewUser");
-                      });
-                    // ***
-                    // ***
-                    // ***
+                    getUser(user.token, event.creator.username).then((res) => {
+                      setViewedUser(res.data);
+                      return navigation.navigate("ViewUser");
+                    });
                   }}
                 >
                   <Text style={styles.eventCreatorButton}>{event.creator.username}</Text>
@@ -199,22 +184,10 @@ export const ViewEvent = () => {
                 <Pressable
                   key={participant.username}
                   onPress={() => {
-                    // ***
-                    // Having to filter users as there's no endpoint to get user by username
-                    // ***
-                    getUsers(user.token)
-                      .then((res) => {
-                        const correctUser = res.data.users.filter((person) => {
-                          return person.username === participant.username;
-                        })[0];
-                        setViewedUser(correctUser);
-                      })
-                      .then(() => {
-                        return navigation.navigate("ViewUser");
-                      });
-                    // ***
-                    // ***
-                    // ***
+                    getUser(user.token, participant.username).then((res) => {
+                      setViewedUser(res.data);
+                      return navigation.navigate("ViewUser");
+                    });
                   }}
                   style={styles.participant}
                 >

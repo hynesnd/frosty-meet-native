@@ -68,8 +68,8 @@ export default function EventCard({ currentEvent }) {
               Creator: {currentEvent.creator.username}
             </Text>
             <Text style={{ color: "white" }}>
-              {currentEvent.eventStart.slice(12, 17)} -{" "}
-              {currentEvent.eventEnd.slice(12, 17)}
+              {currentEvent.eventStart.slice(11, 16)} -{" "}
+              {currentEvent.eventEnd.slice(11, 16)}
             </Text>
           </View>
           <View style={styles.textRow}>
@@ -97,7 +97,6 @@ export default function EventCard({ currentEvent }) {
                 joinEvent(user.token, event.eventId).catch((err) => console.dir(err));
                 setJoined(true);
               }
-              console.log(currentEvent.participants);
             }}
           >
             <Text style={styles.buttonText}>{joined ? "Leave" : "Join"}</Text>
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
   eventImage: {
     flex: 1,
     borderRadius: 10,
+    margin: 3,
   },
   textContainer: {
     flexDirection: "column",

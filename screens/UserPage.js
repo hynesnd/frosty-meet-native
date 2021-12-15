@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { UserContext } from "../contexts/user-context.js";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { getEvents } from "../utils/nh-api.js";
+import { getProfile } from "../utils/nh-api.js";
 import EventCardUserPage from "../components/EventCardUserPage";
 
 const windowWidth = Dimensions.get("window").width;
@@ -29,18 +29,11 @@ export const UserPage = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    getEvents(user.token).then(({ data }) => {
-      setHostedEvents(
-        data.events.filter((event) => event.creator.username === user.username)
-      );
-      setAttendedEvents(
-        data.events.filter((event) =>
-          event.participants.includes(user.username)
-        )
-      );
+    getProfile(user.token).then(({ data }) => {
+      setHostedEvents(data.user.hostedEvents);
+      setAttendedEvents(data.user.attendedEvents);
     });
   }, []);
-  console.log(user);
   return (
     <View style={styles.wholePage}>
       <View style={styles.pageContainer}>
@@ -53,7 +46,7 @@ export const UserPage = () => {
               }}
               style={styles.editButton}
             >
-              <Text style={styles.editButtonText}>cancel</Text>
+              <Text style={{ color: "white" }}>Cancel</Text>
             </Pressable>
           ) : (
             <Pressable
@@ -62,7 +55,7 @@ export const UserPage = () => {
               }}
               style={styles.editButton}
             >
-              <Text style={styles.editButtonText}>edit</Text>
+              <Text style={{ color: "white" }}>Edit</Text>
             </Pressable>
           )}
         </View>
@@ -187,14 +180,13 @@ const styles = StyleSheet.create({
   },
   editButton: {
     flex: 1,
-    borderWidth: 1,
-    borderRadius: 5,
-    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#8E806A",
+    fontSize: 16,
+    padding: 5,
+    height: 24,
     flexDirection: "row",
     justifyContent: "center",
-  },
-  editButtonText: {
-    fontSize: 18,
   },
   firstRowContainer: {
     flexDirection: "row",
@@ -231,12 +223,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   textInputDetails: {
-    height: 35,
+    height: 30,
     fontSize: 16,
-    marginTop: 5,
+    marginVertical: 5,
     marginRight: 10,
+    paddingLeft: 3,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 10,
+    backgroundColor: "white",
   },
 
   eventListBox: {
