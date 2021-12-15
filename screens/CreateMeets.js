@@ -383,6 +383,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 20,
     marginBottom: 10,
   },
