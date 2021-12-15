@@ -24,7 +24,7 @@ export default function EventCard({ currentEvent }) {
   useEffect(() => {
     currentEvent.participants.forEach((person) => {
       if (person.username === user.username) {
-        joined = true;
+        setJoined(true);
       }
     });
   }, [joined]);
@@ -45,9 +45,9 @@ export default function EventCard({ currentEvent }) {
         <Image
           source={{
             uri: `${
-              Categories.filter((cat) => cat.category_name === currentEvent.category)[0][
-                "image_url"
-              ]
+              Categories.filter(
+                (cat) => cat.category_name === currentEvent.category
+              )[0]["image_url"]
             }`,
           }}
           style={styles.eventImage}
@@ -91,10 +91,14 @@ export default function EventCard({ currentEvent }) {
               // which is a new participants array
               console.log(user);
               if (joined) {
-                leaveEvent(user.token, event.eventId).catch((err) => console.dir(err));
+                leaveEvent(user.token, event.eventId).catch((err) =>
+                  console.dir(err)
+                );
                 setJoined(false);
               } else {
-                joinEvent(user.token, event.eventId).catch((err) => console.dir(err));
+                joinEvent(user.token, event.eventId).catch((err) =>
+                  console.dir(err)
+                );
                 setJoined(true);
               }
             }}

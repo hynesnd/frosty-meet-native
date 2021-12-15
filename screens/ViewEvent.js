@@ -41,7 +41,7 @@ export const ViewEvent = () => {
 
   event.participants.forEach((person) => {
     if (person.username === user.username) {
-      joined = true;
+      setJoined(true);
     }
   });
 
@@ -75,7 +75,10 @@ export const ViewEvent = () => {
       }}
       showsVerticalScrollIndicator={false}
     >
-      <ScrollView style={styles.contentsContainer} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.contentsContainer}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.backContainer}>
           <Pressable
             style={styles.backButton}
@@ -117,16 +120,22 @@ export const ViewEvent = () => {
                   // backend patch: just send event id and body,
                   // which is an updated event object
                   if (joined) {
-                    leaveEvent(user.token, event._id).catch((err) => console.dir(err));
+                    leaveEvent(user.token, event._id).catch((err) =>
+                      console.dir(err)
+                    );
                     setJoined(false);
                   } else {
-                    joinEvent(user.token, event._id).catch((err) => console.dir(err));
+                    joinEvent(user.token, event._id).catch((err) =>
+                      console.dir(err)
+                    );
                     setJoined(true);
                   }
                 }}
               >
                 <Text style={styles.buttonText}>
-                  {event.participants.includes(user.username) ? "Leave" : "Join"}
+                  {event.participants.includes(user.username)
+                    ? "Leave"
+                    : "Join"}
                 </Text>
               </Pressable>
             </View>
@@ -147,23 +156,26 @@ export const ViewEvent = () => {
                     });
                   }}
                 >
-                  <Text style={styles.eventCreatorButton}>{event.creator.username}</Text>
+                  <Text style={styles.eventCreatorButton}>
+                    {event.creator.username}
+                  </Text>
                 </Pressable>
               </Text>
               <Text style={styles.eventDetailText}>
                 Date: {event.eventStart.slice(0, 10).replaceAll("-", "/")}
               </Text>
               <Text style={styles.eventDetailText}>
-                Time: {event.eventStart.slice(11, 16)} - {event.eventEnd.slice(11, 16)}
+                Time: {event.eventStart.slice(11, 16)} -{" "}
+                {event.eventEnd.slice(11, 16)}
               </Text>
             </View>
             <View style={styles.rightMiddleSide}>
               <Image
                 source={{
                   uri: `${
-                    Categories.filter((cat) => cat.category_name === event.category)[0][
-                      "image_url"
-                    ]
+                    Categories.filter(
+                      (cat) => cat.category_name === event.category
+                    )[0]["image_url"]
                   }`,
                 }}
                 style={styles.eventImage}
@@ -287,7 +299,9 @@ export const ViewEvent = () => {
             </View>
           )}
           slidingPanelLayout={() => (
-            <View style={styles.slidingPanelLayoutStyle}>{chatOn ? <Chat /> : null}</View>
+            <View style={styles.slidingPanelLayoutStyle}>
+              {chatOn ? <Chat /> : null}
+            </View>
           )}
         />
       </View>
