@@ -16,14 +16,22 @@ export const getHistory = (title) => {
 };
 
 export const joinEvent = (token, event_id) => {
-  // console.log(token);
-  // return frostyApi.post(`events/${event_id}/perticipate`, {
-  //   headers: { "x-auth-token": token },
-  // });
+  console.log(token);
+  return frostyApi.post(
+    `events/${event_id}/perticipate`,
+    {},
+    {
+      headers: { "x-auth-token": token },
+    }
+  );
 };
 
 export const leaveEvent = (token, event_id) => {
-  // return frostyApi.delete(`events/${event_id}/perticipate`, {
-  //   headers: { "x-auth-token": token },
-  // });
+  return frostyApi.delete(
+    `events/${event_id}/perticipate`,
+
+    {
+      headers: { "x-auth-token": token },
+    }
+  );
 };
