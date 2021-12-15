@@ -183,7 +183,7 @@ export const ViewEvent = () => {
                 source={{
                   uri: `${
                     Categories.filter(
-                      (cat) => cat.category_name === currentEvent.category
+                      (cat) => cat.category_name === event.category
                     )[0]["image_url"]
                   }`,
                 }}
