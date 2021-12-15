@@ -10,7 +10,7 @@ import { withSafeAreaInsets } from "react-native-safe-area-context";
 
 import Categories from "../constants/Categories.js";
 
-export default function EventCard({ currentEvent }) {
+export default function EventCard({ currentEvent, setJoinedClicked }) {
   const [toggleOn, setToggleOn] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { event, setEvent } = useContext(EventContext);
@@ -89,17 +89,22 @@ export default function EventCard({ currentEvent }) {
             onPress={() => {
               // backend patch: just send event id and body,
               // which is a new participants array
-              console.log(user);
               if (joined) {
-                leaveEvent(user.token, event.eventId).catch((err) =>
-                  console.dir(err)
-                );
-                setJoined(false);
+                leaveEvent(user.token, event.eventId)
+                  .then((res) => {
+                    setJoined(false);
+                    setEvent(res.data.event);
+                    setJoinedClicked(true);
+                  })
+                  .catch((err) => console.dir(err));
               } else {
-                joinEvent(user.token, event.eventId).catch((err) =>
-                  console.dir(err)
-                );
-                setJoined(true);
+                joinEvent(user.token, event.eventId)
+                  .then((res) => {
+                    setJoined(true);
+                    setEvent(res.data.event);
+                    setJoinedClicked(true);
+                  })
+                  .catch((err) => console.dir(err));
               }
             }}
           >
