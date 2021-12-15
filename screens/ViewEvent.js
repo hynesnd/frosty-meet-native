@@ -39,13 +39,12 @@ export const ViewEvent = () => {
   const navigation = useNavigation();
   const [joined, setJoined] = useState(false);
 
-  event.participants.forEach((person) => {
-    if (person.username === user.username) {
-      setJoined(true);
-    }
-  });
-
   useEffect(() => {
+    event.participants.forEach((person) => {
+      if (person.username === user.username) {
+        setJoined(true);
+      }
+    });
     getComments(user.token, event.eventId)
       .then(({ data }) => {
         setComments(data);
@@ -58,7 +57,7 @@ export const ViewEvent = () => {
     } else {
       setIsSelf(false);
     }
-  }, []);
+  }, [event]);
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -120,22 +119,27 @@ export const ViewEvent = () => {
                   // backend patch: just send event id and body,
                   // which is an updated event object
                   if (joined) {
-                    leaveEvent(user.token, event._id).catch((err) =>
-                      console.dir(err)
-                    );
-                    setJoined(false);
+                    leaveEvent(user.token, event.eventId)
+                      .then((res) => {
+                        setJoined(false);
+                        setEvent(res.data.event);
+                        setJoinedClicked(true);
+                      })
+                      .catch((err) => console.dir(err));
                   } else {
-                    joinEvent(user.token, event._id).catch((err) =>
-                      console.dir(err)
-                    );
+                    joinEvent(user.token, event.eventId)
+                      .then((res) => {
+                        setJoined(true);
+                        setEvent(res.data.event);
+                        setJoinedClicked(true);
+                      })
+                      .catch((err) => console.dir(err));
                     setJoined(true);
                   }
                 }}
               >
                 <Text style={styles.buttonText}>
-                  {event.participants.includes(user.username)
-                    ? "Leave"
-                    : "Join"}
+                  {joined ? "Leave" : "Join"}
                 </Text>
               </Pressable>
             </View>
