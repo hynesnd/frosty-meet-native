@@ -34,3 +34,9 @@ export const postNewUser = (newUser) => {
 export const loginUser = (newUser) => {
   return frostyApi.post("/users/login", newUser);
 };
+
+export const postEvent = (token, newEvent) => {
+  return frostyApi.post("/events", newEvent, {
+    headers: { "x-auth-token": token },
+  });
+};
