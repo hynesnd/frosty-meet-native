@@ -29,5 +29,5 @@ export default [
     image_url:
       "https://thumbs.dreamstime.com/b/line-art-black-white-party-popper-holiday-cracker-props-birthday-themed-vector-illustration-icon-stamp-label-certificate-145299261.jpg",
   },
-  { category_name: "Other", image_url: "https://ibb.co/Qrph3zv" },
+  { category_name: "Other", image_url: "https://i.ibb.co/m6bdV15/logo.jpg" },
 ];

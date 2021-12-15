@@ -22,7 +22,6 @@ import { ViewUser } from "./ViewUser.js";
 import { useContext } from "react";
 import { UserContext } from "../contexts/user-context.js";
 import MapView from "react-native-maps";
-import MapMarkers from "../constants/MapMarkers.js";
 import Categories from "../constants/Categories.js";
 
 const windowWidth = Dimensions.get("window").width;
@@ -176,17 +175,17 @@ export const Meets = () => {
                     longitudeDelta: 1.1421,
                   }}
                 >
-                  {MapMarkers.map((park) => {
+                  {events.map((eachEvent) => {
+                    console.log(eachEvent);
                     return (
                       <MapView.Marker
-                        key={park.parkId}
-                        title={park.name}
-                        description={park.description}
+                        key={eachEvent.location.name}
+                        title={eachEvent.location.name}
+                        description={eachEvent.location.description}
                         coordinate={{
-                          latitude: park.latitude,
-                          longitude: park.longitude,
+                          latitude: eachEvent.location.latitude,
+                          longitude: eachEvent.location.longitude,
                         }}
-                        onPress={() => console.log(park)}
                       />
                     );
                   })}
