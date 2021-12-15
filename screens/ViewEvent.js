@@ -264,20 +264,14 @@ export const ViewEvent = () => {
                     longitudeDelta: 1.1421,
                   }}
                 >
-                  {/* {MapMarkers.map((park) => {
-                    return (
-                      <MapView.Marker
-                        key={park.parkId}
-                        title={park.name}
-                        description={park.description}
-                        coordinate={{
-                          latitude: park.latitude,
-                          longitude: park.longitude,
-                        }}
-                        onPress={() => console.log(park)}
-                      />
-                    );
-                  })} */}
+                  <MapView.Marker
+                    title={event.name}
+                    description={event.description}
+                    coordinate={{
+                      latitude: event.location.latitude,
+                      longitude: event.location.longitude,
+                    }}
+                  />
                 </MapView>
               </View>
             </View>
