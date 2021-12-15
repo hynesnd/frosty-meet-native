@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import {
   View,
@@ -14,11 +14,16 @@ import MapView from "react-native-maps";
 import MapMarkers from "../constants/MapMarkers.js";
 
 import Categories from "../constants/Categories.js";
+import { postEvent } from "../utils/nh-api.js";
+import { UserContext } from "../contexts/user-context.js";
+import { EventContext } from "../contexts/event-context.js";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const CreateMeets = () => {
+  const { user } = useContext(UserContext);
+  const { event, setEvent } = useContext(EventContext);
   const [open, setOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
   const navigation = useNavigation();
@@ -33,14 +38,13 @@ export const CreateMeets = () => {
     eventEnd: "",
   });
   const [markerClicked, setMarkerClicked] = useState(false);
+  const [error, setError] = useState(null);
   // const [chosenDate, setChosenDate] = useState(new Date());
 
   const [startDate, setStartDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endDate, setEndDate] = useState("");
   const [endTime, setEndTime] = useState("");
-
-  const [event, setEvent] = useState({});
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -77,11 +81,29 @@ export const CreateMeets = () => {
     });
   };
 
-  const handleSubmit = () => {};
+  const handleDateBlur = () => {
+    const formStartDate = `${startDate}T${startTime}:00.000Z`;
+    const formEndDate = `${endDate}T${endTime}:00.000Z`;
+    setFormResult((prev) => {
+      const newState = { ...prev };
+      newState.eventStart = formStartDate;
+      newState.eventEnd = formEndDate;
+      return newState;
+    });
+  };
+
+  const handleSubmit = () => {
+    postEvent(user.token, formResult)
+      .then((res) => {
+        setEvent(res.data.eventId);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  };
 
   const uploadEventImage = () => {};
 
-  console.log(formResult);
   return (
     <View>
       <View style={styles.titleContainer}></View>
@@ -136,6 +158,7 @@ export const CreateMeets = () => {
               style={styles.dateInput}
               value={startDate}
               onChangeText={setStartDate}
+              onBlur={handleDateBlur}
               placeholder="YYYY-MM-DD"
               maxLength={10}
             />
@@ -143,6 +166,7 @@ export const CreateMeets = () => {
               style={styles.timeInput}
               value={startTime}
               onChangeText={setStartTime}
+              handleDateBlur={handleDateBlur}
               placeholder="HH:MM"
               maxLength={5}
             />
@@ -152,6 +176,7 @@ export const CreateMeets = () => {
               style={styles.dateInput}
               value={endDate}
               onChangeText={setEndDate}
+              onBlur={handleDateBlur}
               placeholder="YYYY-MM-DD"
               maxLength={10}
             />
@@ -159,6 +184,7 @@ export const CreateMeets = () => {
               style={styles.timeInput}
               value={endTime}
               onChangeText={setEndTime}
+              onBlur={handleDateBlur}
               placeholder="HH:MM"
               maxLength={5}
             />
@@ -200,6 +226,7 @@ export const CreateMeets = () => {
               {formResult.location.name} selected!
             </Text>
           ) : null}
+          {error ? <Text style={styles.error}>{error}</Text> : null}
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -215,8 +242,8 @@ export const CreateMeets = () => {
         <Pressable
           style={styles.button}
           onPress={() => {
-            setEvent;
-            navigation.navigate("View Event");
+            handleSubmit();
+            navigation.navigate("Find Event");
           }}
         >
           <Text style={styles.buttonText}>Submit!</Text>
@@ -394,5 +421,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,
     borderRadius: 10,
     overflow: "hidden",
+  },
+
+  error: {
+    color: "red",
+    fontSize: 18,
   },
 });
