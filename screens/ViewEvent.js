@@ -23,6 +23,7 @@ import Chat from "../components/Chat";
 import { deleteEvent } from "../utils/YizApi.js";
 import { getUsers } from "../utils/nh-api.js";
 import MapView from "react-native-maps";
+import { joinEvent, leaveEvent } from "../utils/YizApi";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -36,6 +37,14 @@ export const ViewEvent = () => {
   const [isSelf, setIsSelf] = useState(false);
   const [mapOpened, setMapOpened] = useState(true);
   const navigation = useNavigation();
+  const [joined, setJoined] = useState(false);
+
+  event.participants.forEach((person) => {
+    if (person.username === user.username) {
+      joined = true;
+    }
+  });
+
   useEffect(() => {
     console.log(event);
     getComments(user.token, event.eventId)
@@ -67,10 +76,7 @@ export const ViewEvent = () => {
       }}
       showsVerticalScrollIndicator={false}
     >
-      <ScrollView
-        style={styles.contentsContainer}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView style={styles.contentsContainer} showsVerticalScrollIndicator={false}>
         <View style={styles.backContainer}>
           <Pressable
             style={styles.backButton}
@@ -111,27 +117,18 @@ export const ViewEvent = () => {
                 onPress={() => {
                   // backend patch: just send event id and body,
                   // which is an updated event object
-                  if (event.participants.includes(user.username)) {
-                    const newEvent = { ...event };
-                    newEvent.participants.splice(
-                      newEvent.participants.indexOf(user.username),
-                      1
-                    );
-                    setEvent(newEvent);
-                    // backend stuff must be done here
+                  if (joined) {
+                    leaveEvent(user.token, event._id).catch((err) => console.dir(err));
+                    setJoined(false);
                   } else {
-                    const newEvent = { ...event };
-                    newEvent.participants.push(user.username);
-                    setEvent(newEvent);
-                    // backend stuff must be done here
+                    joinEvent(user.token, event._id).catch((err) => console.dir(err));
+                    setJoined(true);
                   }
                   console.log(event.participants);
                 }}
               >
                 <Text style={styles.buttonText}>
-                  {event.participants.includes(user.username)
-                    ? "Leave"
-                    : "Join"}
+                  {event.participants.includes(user.username) ? "Leave" : "Join"}
                 </Text>
               </Pressable>
             </View>
@@ -165,26 +162,23 @@ export const ViewEvent = () => {
                     // ***
                   }}
                 >
-                  <Text style={styles.eventCreatorButton}>
-                    {event.creator.username}
-                  </Text>
+                  <Text style={styles.eventCreatorButton}>{event.creator.username}</Text>
                 </Pressable>
               </Text>
               <Text style={styles.eventDetailText}>
                 Date: {event.eventStart.slice(0, 10).replaceAll("-", "/")}
               </Text>
               <Text style={styles.eventDetailText}>
-                Time: {event.eventStart.slice(11, 16)} -{" "}
-                {event.eventEnd.slice(11, 16)}
+                Time: {event.eventStart.slice(11, 16)} - {event.eventEnd.slice(11, 16)}
               </Text>
             </View>
             <View style={styles.rightMiddleSide}>
               <Image
                 source={{
                   uri: `${
-                    Categories.filter(
-                      (cat) => cat.category_name === event.category
-                    )[0]["image_url"]
+                    Categories.filter((cat) => cat.category_name === event.category)[0][
+                      "image_url"
+                    ]
                   }`,
                 }}
                 style={styles.eventImage}
@@ -326,9 +320,7 @@ export const ViewEvent = () => {
             </View>
           )}
           slidingPanelLayout={() => (
-            <View style={styles.slidingPanelLayoutStyle}>
-              {chatOn ? <Chat /> : null}
-            </View>
+            <View style={styles.slidingPanelLayoutStyle}>{chatOn ? <Chat /> : null}</View>
           )}
         />
       </View>
