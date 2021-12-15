@@ -7,11 +7,11 @@ export const getEvents = (token, category) => {
   let path = `/events?category=${category}`;
   return frostyApi.get(path, { headers: { "x-auth-token": token } });
 };
-export const getUsers = () => {
-  return frostyApi.get("/users");
+export const getUsers = (token) => {
+  return frostyApi.get("/users", { headers: { "x-auth-token": token } });
 };
-export const getUser = (id) => {
-  return frostyApi.get(`/users/${id}`);
+export const getUser = (token, id) => {
+  return frostyApi.get(`/users/${id}`, { headers: { "x-auth-token": token } });
 };
 export const getCategories = () => {
   return frostyApi.get("/categories");
