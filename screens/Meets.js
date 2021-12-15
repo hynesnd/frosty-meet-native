@@ -35,6 +35,7 @@ export const Meets = () => {
   const [joinedOptions, setJoinedOptions] = useState([
     { label: "All events", value: "All events" },
     { label: "Joined events", value: "Joined events" },
+    { label: "Not Joined", value: "Not joined"}
   ]);
 
   const [events, setEvents] = useState([]);
@@ -42,20 +43,9 @@ export const Meets = () => {
   // const navigation = useNavigation();
 
   useEffect(() => {
-    // getCategories().then(({ data }) => {
-    //   const newCategories = [...categories];
-    //   data.categories.forEach((category) => {
-    //     newCategories.push({
-    //       label:
-    //         category.categorySlug.slice(0, 1).toUpperCase() +
-    //         category.categorySlug.slice(1),
-    //       value: category.categorySlug,
-    //     });
-    //   });
-    //   setCategories(newCategories);
-    // });
-    setCategoryValue("All categories");
-    setJoinedValue("All events");
+
+    // setCategoryValue("any type");
+
     // getEvents().then(({ data }) => {
     //   const newEvents = [];
     //   data.events.forEach((event) => {
@@ -63,14 +53,26 @@ export const Meets = () => {
     //   });
     //   setEvents(newEvents);
     // });
-    getEvents(user.token).then(({ data }) => {
+
+    getEvents(user.token, categoryValue).then(({ data }) => {
+      console.log(data.events);
+
       setEvents(data.events);
     });
-  }, []);
+  }, [categoryValue, joinedValue]);
 
   const [mapOpened, setMapOpened] = useState(true);
 
   const Stack = createNativeStackNavigator();
+
+  const handleCategoryChange = async (value) => {
+    try {
+      const { data } = await getEvents(user.token, value);
+      setEvents(data.events);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const MeetsPage = () => {
     return (
@@ -84,9 +86,9 @@ export const Meets = () => {
           <Picker
             style={styles.pickerStyle}
             selectedValue={categoryValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setCategoryValue(itemValue)
-            }
+            onValueChange={(itemValue, itemIndex) => {
+              handleCategoryChange(itemValue);
+            }}
           >
             <Picker.Item
               key="All categories"

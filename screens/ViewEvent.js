@@ -203,15 +203,15 @@ export const ViewEvent = () => {
             {event.participants.map((participant) => {
               return (
                 <Pressable
-                  key={participant}
+                  key={participant.username}
                   onPress={() => {
                     // ***
                     // Having to filter users as there's no endpoint to get user by username
                     // ***
-                    getUsers()
+                    getUsers(user.token)
                       .then((res) => {
                         const correctUser = res.data.users.filter((person) => {
-                          return person.username === participant;
+                          return person.username === participant.username;
                         })[0];
                         setViewedUser(correctUser);
                       })
@@ -227,7 +227,7 @@ export const ViewEvent = () => {
                   <View style={{ flexDirection: "row" }}>
                     <Text style={{ textDecorationLine: "none" }}> </Text>
                     <Text style={styles.participantButtonText}>
-                      {participant}
+                      {participant.username}
                     </Text>
                   </View>
                 </Pressable>
