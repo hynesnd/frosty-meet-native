@@ -4,7 +4,10 @@ const frostyApi = axios.create({
 });
 
 export const getEvents = (token, category) => {
-  let path = `/events?category=${category}`;
+  let path = `/events`;
+  if (category !== "All categories") {
+    path += `?category=${category}`;
+  }
   return frostyApi.get(path, { headers: { "x-auth-token": token } });
 };
 export const getUsers = (token) => {
