@@ -29,50 +29,51 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export const Meets = () => {
-  const [categoryValue, setCategoryValue] = useState("");
+  const [categoryValue, setCategoryValue] = useState("All categories");
 
-  const [joinedValue, setJoinedValue] = useState("");
   const [joinedOptions, setJoinedOptions] = useState([
     { label: "All events", value: "All events" },
     { label: "Joined events", value: "Joined events" },
-    { label: "Not Joined", value: "Not joined"}
+    { label: "Not joined", value: "Not joined" },
   ]);
+
+  const [joinedValue, setJoinedValue] = useState("All events");
 
   const [events, setEvents] = useState([]);
   const { user } = useContext(UserContext);
   // const navigation = useNavigation();
 
   useEffect(() => {
-
-    // setCategoryValue("any type");
-
-    // getEvents().then(({ data }) => {
-    //   const newEvents = [];
-    //   data.events.forEach((event) => {
-    //     newEvents.push(event);
-    //   });
-    //   setEvents(newEvents);
-    // });
-
     getEvents(user.token, categoryValue).then(({ data }) => {
-      console.log(data.events);
+      const events = [];
 
-      setEvents(data.events);
+      if (joinedValue === "Joined events") {
+        data.events.forEach((event) => {
+          let joined = false;
+          event.participants.forEach((person) => {
+            if (person.username === user.username) joined = true;
+          });
+          if (joined === true) events.push(event);
+        });
+      } else if (joinedValue === "Not joined") {
+        data.events.forEach((event) => {
+          let joined = false;
+          event.participants.forEach((person) => {
+            if (person.username === user.username) joined = true;
+          });
+          if (joined === false) events.push(event);
+        });
+      } else {
+        data.events.forEach((event) => events.push(event));
+      }
+
+      setEvents(events);
     });
   }, [categoryValue, joinedValue]);
 
   const [mapOpened, setMapOpened] = useState(true);
 
   const Stack = createNativeStackNavigator();
-
-  const handleCategoryChange = async (value) => {
-    try {
-      const { data } = await getEvents(user.token, value);
-      setEvents(data.events);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const MeetsPage = () => {
     return (
@@ -87,7 +88,7 @@ export const Meets = () => {
             style={styles.pickerStyle}
             selectedValue={categoryValue}
             onValueChange={(itemValue, itemIndex) => {
-              handleCategoryChange(itemValue);
+              setCategoryValue(itemValue);
             }}
           >
             <Picker.Item
